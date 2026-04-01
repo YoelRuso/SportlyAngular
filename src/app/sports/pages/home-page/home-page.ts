@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { Header } from '../../components/header/header';
 import { HeroBanner } from '../../components/hero-banner/hero-banner';
 import { Navbar } from '../../components/navbar/navbar';
@@ -13,13 +13,19 @@ type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
   imports: [Header, HeroBanner, Navbar, CardInit],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class HomePage {
+export default class HomePage implements OnInit {
   events: SportEvent[] = [];
   favoriteIds = new Set<string>();
   hasLoadError = false;
 
-  constructor(private readonly sportsData: SportsData) {
+  constructor(
+    private readonly sportsData: SportsData,
+    private readonly cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
     this.loadEvents('all');
   }
 
@@ -59,11 +65,13 @@ export default class HomePage {
       next: (events) => {
         this.events = events;
         this.hasLoadError = false;
+        this.cdr.markForCheck();
       },
       error: (error: unknown) => {
         console.error('Error cargando eventos desde json-server:', error);
         this.events = [];
         this.hasLoadError = true;
+        this.cdr.markForCheck();
       },
     });
   }
