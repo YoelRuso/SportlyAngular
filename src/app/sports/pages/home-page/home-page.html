@@ -18,7 +18,11 @@
           </div>
         } @empty {
           <div class="col-12">
-            <p class="text-center text-secondary m-0">No hay eventos disponibles.</p>
+            @if (hasLoadError) {
+              <p class="text-center text-secondary m-0">No se pudo conectar con json-server en http://localhost:3000.</p>
+            } @else {
+              <p class="text-center text-secondary m-0">No hay eventos disponibles.</p>
+            }
           </div>
         }
       </div>

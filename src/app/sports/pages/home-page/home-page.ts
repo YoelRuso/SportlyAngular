@@ -17,14 +17,15 @@ type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
 export default class HomePage {
   events: SportEvent[] = [];
   favoriteIds = new Set<string>();
+  hasLoadError = false;
 
   constructor(private readonly sportsData: SportsData) {
-    this.events = this.sportsData.getEventsBySport('all');
+    this.loadEvents('all');
   }
 
   onSportSelected(sport: string): void {
     const selected = this.normalizeSport(sport);
-    this.events = this.sportsData.getEventsBySport(selected);
+    this.loadEvents(selected);
   }
 
   openMatchPopup(event: SportEvent): void {
@@ -51,6 +52,20 @@ export default class HomePage {
       return value;
     }
     return 'all';
+  }
+
+  private loadEvents(sport: SportKey): void {
+    this.sportsData.getEventsBySport(sport).subscribe({
+      next: (events) => {
+        this.events = events;
+        this.hasLoadError = false;
+      },
+      error: (error: unknown) => {
+        console.error('Error cargando eventos desde json-server:', error);
+        this.events = [];
+        this.hasLoadError = true;
+      },
+    });
   }
 
   protected readonly String = String;

@@ -55,6 +55,17 @@ export class CardInit {
     return this.event?.strEvent || 'Evento deportivo';
   }
 
+  get teams(): string {
+    const home = this.event?.strHomeTeam || '';
+    const away = this.event?.strAwayTeam || '';
+
+    if (home || away) {
+      return `${home || 'Equipo local'} vs ${away || 'Equipo visitante'}`;
+    }
+
+    return this.event?.strEvent || 'Equipos por confirmar';
+  }
+
   get description(): string {
     const key = (this.event?.strSport || '').toLowerCase();
 
@@ -83,10 +94,27 @@ export class CardInit {
   }
 
   get date(): string {
-    if (!this.event?.dateEvent) return 'Fecha por confirmar';
-    const d = new Date(this.event.dateEvent);
-    if (Number.isNaN(d.getTime())) return this.event.dateEvent;
+    const source = this.event?.dateEventLocal || this.event?.dateEvent;
+    if (!source) return 'Por confirmar';
+
+    const d = new Date(source);
+    if (Number.isNaN(d.getTime())) return source;
+
     return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  get time(): string {
+    const source = this.event?.strTimeLocal || this.event?.strTime;
+    if (!source) {
+      return 'Por confirmar';
+    }
+    return source.slice(0, 5);
+  }
+
+  get place(): string {
+    const venue = this.event?.strVenue || '';
+    const country = this.event?.strCountry || '';
+    return [venue, country].filter(Boolean).join(' - ') || 'Por confirmar';
   }
 
   get image(): string {

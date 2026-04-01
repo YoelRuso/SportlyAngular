@@ -14,6 +14,9 @@ export interface SportEvent {
   strDescriptionEN?: string;
 
   dateEvent?: string;
+  dateEventLocal?: string;
+  strTime?: string;
+  strTimeLocal?: string;
 
   strThumb?: string;
   strPoster?: string;
