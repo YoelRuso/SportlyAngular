@@ -2,8 +2,8 @@
   position: sticky;
   top: 0;
   z-index: 30;
-  background: linear-gradient(100deg, #0f1116 0%, #161a21 100%);
-  border-bottom: 1px solid #222832;
+  background: linear-gradient(100deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  border-bottom: 1px solid var(--border);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
 }
 
@@ -35,7 +35,7 @@
 }
 
 .nav-link {
-  color: #d8e0ea;
+  color: var(--text-1);
   text-decoration: none;
   font-weight: 600;
   padding: 0.35rem 0.6rem;
@@ -45,7 +45,7 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: #3cf7b1;
+  color: var(--accent);
   background-color: rgba(60, 247, 177, 0.12);
 }
 
@@ -61,14 +61,14 @@
   padding: 0.42rem 0.75rem;
   font-weight: 700;
   font-size: 0.85rem;
-  background-color: #22e29f;
+  background-color: var(--accent);
   color: #08130f;
   cursor: pointer;
 }
 
 .auth-btn--outline {
   background-color: transparent;
-  color: #d8e0ea;
+  color: var(--text-1);
   border: 1px solid #7e8a9c;
 }
 
@@ -111,8 +111,8 @@
 
 .mobile-nav {
   display: none;
-  border-top: 1px solid #242a34;
-  background: #11141b;
+  border-top: 1px solid var(--border);
+  background: #111722;
   padding: 0;
 }
 
@@ -122,7 +122,7 @@
 
 .mobile-link {
   display: block;
-  color: #e8edf4;
+  color: var(--text-1);
   text-decoration: none;
   padding: 0.8rem 1rem;
   border-bottom: 1px solid #212833;

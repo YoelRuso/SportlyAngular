@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global dark theme */
+:root {
+	color-scheme: dark;
+	--bg-0: #090c12;
+	--bg-1: #10151e;
+	--bg-2: #151d28;
+	--surface: #131b26;
+	--surface-soft: #182231;
+	--border: #273244;
+	--text-1: #e7edf6;
+	--text-2: #9da9bb;
+	--accent: #31e6a4;
+	--accent-strong: #18c98b;
+}
+
+html,
+body {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	background:
+		radial-gradient(circle at 12% 18%, rgba(49, 230, 164, 0.12) 0%, transparent 36%),
+		linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+	color: var(--text-1);
+}
+
+* {
+	box-sizing: border-box;
+}

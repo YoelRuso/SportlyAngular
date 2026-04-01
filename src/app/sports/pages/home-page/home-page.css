@@ -2,23 +2,23 @@
 	min-height: calc(100vh - 84px);
 	background:
 		radial-gradient(circle at 14% 18%, rgba(34, 226, 159, 0.1) 0%, transparent 35%),
-		linear-gradient(180deg, #f2f5f8 0%, #e9edf2 100%);
+		linear-gradient(180deg, #0f141d 0%, #090c12 100%);
 	padding: 1.25rem;
 }
 
 .hero-card {
 	max-width: 860px;
 	margin: 0 auto;
-	background: #ffffff;
-	border: 1px solid #d4dce6;
+	background: #141c27;
+	border: 1px solid #2b3547;
 	border-radius: 16px;
 	padding: 1.5rem;
-	box-shadow: 0 14px 28px rgba(19, 28, 39, 0.08);
+	box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
 }
 
 .hero-kicker {
 	margin: 0;
-	color: #0e7d5b;
+	color: #31e6a4;
 	font-weight: 800;
 	letter-spacing: 0.08em;
 	font-size: 0.78rem;
@@ -27,11 +27,11 @@
 .hero-card h1 {
 	margin: 0.55rem 0;
 	font-size: clamp(1.4rem, 4vw, 2rem);
-	color: #101722;
+	color: #e7edf6;
 }
 
 .hero-card p {
 	margin: 0;
-	color: #475569;
+	color: #b1bece;
 	line-height: 1.5;
 }
