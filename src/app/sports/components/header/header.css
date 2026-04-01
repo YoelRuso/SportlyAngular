@@ -1,84 +1,159 @@
-.navbar {
-  background-color: #1a1a1a !important;
-  padding: 0.6rem 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: linear-gradient(100deg, #0f1116 0%, #161a21 100%);
+  border-bottom: 1px solid #222832;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
 }
 
-.navbar .logo img {
-  width: 70px;
-  transition: transform 0.2s;
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.navbar .logo img:hover {
-  transform: scale(1.05);
+.brand {
+  display: inline-flex;
+  align-items: center;
 }
 
-/* Links de navegación */
+.brand-logo {
+  width: 92px;
+  height: auto;
+  display: block;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nav-link {
-  color: white !important;
-  font-weight: 500;
-  transition: color 0.3s, transform 0.2s;
+  color: #d8e0ea;
   text-decoration: none;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: #00ffaa !important;
-  transform: scale(1.05);
+  color: #3cf7b1;
+  background-color: rgba(60, 247, 177, 0.12);
 }
 
-/* Botón Login */
-.btn-success {
-  background-color: #00ffaa !important;
-  color: #1a1a1a !important;
-  border: none !important;
-  font-weight: bold;
-  transition: background-color 0.3s, transform 0.2s;
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
 }
 
-.btn-success:hover {
-  background-color: #00cc88 !important;
-  transform: scale(1.05);
+.auth-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 0.42rem 0.75rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background-color: #22e29f;
+  color: #08130f;
+  cursor: pointer;
 }
 
-/* Botón Logout */
-.btn-outline-light:hover {
-  background-color: #00ffaa !important;
-  color: #1a1a1a !important;
-  transform: scale(1.05);
+.auth-btn--outline {
+  background-color: transparent;
+  color: #d8e0ea;
+  border: 1px solid #7e8a9c;
 }
 
-/* Avatar */
-.user-area img {
-  transition: transform 0.2s;
+.avatar-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  border-radius: 999px;
+  cursor: pointer;
 }
 
-.user-area img:hover {
-  transform: scale(1.1);
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #3a434f;
 }
 
-/* Mobile responsivo */
-@media (max-width: 834px) {
-  .navbar {
-    padding: 0.6rem 1rem;
+.menu-toggle {
+  display: none;
+  width: 38px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #3a434f;
+  background: transparent;
+  padding: 0.35rem 0.45rem;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #e8edf4;
+}
+
+.menu-toggle span + span {
+  margin-top: 5px;
+}
+
+.mobile-nav {
+  display: none;
+  border-top: 1px solid #242a34;
+  background: #11141b;
+  padding: 0;
+}
+
+.mobile-nav.mobile-nav--open {
+  display: block;
+}
+
+.mobile-link {
+  display: block;
+  color: #e8edf4;
+  text-decoration: none;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #212833;
+}
+
+.mobile-link:hover {
+  background-color: #1a202b;
+}
+
+@media (max-width: 860px) {
+  .desktop-nav {
+    display: none;
   }
 
-  .navbar .logo img {
-    width: 60px;
-  }
-
-  .user-area {
-    gap: 0.5rem !important;
+  .menu-toggle {
+    display: block;
   }
 }
 
-@media (max-width: 576px) {
-  .navbar .logo img {
-    width: 50px;
+@media (max-width: 560px) {
+  .brand-logo {
+    width: 78px;
   }
 
-  .user-area img {
-    width: 35px !important;
-    height: 35px !important;
+  .auth-btn {
+    padding: 0.4rem 0.62rem;
+    font-size: 0.8rem;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
   }
 }

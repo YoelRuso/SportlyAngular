@@ -1,78 +1,44 @@
-<header class="navbar navbar-dark bg-dark shadow-sm">
-  <div class="container-fluid d-flex justify-content-between align-items-center px-3">
+<header class="site-header">
+  <div class="header-inner">
+    <a routerLink="/home" class="brand" aria-label="Ir al inicio">
+      <img src="/images/marca-icono.png" alt="Sportly Logo" class="brand-logo" />
+    </a>
 
-    <!-- Logo -->
-    <div class="logo">
-      <a routerLink="/" class="navbar-brand">
-        <img src="assets/images/marca-icono.png" alt="Sportly Logo" height="50">
-      </a>
-    </div>
-
-    <!-- Navegación (Desktop) -->
-    <nav class="d-none d-md-flex">
-      <ul class="navbar-nav flex-row gap-3">
-        <li class="nav-item">
-          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-             class="nav-link">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/resumen" routerLinkActive="active" class="nav-link">Resumen</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/calendario" routerLinkActive="active" class="nav-link">Calendario</a>
-        </li>
-      </ul>
+    <nav class="desktop-nav" aria-label="Principal">
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Inicio</a>
+      <a routerLink="/resumen" routerLinkActive="active" class="nav-link">Resumen</a>
+      <a routerLink="/calendario" routerLinkActive="active" class="nav-link">Calendario</a>
     </nav>
 
-    <!-- Área Usuario -->
-    <div class="user-area d-flex align-items-center gap-3">
-      <!-- Botón Login/Logout -->
-      <button
-        id="authBtn"
-        class="btn btn-success btn-sm"
-        (click)="toggleAuth()"
-        *ngIf="!(isLoggedIn$ | async)">
-        Login
+    <div class="header-actions">
+      <button class="auth-btn" (click)="toggleAuth()" *ngIf="!(isLoggedIn$ | async)">Login</button>
+      <button class="auth-btn auth-btn--outline" (click)="logout()" *ngIf="isLoggedIn$ | async">Logout</button>
+
+      <button class="avatar-btn" (click)="handleAvatarClick()" aria-label="Perfil de usuario">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+          alt="Avatar de usuario"
+          class="avatar"
+        />
       </button>
 
       <button
-        id="authBtn"
-        class="btn btn-outline-light btn-sm"
-        (click)="logout()"
-        *ngIf="isLoggedIn$ | async">
-        Logout
+        class="menu-toggle"
+        type="button"
+        (click)="mobileMenuOpen = !mobileMenuOpen"
+        [attr.aria-expanded]="mobileMenuOpen"
+        aria-label="Abrir menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
-
-      <!-- Avatar -->
-      <img
-        id="userAvatar"
-        src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
-        alt="Usuario"
-        class="rounded-circle"
-        style="width: 40px; height: 40px; cursor: pointer;"
-        (click)="handleAvatarClick()"
-      />
     </div>
-
   </div>
 
-  <!-- Menú Mobile (Hamburguesa) -->
-  <nav class="d-md-none">
-    <button class="navbar-toggler" type="button" (click)="mobileMenuOpen = !mobileMenuOpen">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse" [ngClass]="{'show': mobileMenuOpen}">
-      <ul class="navbar-nav mt-2">
-        <li class="nav-item">
-          <a routerLink="/" class="nav-link" (click)="mobileMenuOpen = false">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/resumen" class="nav-link" (click)="mobileMenuOpen = false">Resumen</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/calendario" class="nav-link" (click)="mobileMenuOpen = false">Calendario</a>
-        </li>
-      </ul>
-    </div>
+  <nav class="mobile-nav" [class.mobile-nav--open]="mobileMenuOpen" aria-label="Menu movil">
+    <a routerLink="/home" class="mobile-link" (click)="mobileMenuOpen = false">Inicio</a>
+    <a routerLink="/resumen" class="mobile-link" (click)="mobileMenuOpen = false">Resumen</a>
+    <a routerLink="/calendario" class="mobile-link" (click)="mobileMenuOpen = false">Calendario</a>
   </nav>
 </header>
