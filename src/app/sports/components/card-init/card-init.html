@@ -1,1 +1,65 @@
-<p>card-init works!</p>
+<section
+  class="card-item"
+  tabindex="0"
+  role="button"
+  [attr.aria-label]="'Abrir detalles de ' + title"
+  (click)="onCardClick()"
+  (keydown.enter)="onCardClick()"
+  (keydown.space)="onCardClick()"
+>
+  <div class="card h-100" [ngClass]="{ 'card-football': isSoccer }">
+
+    <ng-container *ngIf="isSoccer; else genericHeader">
+      <div class="card-header-logos">
+        <span class="badge badge-sport">{{ badge }}</span>
+
+        <div class="logos-container">
+          <img
+            *ngIf="event?.strHomeTeamBadge; else homeFallback"
+            [src]="event.strHomeTeamBadge"
+            [alt]="event?.strHomeTeam || 'Equipo local'"
+            class="team-logo"
+          />
+          <ng-template #homeFallback>
+            <div class="team-logo-placeholder">FC</div>
+          </ng-template>
+
+          <span class="vs-text">vs</span>
+
+          <img
+            *ngIf="event?.strAwayTeamBadge; else awayFallback"
+            [src]="event.strAwayTeamBadge"
+            [alt]="event?.strAwayTeam || 'Equipo visitante'"
+            class="team-logo"
+          />
+          <ng-template #awayFallback>
+            <div class="team-logo-placeholder">FC</div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #genericHeader>
+      <div class="card-header" [style.background-image]="'url(' + image + ')'">
+        <span class="badge">{{ badge }}</span>
+      </div>
+    </ng-template>
+
+    <div class="card-content">
+      <h3>{{ title }}</h3>
+      <p class="card-date">{{ date }}</p>
+      <p>{{ description }}</p>
+
+      <button
+        type="button"
+        class="fav-btn"
+        [ngClass]="{ 'fav-btn--active': isFavorite }"
+        [attr.aria-label]="isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+        [title]="isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+        (click)="onFavClick($event)"
+      >
+        ♥
+      </button>
+    </div>
+  </div>
+</section>
