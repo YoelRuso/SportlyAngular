@@ -1,0 +1,84 @@
+.navbar {
+  background-color: #1a1a1a !important;
+  padding: 0.6rem 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.navbar .logo img {
+  width: 70px;
+  transition: transform 0.2s;
+}
+
+.navbar .logo img:hover {
+  transform: scale(1.05);
+}
+
+/* Links de navegación */
+.nav-link {
+  color: white !important;
+  font-weight: 500;
+  transition: color 0.3s, transform 0.2s;
+  text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #00ffaa !important;
+  transform: scale(1.05);
+}
+
+/* Botón Login */
+.btn-success {
+  background-color: #00ffaa !important;
+  color: #1a1a1a !important;
+  border: none !important;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-success:hover {
+  background-color: #00cc88 !important;
+  transform: scale(1.05);
+}
+
+/* Botón Logout */
+.btn-outline-light:hover {
+  background-color: #00ffaa !important;
+  color: #1a1a1a !important;
+  transform: scale(1.05);
+}
+
+/* Avatar */
+.user-area img {
+  transition: transform 0.2s;
+}
+
+.user-area img:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile responsivo */
+@media (max-width: 834px) {
+  .navbar {
+    padding: 0.6rem 1rem;
+  }
+
+  .navbar .logo img {
+    width: 60px;
+  }
+
+  .user-area {
+    gap: 0.5rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar .logo img {
+    width: 50px;
+  }
+
+  .user-area img {
+    width: 35px !important;
+    height: 35px !important;
+  }
+}
