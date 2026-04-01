@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -10,18 +10,13 @@ import { Observable, of } from 'rxjs';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  mobileMenuOpen = false;
-  isLoggedIn$: Observable<boolean> = of(false);
+  @Output() sportSelected = new EventEmitter<string>();
 
-  toggleAuth() {
-    // Implementar lógica de login
-  }
+  activeSport: string = 'all';
 
-  logout() {
-    // Implementar lógica de logout
-  }
-
-  handleAvatarClick() {
-    // Implementar lógica de clic en avatar
+  selectSport(sport: string, event: Event): void {
+    event.preventDefault();
+    this.activeSport = sport;
+    this.sportSelected.emit(sport);
   }
 }

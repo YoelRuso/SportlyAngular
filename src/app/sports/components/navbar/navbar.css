@@ -1,84 +1,77 @@
-.navbar {
-  background-color: #1a1a1a !important;
-  padding: 0.6rem 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+.sports-nav {
+  width: 100%;
+  background-color: #0d131c;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
-.navbar .logo img {
-  width: 70px;
-  transition: transform 0.2s;
+.sports-nav-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 0.75rem;
 }
 
-.navbar .logo img:hover {
-  transform: scale(1.05);
+.nav-sports {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.55rem 0;
+  list-style: none;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
 }
 
-/* Links de navegación */
-.nav-link {
-  color: white !important;
-  font-weight: 500;
-  transition: color 0.3s, transform 0.2s;
-  text-decoration: none;
+.nav-sports .nav-item {
+  flex: 0 0 auto;
 }
 
-.nav-link:hover,
-.nav-link.active {
-  color: #00ffaa !important;
-  transform: scale(1.05);
+.nav-sports .nav-link {
+  color: var(--text-2);
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  padding: 0.6rem 0.7rem;
+  margin-right: 0.45rem;
+  background: transparent;
+  transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
 }
 
-/* Botón Login */
-.btn-success {
-  background-color: #00ffaa !important;
-  color: #1a1a1a !important;
-  border: none !important;
-  font-weight: bold;
-  transition: background-color 0.3s, transform 0.2s;
+.nav-sports .nav-link:hover {
+  color: var(--accent);
+  border-color: #2a3c4a;
 }
 
-.btn-success:hover {
-  background-color: #00cc88 !important;
-  transform: scale(1.05);
+.nav-sports .nav-link.active {
+  color: #08130f;
+  background: var(--accent);
+  border-color: var(--accent-strong);
 }
 
-/* Botón Logout */
-.btn-outline-light:hover {
-  background-color: #00ffaa !important;
-  color: #1a1a1a !important;
-  transform: scale(1.05);
-}
-
-/* Avatar */
-.user-area img {
-  transition: transform 0.2s;
-}
-
-.user-area img:hover {
-  transform: scale(1.1);
-}
-
-/* Mobile responsivo */
 @media (max-width: 834px) {
-  .navbar {
-    padding: 0.6rem 1rem;
+  .nav-sports {
+    justify-content: flex-start;
   }
 
-  .navbar .logo img {
-    width: 60px;
-  }
-
-  .user-area {
-    gap: 0.5rem !important;
+  .nav-sports .nav-link {
+    font-size: 0.82rem;
+    margin-right: 0.6rem;
+    padding: 0.5rem 0.55rem;
   }
 }
 
 @media (max-width: 576px) {
-  .navbar .logo img {
-    width: 50px;
+  .nav-sports {
+    justify-content: flex-start;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
   }
 
-  .user-area img {
-    width: 35px !important;
-    height: 35px !important;
+  .nav-sports .nav-link {
+    font-size: 0.76rem;
+    margin-right: 0.45rem;
   }
 }

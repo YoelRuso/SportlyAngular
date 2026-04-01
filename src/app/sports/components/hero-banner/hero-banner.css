@@ -1,14 +1,20 @@
 .hero-banner {
   position: relative;
   width: 100%;
-  height: 280px;
+  min-height: 250px;
   overflow: hidden;
-  background: linear-gradient(120deg, #04110b, #0a2518, #113a29, #04110b);
+  background: linear-gradient(120deg, #101923, #0f2430, #13313a, #101923);
   background-size: 250% 250%;
   animation: heroFlow 12s ease infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-inner {
+  min-height: 250px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 1.25rem;
 }
 
 .hero-banner::before,
@@ -50,7 +56,7 @@
 .hero-content {
   position: relative;
   z-index: 2;
-  color: #f4fbff;
+  color: var(--text-1);
   padding: 0 16px;
   animation: riseIn 0.8s ease-out both;
 }
@@ -59,7 +65,7 @@
   font-size: 0.85rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #8fffd0;
+  color: #9ee9cc;
 }
 
 .hero-content h1 {
@@ -67,15 +73,15 @@
   font-family: "Impact", "Arial Black", sans-serif;
   font-size: clamp(2.4rem, 8vw, 4.7rem);
   letter-spacing: 0.08em;
-  color: #00ff88;
-  text-shadow: 0 0 12px rgba(0, 255, 136, 0.68), 0 0 24px rgba(0, 255, 136, 0.42);
+  color: var(--accent);
+  text-shadow: 0 0 12px rgba(49, 230, 164, 0.6), 0 0 24px rgba(49, 230, 164, 0.4);
   transition: transform 0.35s ease, text-shadow 0.35s ease, letter-spacing 0.35s ease;
 }
 
 .hero-slogan {
   font-size: clamp(1rem, 2.3vw, 1.28rem);
   font-weight: 600;
-  color: #d9ffef;
+  color: #d5dde8;
   transition: color 0.35s ease;
 }
 
@@ -86,7 +92,7 @@
 }
 
 .hero-banner:hover .hero-slogan {
-  color: #00ff88;
+  color: var(--accent);
 }
 
 .hero-banner:hover::after {
@@ -117,7 +123,11 @@
 
 @media (max-width: 834px) {
   .hero-banner {
-    height: 230px;
+    min-height: 210px;
+  }
+
+  .hero-inner {
+    min-height: 210px;
   }
 
   .hero-content h1 {
@@ -131,7 +141,11 @@
 
 @media (max-width: 576px) {
   .hero-banner {
-    height: 180px;
+    min-height: 170px;
+  }
+
+  .hero-inner {
+    min-height: 170px;
   }
 
   .hero-content h1 {

@@ -1,0 +1,55 @@
+<nav class="sports-nav" aria-label="Deportes">
+  <div class="sports-nav-inner">
+    <ul class="nav-sports">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="#"
+          [class.active]="activeSport === 'all'"
+          (click)="selectSport('all', $event)">
+          Todos
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="#"
+          [class.active]="activeSport === 'soccer'"
+          (click)="selectSport('soccer', $event)">
+          Fútbol
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="#"
+          [class.active]="activeSport === 'basketball'"
+          (click)="selectSport('basketball', $event)">
+          Baloncesto
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="#"
+          [class.active]="activeSport === 'tennis'"
+          (click)="selectSport('tennis', $event)">
+          Tenis
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="#"
+          [class.active]="activeSport === 'f1'"
+          (click)="selectSport('f1', $event)">
+          F1
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
