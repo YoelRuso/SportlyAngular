@@ -123,7 +123,7 @@ export class CardInit {
       this.event?.strPoster ||
       this.event?.strBanner ||
       this.event?.strSquare ||
-      'assets/images/tenis.png'
+      'images/tenis.png'
     );
   }
 }
