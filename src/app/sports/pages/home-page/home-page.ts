@@ -5,12 +5,13 @@ import { Navbar } from '../../components/navbar/navbar';
 import { CardInit } from '../../components/card-init/card-init';
 import { SportEvent } from '../../interfaces/sportevent';
 import { SportsData } from '../../services/sports-data';
+import { Footer } from '../../components/footer/footer';
 
 type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
 
 @Component({
   selector: 'app-home-page',
-  imports: [Header, HeroBanner, Navbar, CardInit],
+  imports: [Header, HeroBanner, Navbar, CardInit, Footer],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,7 +23,7 @@ export default class HomePage implements OnInit {
 
   constructor(
     private readonly sportsData: SportsData,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {

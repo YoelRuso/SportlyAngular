@@ -1,23 +1,29 @@
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .home-shell {
-	min-height: calc(100vh - 76px);
-	padding: 1.25rem;
+  flex: 1;
+  padding: 1.25rem;
 }
 
 .home-grid {
-	max-width: 1120px;
-	margin: 0 auto;
-	border: 1px solid var(--border);
-	background: linear-gradient(180deg, #0f1622 0%, #0c121c 100%);
-	box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
+  max-width: 1120px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, #0f1622 0%, #0c121c 100%);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
 }
 
 .home-grid app-hero-banner,
 .home-grid app-navbar {
-	display: block;
+  display: block;
 }
 
 @media (max-width: 768px) {
-	.home-shell {
-		padding: 0.9rem;
-	}
+  .home-shell {
+    padding: 0.9rem;
+  }
 }

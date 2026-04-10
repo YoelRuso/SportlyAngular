@@ -6,8 +6,8 @@
 
     <nav class="desktop-nav" aria-label="Principal">
       <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Inicio</a>
-      <a routerLink="/resumen" routerLinkActive="active" class="nav-link">Resumen</a>
-      <a routerLink="/calendario" routerLinkActive="active" class="nav-link">Calendario</a>
+      <a routerLink="/resume" routerLinkActive="active" class="nav-link">Resumen</a>
+      <a routerLink="/schedule" routerLinkActive="active" class="nav-link">Calendario</a>
     </nav>
 
     <div class="header-actions">
@@ -38,7 +38,7 @@
 
   <nav class="mobile-nav" [class.mobile-nav--open]="mobileMenuOpen" aria-label="Menu movil">
     <a routerLink="/home" class="mobile-link" (click)="mobileMenuOpen = false">Inicio</a>
-    <a routerLink="/resumen" class="mobile-link" (click)="mobileMenuOpen = false">Resumen</a>
-    <a routerLink="/calendario" class="mobile-link" (click)="mobileMenuOpen = false">Calendario</a>
+    <a routerLink="/resume" class="mobile-link" (click)="mobileMenuOpen = false">Resumen</a>
+    <a routerLink="/schedule" class="mobile-link" (click)="mobileMenuOpen = false">Calendario</a>
   </nav>
 </header>

@@ -1,31 +1,35 @@
-<app-header />
+<div class="home-wrapper">
+  <app-header />
 
-<main class="home-shell">
-	<section class="home-grid" aria-label="Portada deportiva">
-		<app-hero-banner />
-    <app-navbar (sportSelected)="onSportSelected($event)" />
+  <main class="home-shell">
+    <section class="home-grid" aria-label="Portada deportiva">
+      <app-hero-banner />
+      <app-navbar (sportSelected)="onSportSelected($event)" />
 
-    <div class="container-fluid py-4">
-      <div class="row g-4">
-        @for (event of events; track event.idEvent ?? $index) {
-          <div class="col-12 col-md-6 col-lg-4">
-            <app-card-init
-              [event]="event"
-              [isFavorite]="favoriteIds.has(String(event.idEvent))"
-              (cardClick)="openMatchPopup($event)"
-              (favoriteClick)="toggleFavorite($event)"
-            />
-          </div>
-        } @empty {
-          <div class="col-12">
-            @if (hasLoadError) {
-              <p class="text-center text-secondary m-0">No se pudo conectar con json-server en http://localhost:3000.</p>
-            } @else {
-              <p class="text-center text-secondary m-0">No hay eventos disponibles.</p>
-            }
-          </div>
-        }
+      <div class="container-fluid py-4">
+        <div class="row g-4">
+          @for (event of events; track event.idEvent ?? $index) {
+            <div class="col-12 col-md-6 col-lg-4">
+              <app-card-init
+                [event]="event"
+                [isFavorite]="favoriteIds.has(String(event.idEvent))"
+                (cardClick)="openMatchPopup($event)"
+                (favoriteClick)="toggleFavorite($event)"
+              />
+            </div>
+          } @empty {
+            <div class="col-12">
+              @if (hasLoadError) {
+                <p class="text-center text-secondary m-0">No se pudo conectar con json-server en http://localhost:3000.</p>
+              } @else {
+                <p class="text-center text-secondary m-0">No hay eventos disponibles.</p>
+              }
+            </div>
+          }
+        </div>
       </div>
-    </div>
-	</section>
-</main>
+    </section>
+  </main>
+
+  <app-footer />
+</div>
