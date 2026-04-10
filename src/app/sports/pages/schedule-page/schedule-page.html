@@ -1,0 +1,94 @@
+<app-header />
+
+<div class="schedule-wrapper">
+  <main class="schedule-shell">
+    <section class="schedule-grid" aria-label="Calendario deportivo">
+
+      <div class="cal-header">
+        <h1 class="cal-title">Calendario de Eventos</h1>
+
+        <nav class="cal-nav" aria-label="Navegación de calendario">
+          <div class="cal-nav-group">
+            <button class="cal-arrow" (click)="prevMonth()" aria-label="Mes anterior">&lt;</button>
+            <span class="cal-display">{{ mesDisplay }}</span>
+            <button class="cal-arrow" (click)="nextMonth()" aria-label="Mes siguiente">&gt;</button>
+          </div>
+          <div class="cal-nav-group">
+            <button class="cal-arrow" (click)="prevYear()" aria-label="Año anterior">&lt;</button>
+            <span class="cal-display">{{ anioActual }}</span>
+            <button class="cal-arrow" (click)="nextYear()" aria-label="Año siguiente">&gt;</button>
+          </div>
+        </nav>
+      </div>
+
+      <div class="cal-table-wrapper">
+        <table class="cal-table" role="grid">
+          <thead>
+          <tr>
+            @for (dia of diasSemana; track dia) {
+              <th scope="col">{{ dia }}</th>
+            }
+          </tr>
+          </thead>
+          <tbody>
+            @for (week of weeks; track $index) {
+              <tr>
+                @for (day of week; track $index) {
+                  <td
+                    [class.today]="isToday(day)"
+                    [class.empty-cell]="!day"
+                    (click)="openDay(day)"
+                  >
+                    @if (day) {
+                      <div class="day-number">{{ day }}</div>
+                      <div class="matches">
+                        @for (ev of eventsForDay(day).slice(0, 2); track $index) {
+                          <div>{{ ev.sportLabel }} {{ ev.label }}</div>
+                        }
+                        @if (eventsForDay(day).length > 2) {
+                          <div class="matches-more">+{{ eventsForDay(day).length - 2 }} más</div>
+                        }
+                      </div>
+                    }
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+  </main>
+
+  <app-footer />
+</div>
+
+<!-- Modal -->
+@if (modalOpen) {
+  <div class="modal-overlay" (click)="closeOnOverlay($event)">
+    <div class="modal-container" role="dialog" aria-modal="true">
+      <button class="modal-close" (click)="closeModal()" aria-label="Cerrar">&times;</button>
+      <h2 class="modal-title">{{ selectedDayTitle }}</h2>
+      <div class="modal-events">
+        @if (selectedDayEvents.length === 0) {
+          <div class="modal-event">
+            <p class="no-events">No hay eventos programados para este día.</p>
+          </div>
+        }
+        @for (ev of selectedDayEvents; track $index) {
+          <div class="modal-event">
+            <div class="event-sport-icon">{{ ev.sportLabel }}</div>
+            <div class="event-name">{{ ev.label }}</div>
+            @if (ev.time) {
+              <div class="event-time">🕐 {{ ev.time }}</div>
+            }
+            @if (ev.venue) {
+              <div class="event-venue">📍 {{ ev.venue }}</div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
