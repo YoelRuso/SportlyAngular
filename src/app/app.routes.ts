@@ -18,4 +18,8 @@ export const routes: Routes = [
     path: 'schedule',
     loadComponent: () => import('./sports/pages/schedule-page/schedule-page'),
   },
+  {
+    path: 'legal',
+    loadComponent: () => import('./sports/pages/legal-page/legal-page'),
+  },
 ];
