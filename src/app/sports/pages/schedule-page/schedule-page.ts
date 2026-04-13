@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
+import { firstValueFrom } from 'rxjs';
+import { SportEvent } from '../../interfaces/sportevent';
+import { SportsData } from '../../services/sports-data';
 
 const MESES_ES = [
   'Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -39,7 +42,10 @@ export default class SchedulePage implements OnInit, OnDestroy {
     if (e.key === 'Escape') this.closeModal();
   };
 
-  constructor(private readonly cdr: ChangeDetectorRef) {}
+  constructor(
+    private readonly cdr: ChangeDetectorRef,
+    private readonly sportsData: SportsData,
+  ) {}
 
   ngOnInit(): void {
     document.addEventListener('keydown', this.keyHandler);
@@ -135,28 +141,24 @@ export default class SchedulePage implements OnInit, OnDestroy {
   }
 
   private async loadEvents(): Promise<void> {
-    const sports = ['soccer', 'basket', 'tenis', 'f1'];
     try {
-      const results = await Promise.all(
-        sports.map(s =>
-          fetch(`http://localhost:3000/${s}`)
-            .then(r => r.ok ? r.json() : [])
-            .catch(() => [])
-        )
-      );
+      const events = await firstValueFrom(this.sportsData.getAllEvents());
+
       this.eventosPorFecha = {};
-      results.flat().forEach((event: any) => {
+      events.forEach((event: SportEvent) => {
         const fecha = event.dateEvent;
         if (!fecha) return;
+
         const label = event.strEvent ||
           (event.strHomeTeam && event.strAwayTeam ? `${event.strHomeTeam} vs ${event.strAwayTeam}` : 'Evento deportivo');
         const sport = (event.strSport || '').toLowerCase();
+
         const sportLabel = sport === 'soccer' ? '⚽' : sport === 'basketball' ? '🏀' : sport === 'tennis' ? '🎾' : sport === 'motorsport' ? '🏎️' : '🏅';
         if (!this.eventosPorFecha[fecha]) this.eventosPorFecha[fecha] = [];
         this.eventosPorFecha[fecha].push({ label, sportLabel, time: event.strTime || '', venue: event.strVenue || '' });
       });
     } catch (e) {
-      console.error('Error cargando eventos:', e);
+      console.error('Error cargando eventos desde Firebase:', e);
     }
   }
 }

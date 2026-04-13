@@ -1,7 +1,8 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { SportEvent } from '../interfaces/sportevent';
-import { catchError, forkJoin, map, Observable, of } from 'rxjs';
+import { forkJoin, from, map, Observable } from 'rxjs';
+import { firestoreDb } from '../../initialize-firebase';
 
 type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
 
@@ -9,9 +10,6 @@ type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
   providedIn: 'root',
 })
 export class SportsData {
-  private readonly http = inject(HttpClient);
-  private readonly apiBase = 'http://localhost:3000';
-
   getEventsBySport(sport: SportKey): Observable<SportEvent[]> {
     if (sport === 'all') {
       return forkJoin([
@@ -30,10 +28,26 @@ export class SportsData {
     return this.getCollection(endpoint, label).pipe(map((events) => events.slice(0, 9)));
   }
 
+  getAllEvents(): Observable<SportEvent[]> {
+    return forkJoin([
+      this.getCollection('soccer', 'Soccer'),
+      this.getCollection('basket', 'Basketball'),
+      this.getCollection('tenis', 'Tennis'),
+      this.getCollection('f1', 'F1'),
+    ]).pipe(map(([soccer, basket, tenis, f1]) => [...soccer, ...basket, ...tenis, ...f1]));
+  }
+
   private getCollection(endpoint: string, defaultSport: string): Observable<SportEvent[]> {
-    return this.http.get<SportEvent[]>(`${this.apiBase}/${endpoint}`).pipe(
-      map((events) => events.map((event) => ({ ...event, strSport: event.strSport || defaultSport }))),
-      catchError(() => of([]))
+    const collectionRef = collection(firestoreDb, endpoint);
+    const collectionQuery = query(collectionRef, limit(5000));
+
+    return from(getDocs(collectionQuery)).pipe(
+      map((snapshot) =>
+        snapshot.docs.map((doc) => {
+          const event = doc.data() as SportEvent;
+          return { ...event, strSport: event.strSport || defaultSport };
+        })
+      )
     );
   }
 }
