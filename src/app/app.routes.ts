@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+// @ts-ignore
 export const routes: Routes = [
   {
     path: '',
@@ -21,5 +22,9 @@ export const routes: Routes = [
   {
     path: 'legal',
     loadComponent: () => import('./sports/pages/legal-page/legal-page'),
+  },
+  {
+    path: 'contact',
+    loadComponent: () => import('./sports/pages/contact-page/contact-page'),
   },
 ];

@@ -1,0 +1,114 @@
+/* ── Layout ── */
+.contact-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.contact-shell {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.25rem;
+}
+
+/* ── Caja ── */
+.contact-box {
+  background: linear-gradient(180deg, #0f1622 0%, #0c121c 100%);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 24px rgba(60, 247, 177, 0.12);
+  width: 420px;
+  max-width: 100%;
+  padding: 2.5rem;
+  border-radius: 14px;
+}
+
+.contact-box h1 {
+  color: var(--accent);
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.contact-box p {
+  color: var(--text-1);
+  opacity: 0.6;
+  font-size: 0.88rem;
+  text-align: center;
+  margin-bottom: 1.8rem;
+  line-height: 1.6;
+}
+
+/* ── Items ── */
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.contact-item:hover {
+  background-color: var(--accent);
+}
+
+.contact-item i {
+  color: var(--accent);
+  font-size: 1.1rem;
+  transition: color 0.2s;
+  width: 18px;
+  text-align: center;
+}
+
+.contact-item a,
+.contact-item span {
+  color: var(--text-1);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.contact-item:hover i,
+.contact-item:hover a,
+.contact-item:hover span {
+  color: #08130f;
+}
+
+/* ── Responsive ── */
+@media (max-width: 834px) {
+  .contact-box {
+    width: 80%;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .contact-shell {
+    align-items: flex-start;
+    padding-top: 2.5rem;
+  }
+
+  .contact-box {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .contact-box h1 {
+    font-size: 1.3rem;
+  }
+
+  .contact-item {
+    gap: 0.65rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .contact-item i {
+    font-size: 1rem;
+  }
+}
