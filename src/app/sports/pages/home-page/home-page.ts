@@ -69,7 +69,7 @@ export default class HomePage implements OnInit {
         this.cdr.markForCheck();
       },
       error: (error: unknown) => {
-        console.error('Error cargando eventos desde json-server:', error);
+        console.error('Error cargando eventos desde Firebase:', error);
         this.events = [];
         this.hasLoadError = true;
         this.cdr.markForCheck();
