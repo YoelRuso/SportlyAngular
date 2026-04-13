@@ -3,11 +3,10 @@
 
   <div class="legal-container">
 
-    <div
-      class="sidebar-overlay"
-      [class.sidebar-overlay--open]="sidebarOpen"
-      (click)="toggleSidebar()"
-    ></div>
+    <div class="sidebar-overlay"
+         [class.sidebar-overlay--open]="sidebarOpen"
+         (click)="toggleSidebar()">
+    </div>
 
     <button class="menu-toggle-legal" (click)="toggleSidebar()" aria-label="Abrir menú legal">
       <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 16 16">
@@ -21,11 +20,9 @@
         <ul>
           @for (section of sections; track section.id) {
             <li>
-
-              href="#"
-              [class.active]="active.id === section.id"
-              (click)="$event.preventDefault(); select(section)"
-              >{{ section.title }}
+              <button class="sidebar-btn" [class.active]="active.id === section.id" (click)="select(section)">
+                {{ section.title }}
+              </button>
             </li>
           }
         </ul>

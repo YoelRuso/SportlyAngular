@@ -37,9 +37,14 @@
   margin-bottom: 0.5rem;
 }
 
-.legal-sidebar a {
+/* ── Botón sidebar ── */
+.sidebar-btn {
   display: block;
-  text-decoration: none;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
   color: var(--text-1);
   font-size: 0.9rem;
   font-weight: 600;
@@ -49,13 +54,13 @@
   transition: color 0.2s, background-color 0.2s, opacity 0.2s;
 }
 
-.legal-sidebar a:hover {
+.sidebar-btn:hover {
   color: var(--accent);
   background-color: rgba(60, 247, 177, 0.08);
   opacity: 1;
 }
 
-.legal-sidebar a.active {
+.sidebar-btn.active {
   color: var(--accent);
   background-color: rgba(60, 247, 177, 0.12);
   opacity: 1;
@@ -96,7 +101,6 @@
 .legal-content::-webkit-scrollbar-thumb {
   background-color: var(--accent);
   border-radius: 10px;
-  opacity: 0.5;
 }
 
 /* ── Elementos móvil (ocultos en desktop) ── */
