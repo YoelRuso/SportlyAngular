@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
+import { SidebarComponent } from '../../components/sidebar/sidebar';
 
 interface LegalSection {
   id: string;
@@ -57,7 +58,7 @@ const LEGAL_DATA: LegalSection[] = [
 
 @Component({
   selector: 'app-legal-page',
-  imports: [CommonModule, Header, Footer],
+  imports: [CommonModule, Header, Footer, SidebarComponent],
   templateUrl: './legal-page.html',
   styleUrl: './legal-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

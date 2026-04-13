@@ -11,62 +11,6 @@
   position: relative;
 }
 
-/* ── Sidebar ── */
-.legal-sidebar {
-  width: 260px;
-  flex-shrink: 0;
-  background: linear-gradient(180deg, #0f1622 0%, #0c121c 100%);
-  border-right: 1px solid var(--border);
-  padding: 2.5rem 1.5rem;
-}
-
-.legal-sidebar h2 {
-  color: var(--accent);
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-}
-
-.legal-sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.legal-sidebar li {
-  margin-bottom: 0.5rem;
-}
-
-/* ── Botón sidebar ── */
-.sidebar-btn {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--text-1);
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 0.45rem 0.7rem;
-  border-radius: 8px;
-  opacity: 0.65;
-  transition: color 0.2s, background-color 0.2s, opacity 0.2s;
-}
-
-.sidebar-btn:hover {
-  color: var(--accent);
-  background-color: rgba(60, 247, 177, 0.08);
-  opacity: 1;
-}
-
-.sidebar-btn.active {
-  color: var(--accent);
-  background-color: rgba(60, 247, 177, 0.12);
-  opacity: 1;
-  font-weight: 700;
-}
-
 /* ── Contenido ── */
 .legal-content {
   flex: 1;
@@ -96,29 +40,18 @@
   margin-bottom: 1.1rem;
 }
 
-/* Scrollbar */
-.legal-content::-webkit-scrollbar { width: 6px; }
+/* ── Scrollbar ── */
+.legal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
 .legal-content::-webkit-scrollbar-thumb {
   background-color: var(--accent);
   border-radius: 10px;
 }
 
-/* ── Elementos móvil (ocultos en desktop) ── */
-.menu-toggle-legal {
-  display: none;
-}
-
-.sidebar-overlay {
-  display: none;
-}
-
 /* ── Tablet ≤ 834px ── */
 @media (max-width: 834px) {
-  .legal-sidebar {
-    width: 200px;
-    padding: 2rem 1rem;
-  }
-
   .legal-content {
     padding: 2rem 1.5rem;
   }
@@ -135,54 +68,6 @@
 
 /* ── Móvil ≤ 430px ── */
 @media (max-width: 430px) {
-  .menu-toggle-legal {
-    display: flex;
-    position: fixed;
-    left: 10px;
-    top: 62px;
-    width: 28px;
-    height: 28px;
-    z-index: 200;
-    color: var(--accent);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-  }
-
-  .legal-sidebar {
-    position: fixed;
-    top: 52px;
-    left: 0;
-    bottom: 0;
-    width: 220px;
-    padding: 2.5rem 1.2rem 2rem;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 150;
-    border-right: 1px solid var(--border);
-    overflow-y: auto;
-  }
-
-  .legal-sidebar--open {
-    transform: translateX(0);
-  }
-
-  .sidebar-overlay {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    z-index: 140;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .sidebar-overlay--open {
-    opacity: 1;
-    pointer-events: all;
-  }
-
   .legal-content {
     padding: 1.5rem 1rem 1.5rem 2.8rem;
   }
