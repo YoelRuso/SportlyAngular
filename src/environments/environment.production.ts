@@ -1,12 +1,14 @@
+import type { FirebaseOptions } from 'firebase/app';
+
+const firebaseConfig = (window as Window & { __firebaseConfig?: FirebaseOptions }).__firebaseConfig;
+
+if (!firebaseConfig?.apiKey || firebaseConfig.apiKey.startsWith('REPLACE_WITH_')) {
+  throw new Error(
+    'Missing Firebase config. Create public/firebase-config.js from public/firebase-config.template.js.'
+  );
+}
+
 export const environment = {
   production: true,
-  firebase: {
-    apiKey: 'AIzaSyDcgIPTL0b6bol7VNnlX9o3u_NOqUwSDuc',
-    authDomain: 'sportlyangular.firebaseapp.com',
-    projectId: 'sportlyangular',
-    storageBucket: 'sportlyangular.firebasestorage.app',
-    messagingSenderId: '1097527919388',
-    appId: '1:1097527919388:web:a8334d8c4f6f5748cbf0d9',
-    measurementId: 'G-DBKWBL4J06',
-  },
+  firebase: firebaseConfig,
 };
