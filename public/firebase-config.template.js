@@ -1,9 +1,9 @@
 window.__firebaseConfig = {
-  apiKey: 'REPLACE_WITH_YOUR_FIREBASE_API_KEY',
-  authDomain: 'REPLACE_WITH_YOUR_FIREBASE_AUTH_DOMAIN',
-  projectId: 'REPLACE_WITH_YOUR_FIREBASE_PROJECT_ID',
-  storageBucket: 'REPLACE_WITH_YOUR_FIREBASE_STORAGE_BUCKET',
-  messagingSenderId: 'REPLACE_WITH_YOUR_FIREBASE_MESSAGING_SENDER_ID',
-  appId: 'REPLACE_WITH_YOUR_FIREBASE_APP_ID',
-  measurementId: 'REPLACE_WITH_YOUR_FIREBASE_MEASUREMENT_ID',
+  apiKey: "AIzaSyDcgIPTL0b6bol7VNnlX9o3u_NOqUwSDuc",
+  authDomain: "sportlyangular.firebaseapp.com",
+  projectId: "sportlyangular",
+  storageBucket: "sportlyangular.firebasestorage.app",
+  messagingSenderId: "1097527919388",
+  appId: "1:1097527919388:web:a8334d8c4f6f5748cbf0d9",
+  measurementId: "G-DBKWBL4J06"
 };
