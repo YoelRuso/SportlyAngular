@@ -1,19 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Authentication } from '../../services/authentication'
 import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-login',
   imports: [FormsModule],
-  templateUrl: './login.html',
-  styleUrl: './login.css',
+  templateUrl: './login-page.html',
+  styleUrl: './login-page.css',
 })
-export class Login {
-  constructor(private auth: Authentication) {}
-
-  ngOnInit() {
-    this.userEmail = this.auth.getCurrentUser()?.email;
-  }
+export default class LoginPage {
+  auth = inject(Authentication);
 
   password: string = '';
   email: string = '';
@@ -36,7 +32,7 @@ export class Login {
       console.log("EmailToken " + this.auth.getCurrentUser()?.uid);
     }
     catch (err: any) {
-      this.error = err.message || 'login failed :(';
+      this.error = err.message || 'no puede entrar';
     }
     finally {
       console.log("Loginprocess over");

@@ -27,4 +27,8 @@ export const routes: Routes = [
     path: 'contact',
     loadComponent: () => import('./sports/pages/contact-page/contact-page'),
   },
+  {
+    path: 'login',
+    loadComponent: () => import('./sports/pages/login-page/login-page'),
+  },
 ];
