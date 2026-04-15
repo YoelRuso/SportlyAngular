@@ -1,0 +1,24 @@
+<div class="dashboard">
+    <!-- PANEL IZQUIERDO -->
+    <div class="profile-section">
+        <div class="title-with-btn-back" id="perfil-title-with-btn-back">
+        <h2>Ver Perfil</h2>
+        <a  class="btn-back-home" id="perfil-btn-back">← Volver a Inicio</a>
+        <a  class="btn-back-home" id="mobile-btn-back">←</a>
+        </div>
+        <div class="user-info">
+        <p><strong>Email: </strong> <span id="email">{{ email }}</span></p>
+        <p><strong>ID: </strong> <span id="userID">{{ userUUID }}</span></p>
+        </div>
+    </div>
+
+    <!-- PANEL DERECHO -->
+    <div class="favorites-section">
+        <div class="title-with-btn-back">
+        <h2>Partidos Favoritos</h2>
+        <a  class="btn-back-home" id="partidos-btn-back">← Volver a Inicio</a>
+        </div>
+
+        <div class="match-list" id="match-list"></div>
+    </div>
+</div>

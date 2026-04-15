@@ -1,0 +1,291 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General */
+h2 {
+    color: #00ffaa;
+    font-size: 28px;
+    margin-bottom: 0;
+}
+
+/* Body ocupa toda la pantalla */
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    overflow: hidden;
+}
+
+/* Dashboard ocupa toda la pantalla */
+.dashboard {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+/* PANEL IZQUIERDO */
+.profile-section {
+    width: 30%;
+    background-color: #181818;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid #00ffaa;
+}
+
+/* Imagen */
+.profile-image img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 4px solid #00ffaa;
+    object-fit: cover;
+    margin-bottom: 25px;
+}
+
+/* Botón */
+.change-photo {
+    background-color: transparent;
+    border: 2px solid #00ffaa;
+    color: #00ffaa;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 35px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.change-photo:hover {
+    background-color: #00ffaa;
+    color: #121212;
+}
+
+/* Info usuario */
+.user-info {
+    text-align: center;
+    color: #ccc;
+    font-size: 16px;
+    line-height: 2;
+}
+
+.user-info strong {
+    color: #00ffaa;
+}
+
+/* PANEL DERECHO */
+.favorites-section {
+    width: 70%;
+    padding: 60px;
+    overflow-y: auto;
+}
+
+
+/* Lista */
+.match-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Partido */
+.match-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 25px;
+    border: 2px solid #00ffaa;
+    border-radius: 10px;
+    color: #ccc;
+    font-size: 18px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+/* date & time */
+.date {
+    color: #00ffaa;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.match-date + .match-time::before,
+.match-date + .match-league::before,
+.match-time + .match-league::before {
+    content: ' · ';
+}
+
+.match-item:hover {
+    background-color: #00ffaa;
+    color: #121212;
+}
+
+.match-item:hover .date {
+    color: #121212;
+}
+.btn-remove-fav {
+    background: transparent;
+    border: 1px solid #555;
+    color: #555;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remove-fav:hover {
+    border-color: #ff4466;
+    color: #ff4466;
+    transform: scale(1.15);
+}
+
+.btn-remove-fav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Animación de salida al eliminar */
+.match-item.removing {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Título del partido */
+.match-title {
+    flex: 1;
+    margin-right: 16px;
+}
+
+/* Hint de video */
+.match-video-hint {
+    font-size: 13px;
+    color: #00ffaa;
+    margin-right: 12px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.match-item:hover .match-video-hint {
+    opacity: 1;
+}
+
+/* Estado vacío */
+.empty-favorites {
+    color: #aaa;
+    text-align: center;
+    padding: 40px 0;
+    font-size: 18px;
+    line-height: 2;
+}
+
+/* Cargando */
+.loading-favorites {
+    color: #555;
+    text-align: center;
+    padding: 40px 0;
+    font-size: 16px;
+}
+
+/* Header con botón volver */
+.title-with-btn-back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+
+.btn-back-home {
+    background-color: transparent;
+    border: 2px solid #00ffaa;
+    color: #00ffaa;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+#perfil-btn-back {
+    display: none;
+}
+
+#perfil-title-with-btn-back {
+    justify-content: center;
+}
+
+#mobile-btn-back {
+    display: none;
+}
+
+.btn-back-home:hover {
+    background-color: #00ffaa;
+    color: #121212;
+}
+
+/* TABLET ≤ 834px */
+
+@media (max-width: 834px) {
+    .dashboard {
+        flex-direction: column;
+        align-items: center;
+    }
+    .profile-section {
+         width: 85%;
+        padding: 40px;
+        border-right: 0;
+        border-bottom: 2px solid #00ffaa;
+     }
+    .favorites-section {
+        width: 100%;
+    }
+    #perfil-btn-back {
+        display: flex;
+    }
+    #partidos-btn-back {
+        display: none;
+    }
+    #perfil-title-with-btn-back {
+        justify-content: space-between;
+    }
+}
+
+
+@media (max-width: 665px) {
+    .match-item {
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 200px;
+    }
+    .match-separator {
+        display: none;
+    }
+}
+
+
+/* MOBILE ≤ 430px */
+
+@media (max-width: 430px) {
+    #mobile-btn-back {
+        display: flex;
+    }
+    #perfil-btn-back {
+        display: none;
+    }
+}

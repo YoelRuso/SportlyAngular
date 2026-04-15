@@ -31,4 +31,8 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./sports/pages/login-page/login-page'),
   },
+  {
+    path: 'profile',
+    loadComponent: () => import('./sports/pages/profile-page/profile-page'),
+  },
 ];

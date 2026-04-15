@@ -1,24 +1,24 @@
 import { Component, inject } from '@angular/core';
 import { Authentication } from '../../services/authentication'
 import { FormsModule } from '@angular/forms'
+import { Router, RouterLink, RouterLinkActive } from '@angular/router'
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css',
 })
 export default class LoginPage {
   auth = inject(Authentication);
+  router = inject(Router);
 
   password: string = '';
   email: string = '';
   error: string = '';
   loading: boolean = false;
 
-  userEmail: string | null | undefined = '';
-
-
+  // User Pressed Login button
   async onLogin() {
       console.log("Loginprocess started");
     this.error = '';
@@ -26,10 +26,8 @@ export default class LoginPage {
 
     try {
       this.auth.login(this.email, this.password);
-      console.log("Succesfully logged in Mr.");
-      console.log("Email " + this.auth.getCurrentUser()?.email);
-      this.userEmail = this.auth.getCurrentUser()?.email;
-      console.log("EmailToken " + this.auth.getCurrentUser()?.uid);
+      console.log("Succesfully logged in");
+      this.router.navigate(['/profile']);
     }
     catch (err: any) {
       this.error = err.message || 'no puede entrar';
