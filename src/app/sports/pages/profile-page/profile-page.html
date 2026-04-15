@@ -19,6 +19,28 @@
         <a  class="btn-back-home" id="partidos-btn-back">← Volver a Inicio</a>
         </div>
 
-        <div class="match-list" id="match-list"></div>
+        <div class="match-list" id="match-list">
+            
+            @for (sport of sports(); track sport.idEvent) {
+                <div class="match-item">
+                    <!-- <span class="match-title">${title}</span>
+                    ${dateParts}
+                    ${videoUrl ? '<span class="match-video-hint">▶ Ver video</span>' : ''}
+                    <button class="btn-remove-fav" aria-label="Eliminar de favoritos" title="Quitar de favoritos">✕</button> -->
+                    <span class="match-title">{{
+                        sport.strHomeTeam && sport.strAwayTeam ?
+                        sport.strHomeTeam + ' vs ' + sport.strAwayTeam :
+                        sport.strEvent || 'Evento deportivo'}}
+                    </span>
+                    <span class="date match-date">{{ sport.dateEvent }}</span>
+                    <span class="date match-separator"> · </span>
+                    <span class="date match-time">{{sport.strTimeLocal}}</span>
+                    <span class="date match-separator"> · </span>
+                    <span class="date match-league">{{sport.strLeague}}</span>
+                    <span class="match-video-hint">▶ Ver video</span>
+                    <button class="btn-remove-fav" aria-label="Eliminar de favoritos" title="Quitar de favoritos">✕</button>
+                </div>
+            }
+        </div>
     </div>
 </div>
