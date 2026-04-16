@@ -16,5 +16,5 @@ export default class ProfilePage {
   email = this.auth.getCurrentUser()?.email;
   userUUID = this.auth.getCurrentUser()?.uid;
 
-  sports = this.favoriteSportsService.favoriteSports;
+  sports = this.favoriteSportsService.favoriteSportEvents;
 }
