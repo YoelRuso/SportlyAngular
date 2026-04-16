@@ -5,11 +5,16 @@
     box-sizing: border-box;
 }
 
+
 /* General */
 h2 {
     color: #00ffaa;
     font-size: 28px;
     margin-bottom: 0;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* Body ocupa toda la pantalla */
