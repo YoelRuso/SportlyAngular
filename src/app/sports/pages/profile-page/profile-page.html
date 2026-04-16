@@ -3,8 +3,8 @@
     <div class="profile-section">
         <div class="title-with-btn-back" id="perfil-title-with-btn-back">
         <h2>Ver Perfil</h2>
-        <a  class="btn-back-home" id="perfil-btn-back">← Volver a Inicio</a>
-        <a  class="btn-back-home" id="mobile-btn-back">←</a>
+        <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="perfil-btn-back">← Volver a Inicio</a>
+        <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="mobile-btn-back">←</a>
         </div>
         <div class="user-info">
         <p><strong>Email: </strong> <span id="email">{{ email }}</span></p>
@@ -16,7 +16,7 @@
     <div class="favorites-section">
         <div class="title-with-btn-back">
         <h2>Partidos Favoritos</h2>
-        <a  class="btn-back-home" id="partidos-btn-back">← Volver a Inicio</a>
+        <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="partidos-btn-back">← Volver a Inicio</a>
         </div>
 
         <div class="match-list" id="match-list">
@@ -38,7 +38,7 @@
                     @if (sport.strVideo) {
                         <a [href]="sport.strVideo"><span class="match-video-hint">▶ Ver video</span></a>
                     }
-                    <button class="btn-remove-fav" aria-label="Eliminar de favoritos" title="Quitar de favoritos">✕</button>
+                    <button (click)="favoriteSportsService.deleteFavoriteSport(sport.idEvent!)" class="btn-remove-fav" aria-label="Eliminar de favoritos" title="Quitar de favoritos">✕</button>
                 </div>
             }
         </div>
