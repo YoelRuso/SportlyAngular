@@ -20,7 +20,6 @@ export default class LoginPage {
 
   // User Pressed Login button
   async onLogin() {
-      console.log("Loginprocess started");
     this.error = '';
     this.loading = true;
 
@@ -33,7 +32,6 @@ export default class LoginPage {
       this.error = err.message || 'no puede entrar';
     }
     finally {
-      console.log("Loginprocess over");
       this.loading = false;
     }
   }
