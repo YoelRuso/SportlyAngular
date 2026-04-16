@@ -30,6 +30,10 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./sports/pages/login-page/login-page'),
+  },,
+  {
+    path: 'registration',
+    loadComponent: () => import('./sports/pages/registration-page/registration-page'),
   },
   {
     path: 'profile',
