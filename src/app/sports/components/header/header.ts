@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule, AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Authentication } from '../../services/authentication';
-import { Observable, of } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -14,18 +15,10 @@ export class Header {
   router = inject(Router);
   auth = inject(Authentication);
   mobileMenuOpen = false;
-  isLoggedIn$: Observable<boolean> = of(false);
-
-  toggleAuth() {
-    // Implementar lógica de login
-  }
-
-  logout() {
-    // Implementar lógica de logout
-  }
-
+  
+  isLoggedIn = toSignal(this.auth.user$, {initialValue: null});
+  
   handleAvatarClick() {
-    // Implementar lógica de clic en avatar
     if (this.auth.getCurrentUser()) {
       this.router.navigate(['/profile']);
     }
