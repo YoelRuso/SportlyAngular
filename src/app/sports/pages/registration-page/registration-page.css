@@ -10,6 +10,13 @@ input[type="password"].invalid {
     border: 2px solid red;
 }
 
+small.error {
+    display: block;
+    margin-top: 0.5rem;
+    color: #ff6b6b;
+    font-size: 0.82rem;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,12 +24,12 @@ input[type="password"].invalid {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
+.registration-wrapper {
     background-color: #0f0f0f;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100vh; /* mejor que height */
     color: #ffffff;
     padding: 20px;
 }
