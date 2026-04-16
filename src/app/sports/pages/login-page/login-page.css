@@ -57,9 +57,20 @@ input[type="password"] {
     transition: border-color 0.3s;
 }
 
+input.invalid {
+    border-color: #ff6b6b;
+}
+
 input[type="email"]:focus,
 input[type="password"]:focus {
     border-color: #00ff88;
+}
+
+.form-error {
+    color: #ff6b6b;
+    margin-top: 10px;
+    text-align: center;
+    min-height: 20px;
 }
 
 /* OPCIONES (checkbox + link) */

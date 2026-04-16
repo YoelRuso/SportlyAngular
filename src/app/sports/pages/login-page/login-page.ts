@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Authentication } from '../../services/authentication'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, NgForm } from '@angular/forms'
 import { Router, RouterLink, RouterLinkActive } from '@angular/router'
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css',
 })
@@ -18,10 +19,19 @@ export default class LoginPage {
   email: string = '';
   error: string = '';
   loading: boolean = false;
+  submitted: boolean = false;
+
+  emailPattern = '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$';
 
   // User Pressed Login button
-  async onLogin() {
+  async onLogin(form: NgForm) {
+    this.submitted = true;
     this.error = '';
+
+    if (form.invalid) {
+      return;
+    }
+
     this.loading = true;
 
     try {
@@ -32,7 +42,17 @@ export default class LoginPage {
       }
     }
     catch (err: any) {
-      this.error = err.message || 'no puede entrar';
+      const code = err.code || '';
+      const message = err.message || '';
+
+      if (code === 'auth/user-not-found' || message.toLowerCase().includes('user-not-found')) {
+        this.error = 'Usuario no encontrado';
+      } else if (code === 'auth/wrong-password' || message.toLowerCase().includes('wrong-password')) {
+        this.error = 'Contraseña incorrecta';
+      } else {
+        this.error = 'Correo electrónico o contraseña incorrectos';
+      }
+      console.log(message);
     }
     finally {
       this.loading = false;
