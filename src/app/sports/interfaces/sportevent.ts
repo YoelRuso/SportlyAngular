@@ -29,4 +29,6 @@ export interface SportEvent {
   strVenue?: string;
   strCity?: string;
   strCountry?: string;
+
+  strVideo?: string;
 }

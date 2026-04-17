@@ -11,8 +11,11 @@
     </nav>
 
     <div class="header-actions">
-      <button class="auth-btn" (click)="toggleAuth()" *ngIf="!(isLoggedIn$ | async)">Login</button>
-      <button class="auth-btn auth-btn--outline" (click)="logout()" *ngIf="isLoggedIn$ | async">Logout</button>
+    <button class="auth-btn"
+            (click)="isLoggedIn() ? auth.logout() : router.navigate(['/login'])">
+      {{ isLoggedIn() ? 'Logout' : 'Login' }}
+    </button>
+      <!--<button class="auth-btn auth-btn--outline" (click)="logout()" *ngIf="isLoggedIn$ | async">Logout</button>-->
 
       <button class="avatar-btn" (click)="handleAvatarClick()" aria-label="Perfil de usuario">
         <img

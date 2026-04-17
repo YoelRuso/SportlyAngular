@@ -6,7 +6,7 @@ import { HeroBanner } from '../../components/hero-banner/hero-banner';
 
 @Component({
   selector: 'app-resume-page',
-  imports: [Header, Footer, Navbar, HeroBanner],
+  imports: [Header, Footer, Navbar, HeroBanner ],
   templateUrl: './resume-page.html',
   styleUrl: './resume-page.css',
 })
