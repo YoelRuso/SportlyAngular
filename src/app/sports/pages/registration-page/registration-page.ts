@@ -41,22 +41,33 @@ export default class RegistrationPage {
 
     try {
       await this.auth.register(this.email, this.password);
-      console.log("Registration proccessed!");
+      console.log('Registration proccessed!');
       this.router.navigate(['/login']);
-    }
-    catch (err: any) {
+    } catch (err: any) {
       const code = err.code || '';
       const message = err.message || '';
 
-      if (code === 'auth/email-already-in-use' || message.toLowerCase().includes('email-already-in-use')) {
+      if (
+        code === 'auth/email-already-in-use' ||
+        message.toLowerCase().includes('email-already-in-use')
+      ) {
         this.serverEmailError = 'Correo electrónico ya existe';
       } else {
         this.error = message || 'Error durante el registro';
       }
-    }
-    finally {
+    } finally {
       this.loading = false;
       this.cdr.detectChanges();
     }
+  }
+  showPassword = false;
+  showConfirmPassword = false;
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPassword(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 }

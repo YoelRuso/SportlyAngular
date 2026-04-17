@@ -59,4 +59,9 @@ export default class LoginPage {
       this.cdr.detectChanges();
     }
   }
+  showPassword = false;
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
 }
