@@ -2,25 +2,36 @@
   <app-header />
 
   <main class="contact-shell">
-    <div class="contact-box">
-      <h1>Contáctanos</h1>
-      <p>¿Tienes alguna duda o quieres trabajar con nosotros? Escríbenos o síguenos en nuestras redes.</p>
 
-      <div class="contact-item">
-        <i class="fa-solid fa-envelope"></i>
-        <a href="mailto:correo@gmail.com">correo&#64;gmail.com</a>
+    @if (loading) {
+      <div class="contact-box">
+        <p class="contact-status">Cargando...</p>
       </div>
+    } @else if (error || !contact) {
+      <div class="contact-box">
+        <p class="contact-status">Error al cargar el contenido.</p>
+      </div>
+    } @else {
+      <div class="contact-box">
+        <h1>{{ contact.title }}</h1>
+        <p>{{ contact.description }}</p>
 
-      <div class="contact-item">
-        <i class="fa-brands fa-instagram"></i>
-        <a href="https://instagram.com/" target="_blank" rel="noopener">&#64;tuinstagram</a>
-      </div>
+        @for (item of contact.items; track item.value) {
+          <div class="contact-item">
+            <i [class]="item.icon"></i>
+            @if (item.type === 'text') {
+              <span>{{ item.value }}</span>
+            } @else {
+              <a [href]="item.href"
+                 [attr.target]="item.type === 'link' ? '_blank' : null"
+                 rel="noopener">{{ item.value }}</a>
+            }
+          </div>
+        }
 
-      <div class="contact-item">
-        <i class="fa-solid fa-phone"></i>
-        <span>+34 600 123 456</span>
       </div>
-    </div>
+    }
+
   </main>
 
   <app-footer />

@@ -79,6 +79,12 @@
 .contact-item:hover span {
   color: #08130f;
 }
+.contact-status {
+  color: var(--text-1);
+  opacity: 0.5;
+  text-align: center;
+  font-size: 0.9rem;
+}
 
 /* ── Responsive ── */
 @media (max-width: 834px) {
