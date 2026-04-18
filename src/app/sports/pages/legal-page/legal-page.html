@@ -20,7 +20,7 @@
         <ul>
           @for (section of sections; track section.id) {
             <li>
-              <button class="sidebar-btn" [class.active]="active.id === section.id" (click)="select(section)">
+              <button class="sidebar-btn" [class.active]="active?.id === section.id" (click)="select(section)">
                 {{ section.title }}
               </button>
             </li>
@@ -30,8 +30,14 @@
     </aside>
 
     <main class="legal-content">
-      <h1>{{ active.title }}</h1>
-      <div class="legal-text" [innerHTML]="active.content"></div>
+      @if (loading) {
+        <p class="legal-status">Cargando...</p>
+      } @else if (error) {
+        <p class="legal-status">Error al cargar el contenido.</p>
+      } @else if (active) {
+        <h1>{{ active.title }}</h1>
+        <div class="legal-text" [innerHTML]="active.content"></div>
+      }
     </main>
 
   </div>

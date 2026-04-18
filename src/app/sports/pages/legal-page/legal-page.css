@@ -111,7 +111,13 @@
 .sidebar-overlay {
   display: none;
 }
-
+.legal-status {
+  color: var(--text-1);
+  opacity: 0.5;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+}
 /* ── Tablet ≤ 834px ── */
 @media (max-width: 834px) {
   .legal-sidebar {
