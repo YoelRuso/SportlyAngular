@@ -32,4 +32,11 @@
   </main>
 
   <app-footer />
+
+  @if (selectedEvent) {
+    <app-match-popup
+      [event]="selectedEvent"
+      (close)="closePopup()"
+    />
+  }
 </div>

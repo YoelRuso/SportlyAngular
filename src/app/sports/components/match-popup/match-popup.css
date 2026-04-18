@@ -1,0 +1,186 @@
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.popup-container {
+  background: #111822;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Header ── */
+.popup-header {
+  position: relative;
+  height: 220px;
+  background: linear-gradient(135deg, #1a2a1a, #2a1a1a);
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--accent);
+  color: #08130f;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+}
+
+.popup-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.popup-close:hover {
+  background: rgba(60, 247, 177, 0.3);
+}
+
+.popup-logos {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.popup-team-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+
+.popup-vs {
+  color: rgba(255,255,255,0.7);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+/* ── Body ── */
+.popup-body {
+  padding: 1.75rem 2rem;
+}
+
+.popup-title {
+  color: var(--text-1);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.popup-subtitle {
+  color: var(--text-1);
+  opacity: 0.5;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.popup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.popup-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.popup-label {
+  color: var(--text-1);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.popup-field span:last-child {
+  color: var(--text-1);
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
+.popup-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #08130f;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.popup-btn:hover {
+  opacity: 0.85;
+}
+
+/* ── Scrollbar ── */
+.popup-container::-webkit-scrollbar { width: 6px; }
+.popup-container::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .popup-header { height: 160px; }
+  .popup-team-logo { width: 60px; height: 60px; }
+  .popup-body { padding: 1.25rem; }
+  .popup-grid { grid-template-columns: 1fr; }
+  .popup-title { font-size: 1.1rem; }
+}

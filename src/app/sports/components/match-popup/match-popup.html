@@ -1,0 +1,66 @@
+<div class="popup-overlay" (click)="onOverlayClick($event)">
+  <div class="popup-container" role="dialog" aria-modal="true">
+
+    <!-- Imagen de cabecera -->
+    <div class="popup-header" [style.background-image]="image ? 'url(' + image + ')' : 'none'">
+      <span class="popup-badge">{{ badge }}</span>
+      <button class="popup-close" (click)="close.emit()" aria-label="Cerrar">✕</button>
+
+      @if (isSoccer && event?.strHomeTeamBadge && event?.strAwayTeamBadge) {
+        <div class="popup-logos">
+          <img [src]="event.strHomeTeamBadge" [alt]="event.strHomeTeam" class="popup-team-logo" />
+          <span class="popup-vs">VS</span>
+          <img [src]="event.strAwayTeamBadge" [alt]="event.strAwayTeam" class="popup-team-logo" />
+        </div>
+      }
+    </div>
+
+    <!-- Contenido -->
+    <div class="popup-body">
+      <h2 class="popup-title">{{ title }}</h2>
+      <p class="popup-subtitle">Consulta todos los detalles de este evento deportivo.</p>
+
+      <div class="popup-grid">
+        <div class="popup-field">
+          <span class="popup-label">Fecha:</span>
+          <span>{{ date }}</span>
+        </div>
+        <div class="popup-field">
+          <span class="popup-label">Hora:</span>
+          <span>{{ time }}</span>
+        </div>
+        <div class="popup-field">
+          <span class="popup-label">Competición:</span>
+          <span>{{ event?.strLeague || 'Por confirmar' }}</span>
+        </div>
+        <div class="popup-field">
+          <span class="popup-label">Estado:</span>
+          <span>{{ event?.strStatus || 'Por confirmar' }}</span>
+        </div>
+        <div class="popup-field">
+          <span class="popup-label">Marcador:</span>
+          <span>{{ score }}</span>
+        </div>
+        <div class="popup-field">
+          <span class="popup-label">Estadio/Circuito:</span>
+          <span>{{ event?.strVenue || 'Por confirmar' }}</span>
+        </div>
+        <div class="popup-field">
+          <span class="popup-label">Ronda:</span>
+          <span>{{ event?.intRound ? 'Jornada/Ronda ' + event.intRound : 'Por confirmar' }}</span>
+        </div>
+        <div class="popup-field">
+          <span class="popup-label">Ciudad/País:</span>
+          <span>{{ event?.strCountry || 'Por confirmar' }}</span>
+        </div>
+      </div>
+
+      @if (event?.strVideo) {
+        <a [href]="event.strVideo" target="_blank" rel="noopener" class="popup-btn">
+          Ver mejores jugadas
+        </a>
+      }
+    </div>
+
+  </div>
+</div>

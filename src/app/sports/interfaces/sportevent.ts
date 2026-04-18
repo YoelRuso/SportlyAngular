@@ -1,7 +1,7 @@
 export interface SportEvent {
   idEvent?: string;
   strSport?: string;
-
+  strStatus?: string;
   strEvent?: string;
   strHomeTeam?: string;
   strAwayTeam?: string;
