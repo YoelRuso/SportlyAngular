@@ -20,6 +20,8 @@ export default class LoginPage {
   error: string = '';
   loading: boolean = false;
   submitted: boolean = false;
+  rememberMe: boolean = false;
+  showPassword = false;
 
   emailPattern = '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$';
 
@@ -36,6 +38,12 @@ export default class LoginPage {
 
     try {
       await this.auth.login(this.email, this.password);
+      // Guardar email si recordarme está activo
+      if (this.rememberMe) {
+        localStorage.setItem('sportly_remember_email', this.email);
+      } else {
+        localStorage.removeItem('sportly_remember_email');
+      }
       // navigate to profile when user exists
       if (this.auth.getCurrentUser()) {
         this.router.navigate(['/profile']);
@@ -59,9 +67,16 @@ export default class LoginPage {
       this.cdr.detectChanges();
     }
   }
-  showPassword = false;
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
+  }
+
+  ngOnInit() {
+    const remembered = localStorage.getItem('sportly_remember_email');
+    if (remembered) {
+      this.email = remembered;
+      this.rememberMe = true;
+    }
   }
 }
