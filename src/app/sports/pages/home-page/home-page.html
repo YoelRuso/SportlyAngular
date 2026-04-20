@@ -20,13 +20,43 @@
           } @empty {
             <div class="col-12">
               @if (hasLoadError) {
-                <p class="text-center text-secondary m-0">No se pudo conectar con json-server en http://localhost:3000.</p>
+                <p class="text-center text-secondary m-0">No se pudo conectar con Firebase.</p>
               } @else {
                 <p class="text-center text-secondary m-0">No hay eventos disponibles.</p>
               }
             </div>
           }
         </div>
+
+        @if (totalPages > 1) {
+          <nav class="pagination-nav" aria-label="Paginación">
+            <button
+              class="page-btn"
+              [class.disabled]="currentPage === 1"
+              (click)="goToPage(currentPage - 1)"
+              aria-label="Página anterior"
+            >&lt;</button>
+
+            @for (page of compactPages; track page ?? $index) {
+              @if (page === null) {
+                <span class="page-ellipsis">...</span>
+              } @else {
+                <button
+                  class="page-btn"
+                  [class.active]="page === currentPage"
+                  (click)="goToPage(page)"
+                >{{ page }}</button>
+              }
+            }
+
+            <button
+              class="page-btn"
+              [class.disabled]="currentPage === totalPages"
+              (click)="goToPage(currentPage + 1)"
+              aria-label="Página siguiente"
+            >&gt;</button>
+          </nav>
+        }
       </div>
     </section>
   </main>

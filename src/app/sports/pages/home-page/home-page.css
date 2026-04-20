@@ -21,7 +21,44 @@
 .home-grid app-navbar {
   display: block;
 }
+.pagination-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.5rem 0 0.5rem;
+}
 
+.page-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-1);
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.page-btn:hover:not(.disabled):not(.active) {
+  background: rgba(60, 247, 177, 0.08);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.page-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #08130f;
+}
+
+.page-btn.disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
 @media (max-width: 768px) {
   .home-shell {
     padding: 0.9rem;

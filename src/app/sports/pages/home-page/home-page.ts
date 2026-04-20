@@ -17,6 +17,8 @@ import { MatchPopup } from '../../components/match-popup/match-popup';
 
 type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
 
+const PAGE_SIZE = 9;
+
 @Component({
   selector: 'app-home-page',
   imports: [Header, HeroBanner, Navbar, CardInit, Footer, MatchPopup],
@@ -25,10 +27,46 @@ type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class HomePage implements OnInit {
+  allEvents: SportEvent[] = [];
+  fullEvents: SportEvent[] = [];
   events: SportEvent[] = [];
   favoriteIds = new Set<string>();
   hasLoadError = false;
   selectedEvent: SportEvent | null = null;
+
+  currentPage = 1;
+  pageSize = PAGE_SIZE;
+
+  get totalPages(): number {
+    return Math.ceil(this.allEvents.length / this.pageSize);
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  get compactPages(): (number | null)[] {
+    const total = this.totalPages;
+    const current = this.currentPage;
+    const delta = 2; // cantidad de páginas alrededor de la actual
+    const range: (number | null)[] = [];
+    let l: number;
+
+    for (let i = 1; i <= total; i++) {
+      if (
+        i === 1 ||
+        i === total ||
+        (i >= current - delta && i <= current + delta)
+      ) {
+        range.push(i);
+      } else if (
+        range.length && range[range.length - 1] !== null
+      ) {
+        range.push(null);
+      }
+    }
+    return range;
+  }
 
   constructor(
     private favoriteSportsService: FavoriteSports,
@@ -38,13 +76,20 @@ export default class HomePage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadEvents('all');
+    this.loadAllEvents();
     this.favoriteIds = new Set(
       this.favoriteSportsService
         .favoriteSportIds()
         .map((sport) => sport.idEvent)
         .filter((id): id is string => id !== undefined),
     );
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.applyPage();
+    this.cdr.markForCheck();
   }
 
   openMatchPopup(event: SportEvent): void {
@@ -79,6 +124,11 @@ export default class HomePage implements OnInit {
     }
   }
 
+  private applyPage(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.events = this.allEvents.slice(start, start + this.pageSize);
+  }
+
   private normalizeSport(value: string): SportKey {
     if (value === 'soccer' || value === 'basketball' || value === 'tennis' || value === 'f1') {
       return value;
@@ -87,14 +137,36 @@ export default class HomePage implements OnInit {
   }
 
   private loadEvents(sport: SportKey): void {
-    this.sportsData.getEventsBySport(sport).subscribe({
+    let filtered = this.fullEvents;
+    if (sport !== 'all') {
+      const label = this.getSportLabel(sport);
+      filtered = this.fullEvents.filter(e => e.strSport === label);
+    }
+    this.allEvents = filtered;
+    this.currentPage = 1;
+    this.applyPage();
+    this.hasLoadError = false;
+    this.cdr.markForCheck();
+  }
+
+  private getSportLabel(sport: Exclude<SportKey, 'all'>): string {
+    const labels = { soccer: 'Soccer', basketball: 'Basketball', tennis: 'Tennis', f1: 'F1' };
+    return labels[sport];
+  }
+
+  private loadAllEvents(): void {
+    this.sportsData.getAllEvents().subscribe({
       next: (events) => {
-        this.events = events;
+        this.allEvents = events;
+        this.fullEvents = events; // Store all loaded events
+        this.currentPage = 1;
+        this.applyPage();
         this.hasLoadError = false;
         this.cdr.markForCheck();
       },
       error: (error: unknown) => {
-        console.error('Error cargando eventos desde Firebase:', error);
+        console.error('Error cargando todos los eventos desde Firebase:', error);
+        this.allEvents = [];
         this.events = [];
         this.hasLoadError = true;
         this.cdr.markForCheck();
