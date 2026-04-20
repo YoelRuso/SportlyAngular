@@ -4,10 +4,39 @@
   <main class="resume-shell">
     <section class="resume-grid" aria-label="Resumen deportivo">
       <app-hero-banner />
-      <app-navbar />
+      <app-navbar (sportSelected)="onFilterChange($event)" />
 
-      <div class="container-fluid py-4">
-        <!-- contenido -->
+      <div class="resume-content">
+        <header class="resume-content-header">
+          <h2>Resumen de noticias</h2>
+          <p>Actualidad de futbol, baloncesto, tenis y F1.</p>
+        </header>
+
+        @if (isLoading) {
+          <div class="resume-state">
+            <p>Cargando noticias...</p>
+          </div>
+        } @else if (errorMessage) {
+          <div class="resume-state resume-state-error">
+            <p>{{ errorMessage }}</p>
+          </div>
+        } @else if (isEmptyState) {
+          <div class="resume-state">
+            <p>No se encontraron noticias para este filtro.</p>
+          </div>
+        } @else {
+          <div class="resume-cards">
+            @for (article of paginatedNews; track article.id) {
+              <app-card-summary [article]="article" />
+            }
+          </div>
+
+          <app-resume-pagination
+            [currentPage]="currentPage"
+            [totalPages]="totalPages"
+            (pageChange)="onPageChange($event)"
+          />
+        }
       </div>
     </section>
   </main>

@@ -1,1 +1,30 @@
-<p>card-summary works!</p>
+<article class="news-card">
+  <div class="news-image-container">
+	<img
+	  class="news-image"
+	  [src]="article.image || fallbackImage"
+	  [alt]="article.title"
+	  loading="lazy"
+	  (error)="onImageError($event)"
+	/>
+  </div>
+
+  <div class="news-body">
+	<div class="news-meta">
+	  <span class="news-category">{{ metaLabel }}</span>
+	  <span class="news-date">{{ formattedDate }}</span>
+	</div>
+
+	<h2 class="news-title">{{ article.title || 'Sin titular' }}</h2>
+	<p class="news-excerpt">{{ article.description || 'Sin descripcion disponible.' }}</p>
+
+	<a
+	  class="news-read-more"
+	  [href]="article.url || '#'"
+	  target="_blank"
+	  rel="noopener noreferrer"
+	>
+	  Leer mas ->
+	</a>
+  </div>
+</article>

@@ -15,6 +15,46 @@
 .resume-grid app-navbar {
   display: block;
 }
+
+.resume-content {
+  padding: 1.3rem;
+}
+
+.resume-content-header {
+  margin-bottom: 1rem;
+}
+
+.resume-content-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.resume-content-header p {
+  margin: 0.35rem 0 0;
+  color: var(--text-2);
+}
+
+.resume-cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.resume-state {
+  min-height: 200px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px dashed #304152;
+  color: var(--text-2);
+  background: #0f1824;
+}
+
+.resume-state-error {
+  border-color: #8c3f3f;
+  color: #ffb5b5;
+}
+
 .resume-wrapper {
   display: flex;
   flex-direction: column;
@@ -28,5 +68,15 @@
 @media (max-width: 768px) {
   .resume-shell {
     padding: 0.9rem;
+  }
+
+  .resume-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .resume-cards {
+    grid-template-columns: 1fr;
   }
 }

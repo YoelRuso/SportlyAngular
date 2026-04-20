@@ -1,0 +1,39 @@
+@if (totalPages > 1) {
+  <nav class="pagination-nav" aria-label="Paginacion de noticias">
+    <button
+      type="button"
+      class="page-button"
+      [disabled]="currentPage === 1"
+      (click)="previousPage()"
+      aria-label="Pagina anterior"
+    >
+      <
+    </button>
+
+    @for (page of compactPages; track page ?? $index) {
+      @if (page === null) {
+        <span class="page-ellipsis">...</span>
+      } @else {
+        <button
+          type="button"
+          class="page-button"
+          [class.active]="currentPage === page"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+      }
+    }
+
+    <button
+      type="button"
+      class="page-button"
+      [disabled]="currentPage === totalPages"
+      (click)="nextPage()"
+      aria-label="Pagina siguiente"
+    >
+      >
+    </button>
+  </nav>
+}
+
