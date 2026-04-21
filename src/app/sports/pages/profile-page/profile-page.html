@@ -1,46 +1,56 @@
-<div class="dashboard">
+<div class="profile-wrapper">
+  <div class="dashboard">
     <!-- PANEL IZQUIERDO -->
     <div class="profile-section">
-        <div class="title-with-btn-back" id="perfil-title-with-btn-back">
+      <div class="title-with-btn-back" id="perfil-title-with-btn-back">
         <h2>Ver Perfil</h2>
-        <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="perfil-btn-back">← Volver a Inicio</a>
+        <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="perfil-btn-back">← Volver</a>
         <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="mobile-btn-back">←</a>
-        </div>
-        <div class="user-info">
-        <p><strong>Email: </strong> <span id="email">{{ email }}</span></p>
-        <p><strong>ID: </strong> <span id="userID">{{ userUUID }}</span></p>
-        </div>
+      </div>
+      <div class="user-info">
+        <p><strong>Email: </strong>{{ email }}</p>
+        <p><strong>ID: </strong>{{ userUUID }}</p>
+      </div>
     </div>
 
     <!-- PANEL DERECHO -->
     <div class="favorites-section">
-        <div class="title-with-btn-back">
+      <div class="title-with-btn-back">
         <h2>Partidos Favoritos</h2>
         <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="partidos-btn-back">← Volver a Inicio</a>
-        </div>
+      </div>
 
-        <div class="match-list" id="match-list">
-            
-            @for (sport of sports(); track sport.idEvent) {
-                <div class="match-item">
-                    <span class="match-title">{{
-                        sport.strHomeTeam && sport.strAwayTeam ?
-                        sport.strHomeTeam + ' vs ' + sport.strAwayTeam :
-                        sport.strEvent || 'Evento deportivo'}}
-                    </span>
-                    <span class="date match-date">{{ sport.dateEvent }}</span>
-                    <span class="date match-separator"> · </span>
-                    @if (sport.strTimeLocal) {
-                        <span class="date match-time">{{sport.strTimeLocal}}</span>
-                        <span class="date match-separator"> · </span>
-                    }
-                    <span class="date match-league">{{sport.strLeague}}</span>
-                    @if (sport.strVideo) {
-                        <a [href]="sport.strVideo"><span class="match-video-hint">▶ Ver video</span></a>
-                    }
-                    <button (click)="favoriteSportsService.deleteFavoriteSport(sport.idEvent!)" class="btn-remove-fav" aria-label="Eliminar de favoritos" title="Quitar de favoritos">✕</button>
-                </div>
+      <div class="match-list">
+        @for (sport of sports(); track sport.idEvent) {
+          <div class="match-item">
+            <span class="match-title">{{
+                sport.strHomeTeam && sport.strAwayTeam
+                  ? sport.strHomeTeam + ' vs ' + sport.strAwayTeam
+                  : sport.strEvent || 'Evento deportivo'
+              }}</span>
+            <span class="date match-date">{{ sport.dateEvent }}</span>
+            <span class="match-separator"> · </span>
+            @if (sport.strTimeLocal) {
+              <span class="date match-time">{{ sport.strTimeLocal }}</span>
+              <span class="match-separator"> · </span>
             }
-        </div>
+            <span class="date match-league">{{ sport.strLeague }}</span>
+            @if (sport.strVideo) {
+              <a [href]="sport.strVideo" target="_blank" rel="noopener">
+                <span class="match-video-hint">▶ Ver video</span>
+              </a>
+            }
+            <button
+              (click)="favoriteSportsService.deleteFavoriteSport(sport.idEvent!)"
+              class="btn-remove-fav"
+              aria-label="Eliminar de favoritos"
+              title="Quitar de favoritos"
+            >✕</button>
+          </div>
+        } @empty {
+          <p class="empty-favorites">No tienes partidos favoritos aún.</p>
+        }
+      </div>
     </div>
+  </div>
 </div>

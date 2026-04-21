@@ -36,13 +36,22 @@ export class MatchPopup {
   }
 
   get image(): string {
-    return (
+    const specific =
       this.event?.strThumb ||
       this.event?.strPoster ||
       this.event?.strBanner ||
       this.event?.strSquare ||
-      ''
-    );
+      '';
+
+    if (specific) return specific;
+
+    // Fallback por deporte
+    const key = (this.event?.strSport || '').toLowerCase();
+    if (key === 'soccer') return 'images/soccer.png';
+    if (key === 'basketball' || key === 'basket') return 'images/basketball.png';
+    if (key === 'tennis' || key === 'tenis') return 'images/tenis.png';
+    if (key === 'motorsport' || key === 'f1') return 'images/f1.png';
+    return '';
   }
 
   get date(): string {

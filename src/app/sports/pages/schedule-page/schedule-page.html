@@ -43,7 +43,7 @@
                       <div class="day-number">{{ day }}</div>
                       <div class="matches">
                         @for (ev of eventsForDay(day).slice(0, 2); track $index) {
-                          <div>{{ ev.sportLabel }} {{ ev.label }}</div>
+                          <div class="match-dot" [attr.title]="ev.sportLabel + ' ' + ev.label">{{ ev.sportLabel }} {{ ev.label }}</div>
                         }
                         @if (eventsForDay(day).length > 2) {
                           <div class="matches-more">+{{ eventsForDay(day).length - 2 }} más</div>
