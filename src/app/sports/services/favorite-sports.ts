@@ -131,23 +131,6 @@ export class FavoriteSports {
     }
   }
 
-  async syncFavoriteSports(idEvents: string[]): Promise<void> {
-    const user = this.userSignal();
-    if (!user) {
-      console.error('No user logged in');
-      return;
-    }
-
-    const uniqueIds = Array.from(new Set(idEvents.filter((id) => id)));
-    const batch = writeBatch(this.firestore);
-    uniqueIds.forEach((idEvent) => {
-      const ref = doc(this.firestore, 'partidas-favoritas', this.favoriteDocId(user.uid, idEvent));
-      batch.set(ref, { idEvent, userID: user.uid }, { merge: true });
-    });
-
-    await batch.commit();
-    this.favoriteSportIdsSignal.set(uniqueIds.map((idEvent) => ({ idEvent, userID: user.uid })));
-  }
 
   private favoriteDocId(userId: string, idEvent: string): string {
     return `${userId}_${idEvent}`;
