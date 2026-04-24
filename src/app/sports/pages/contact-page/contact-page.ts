@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Firestore, doc, getDoc } from 'firebase/firestore';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 
