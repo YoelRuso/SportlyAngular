@@ -21,24 +21,6 @@ export class SportsData {
   };
   private readonly cache = new Map<string, { expiresAt: number; stream: Observable<SportEvent[]> }>();
 
-  getEventsBySport(sport: SportKey): Observable<SportEvent[]> {
-    if (sport === 'all') {
-      return this.cachedQuery('events:all:cards', () => {
-        const perSportLimit = Math.max(3, Math.ceil(this.cardLimit / Object.keys(this.sportConfig).length));
-        return forkJoin([
-          this.getCollection('soccer', 'Soccer', perSportLimit),
-          this.getCollection('basket', 'Basketball', perSportLimit),
-          this.getCollection('tenis', 'Tennis', perSportLimit),
-          this.getCollection('f1', 'F1', perSportLimit),
-        ]).pipe(map(([soccer, basket, tenis, f1]) => [...soccer, ...basket, ...tenis, ...f1].slice(0, this.cardLimit)));
-      });
-    }
-
-    const { endpoint, label } = this.sportConfig[sport];
-    return this.cachedQuery(`events:${sport}:cards`, () =>
-      this.getCollection(endpoint, label, this.cardLimit).pipe(map((events) => events.slice(0, this.cardLimit)))
-    );
-  }
 
   getAllEvents(): Observable<SportEvent[]> {
     return this.cachedQuery(`events:all:full:${this.allEventsPerSportLimit}`, () =>
