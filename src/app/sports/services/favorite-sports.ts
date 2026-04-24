@@ -1,6 +1,5 @@
-import { Injectable, signal, effect } from '@angular/core';
-import { collection, query, where, getDocs, doc, setDoc, writeBatch } from 'firebase/firestore';
-import { firestoreDb } from '../../initialize-firebase';
+import { Injectable, signal, effect, inject } from '@angular/core';
+import { Firestore, collection, query, where, getDocs, doc, setDoc, writeBatch } from '@angular/fire/firestore'
 import { Authentication } from './authentication';
 import { FavoriteSport } from '../interfaces/favorite-sport';
 import { SportEvent } from '../interfaces/sportevent';
@@ -12,6 +11,7 @@ import { Observable, Subscription, from, map, catchError, of } from 'rxjs';
   providedIn: 'root',
 })
 export class FavoriteSports {
+  firestore = inject(Firestore);
   private favoriteSportEventsSignal = signal<SportEvent[]>([]);
   private favoriteSportIdsSignal = signal<FavoriteSport[]>([]);
   private userSignal!: any;
@@ -73,7 +73,7 @@ export class FavoriteSports {
   // returns idEvents from partidas-favoritas endpoint
   private getFavoriteSportIds(userId: string): Observable<FavoriteSport[]> {
     const q = query(
-      collection(firestoreDb, 'partidas-favoritas'),
+      collection(this.firestore, 'partidas-favoritas'),
       where('userID', '==', userId)
     );
 
@@ -105,7 +105,7 @@ export class FavoriteSports {
       }
 
       const favoriteDocId = this.favoriteDocId(userId, idEvent);
-      await setDoc(doc(firestoreDb, 'partidas-favoritas', favoriteDocId), favorite, { merge: true });
+      await setDoc(doc(this.firestore, 'partidas-favoritas', favoriteDocId), favorite, { merge: true });
       this.favoriteSportIdsSignal.update((current) => [...current, favorite]);
     } catch (error) {
       console.error('Error adding favorite sport:', error);
@@ -116,14 +116,14 @@ export class FavoriteSports {
   private async _deleteFavoriteSport(idEvent: string, userId: string): Promise<void> {
     try {
       const favoriteQuery = query(
-        collection(firestoreDb, 'partidas-favoritas'),
+        collection(this.firestore, 'partidas-favoritas'),
         where('userID', '==', userId),
         where('idEvent', '==', idEvent)
       );
       const snapshot = await getDocs(favoriteQuery);
-      const batch = writeBatch(firestoreDb);
+      const batch = writeBatch(this.firestore);
       snapshot.docs.forEach((favoriteDoc) => batch.delete(favoriteDoc.ref));
-      batch.delete(doc(firestoreDb, 'partidas-favoritas', this.favoriteDocId(userId, idEvent)));
+      batch.delete(doc(this.firestore, 'partidas-favoritas', this.favoriteDocId(userId, idEvent)));
       await batch.commit();
       this.favoriteSportIdsSignal.update((current) => current.filter((item) => item.idEvent !== idEvent));
     } catch (error) {
@@ -139,9 +139,9 @@ export class FavoriteSports {
     }
 
     const uniqueIds = Array.from(new Set(idEvents.filter((id) => id)));
-    const batch = writeBatch(firestoreDb);
+    const batch = writeBatch(this.firestore);
     uniqueIds.forEach((idEvent) => {
-      const ref = doc(firestoreDb, 'partidas-favoritas', this.favoriteDocId(user.uid, idEvent));
+      const ref = doc(this.firestore, 'partidas-favoritas', this.favoriteDocId(user.uid, idEvent));
       batch.set(ref, { idEvent, userID: user.uid }, { merge: true });
     });
 

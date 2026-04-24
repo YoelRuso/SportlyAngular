@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { collection, getDocs, limit, query, where } from 'firebase/firestore';
+import { inject, Injectable } from '@angular/core';
+import { collection, getDocs, limit, query, where } from '@angular/fire/firestore';
 import { SportEvent } from '../interfaces/sportevent';
 import { catchError, forkJoin, from, map, Observable, of, shareReplay } from 'rxjs';
-import { firestoreDb } from '../../initialize-firebase';
+import { Firestore } from '@angular/fire/firestore';
 
 type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
 
@@ -10,6 +10,7 @@ type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
   providedIn: 'root',
 })
 export class SportsData {
+  firestore = inject(Firestore);
   private readonly cardLimit = 9;
   private readonly allEventsPerSportLimit = 120;
   private readonly cacheTtlMs = 5 * 60 * 1000;
@@ -71,7 +72,7 @@ export class SportsData {
   }
 
   private getCollection(endpoint: string, defaultSport: string, maxDocs: number): Observable<SportEvent[]> {
-    const collectionRef = collection(firestoreDb, endpoint);
+    const collectionRef = collection(this.firestore, endpoint);
     const collectionQuery = query(collectionRef, limit(maxDocs));
 
     return from(getDocs(collectionQuery)).pipe(
@@ -84,7 +85,7 @@ export class SportsData {
   }
 
   private getCollectionByIds(endpoint: string, defaultSport: string, idEvents: string[]): Observable<SportEvent[]> {
-    const collectionRef = collection(firestoreDb, endpoint);
+    const collectionRef = collection(this.firestore, endpoint);
     const collectionQuery = query(collectionRef, where('idEvent', 'in', idEvents));
 
     return from(getDocs(collectionQuery)).pipe(

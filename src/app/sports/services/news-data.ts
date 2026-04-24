@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { collection, getDocs } from 'firebase/firestore';
+import { inject, Injectable } from '@angular/core';
+import { collection, getDocs } from '@angular/fire/firestore'
 import { catchError, forkJoin, from, map, Observable, throwError } from 'rxjs';
-import { firestoreDb } from '../../initialize-firebase';
 import { NewsArticle, NewsSportFilter } from '../interfaces/news-article';
+import { Firestore } from '@angular/fire/firestore';
 
 type NewsSportKey = Exclude<NewsSportFilter, 'all'>;
 
@@ -31,6 +31,7 @@ type FirestoreNewsDoc = {
   providedIn: 'root',
 })
 export class NewsData {
+  firestore = inject(Firestore);
   private readonly collectionBySport: Record<NewsSportKey, { collection: string; category: string }> = {
 	soccer: { collection: 'news-soccer', category: 'Futbol' },
 	basketball: { collection: 'news-basket', category: 'Baloncesto' },
@@ -50,7 +51,7 @@ export class NewsData {
 
   private getNewsCollection(sport: NewsSportKey): Observable<NewsArticle[]> {
 	const source = this.collectionBySport[sport];
-	const collectionRef = collection(firestoreDb, source.collection);
+	const collectionRef = collection(this.firestore, source.collection);
 
 	return from(getDocs(collectionRef)).pipe(
 	  map((snapshot) =>
