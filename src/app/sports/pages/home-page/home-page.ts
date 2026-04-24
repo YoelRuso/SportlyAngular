@@ -41,16 +41,11 @@ export default class HomePage implements OnInit {
     return Math.ceil(this.allEvents.length / this.pageSize);
   }
 
-  get pages(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-  }
-
   get compactPages(): (number | null)[] {
     const total = this.totalPages;
     const current = this.currentPage;
     const delta = 2; // cantidad de páginas alrededor de la actual
     const range: (number | null)[] = [];
-    let l: number;
 
     for (let i = 1; i <= total; i++) {
       if (
@@ -150,7 +145,7 @@ export default class HomePage implements OnInit {
   }
 
   private getSportLabel(sport: Exclude<SportKey, 'all'>): string {
-    const labels = { soccer: 'Soccer', basketball: 'Basketball', tennis: 'Tennis', f1: 'F1' };
+    const labels = { soccer: 'Soccer', basketball: 'Basketball', tennis: 'Tennis', f1: 'Motorsport' };
     return labels[sport];
   }
 
