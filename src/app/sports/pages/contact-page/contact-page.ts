@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { doc, getDoc } from 'firebase/firestore';
-import { firestoreDb } from '../../../initialize-firebase';
+import { Firestore, doc, getDoc } from 'firebase/firestore';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 
@@ -26,6 +25,7 @@ interface ContactInfo {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ContactPage implements OnInit {
+  firestore = inject(Firestore)
   contact: ContactInfo | null = null;
   loading = true;
   error = false;
@@ -38,7 +38,7 @@ export default class ContactPage implements OnInit {
 
   private async loadContact(): Promise<void> {
     try {
-      const snapshot = await getDoc(doc(firestoreDb, 'contact', 'info'));
+      const snapshot = await getDoc(doc(this.firestore, 'contact', 'info'));
       if (snapshot.exists()) {
         this.contact = snapshot.data() as ContactInfo;
       } else {

@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestoreDb } from '../../../initialize-firebase';
+import { collection, getDocs } from '@angular/fire/firestore'
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
+import { Firestore } from '@angular/fire/firestore';
 
 interface LegalSection {
   id: string;
@@ -20,6 +20,7 @@ interface LegalSection {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LegalPage implements OnInit {
+  firestore = inject(Firestore);
   sections: LegalSection[] = [];
   active: LegalSection | null = null;
   sidebarOpen = false;
@@ -56,7 +57,7 @@ export default class LegalPage implements OnInit {
 
   private async loadLegal(): Promise<void> {
     try {
-      const snapshot = await getDocs(collection(firestoreDb, 'legal'));
+      const snapshot = await getDocs(collection(this.firestore, 'legal'));
       this.sections = snapshot.docs.map((doc) => doc.data() as LegalSection);
 
       // Orden fijo del sidebar
