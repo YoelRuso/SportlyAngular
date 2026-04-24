@@ -30,7 +30,6 @@ export default class HomePage implements OnInit {
   allEvents: SportEvent[] = [];
   fullEvents: SportEvent[] = [];
   events: SportEvent[] = [];
-  favoriteIds = new Set<string>();
   hasLoadError = false;
   selectedEvent: SportEvent | null = null;
 
@@ -64,7 +63,7 @@ export default class HomePage implements OnInit {
   }
 
   constructor(
-    private favoriteSportsService: FavoriteSports,
+    public favoriteSportsService: FavoriteSports,
     private readonly sportsData: SportsData,
     private readonly cdr: ChangeDetectorRef,
     private readonly ngZone: NgZone,
@@ -72,12 +71,6 @@ export default class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.loadAllEvents();
-    this.favoriteIds = new Set(
-      this.favoriteSportsService
-        .favoriteSportIds()
-        .map((sport) => sport.idEvent)
-        .filter((id): id is string => id !== undefined),
-    );
   }
 
   goToPage(page: number): void {
@@ -110,12 +103,10 @@ export default class HomePage implements OnInit {
     const id = String(event.idEvent ?? '');
     if (!id) {
       // skip
-    } else if (this.favoriteIds.has(id)) {
+    } else if (this.favoriteSportsService.favoriteSportIds().find(s => s.idEvent === id) != null) {
       this.favoriteSportsService.deleteFavoriteSport(id);
-      this.favoriteIds.delete(id);
     } else {
       this.favoriteSportsService.addFavoriteSport(id);
-      this.favoriteIds.add(id);
     }
   }
 

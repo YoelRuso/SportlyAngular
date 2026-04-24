@@ -12,7 +12,7 @@
             <div class="col-12 col-md-6 col-lg-4">
               <app-card-init
                 [event]="event"
-                [isFavorite]="favoriteIds.has(String(event.idEvent))"
+                [isFavorite]="favoriteSportsService.favoriteSportIds().find(s => s.idEvent === event.idEvent) != null"
                 (cardClick)="openMatchPopup($event)"
                 (favoriteClick)="toggleFavorite($event)"
               />
