@@ -14,7 +14,8 @@ interface LegalSection {
 
 @Component({
   selector: 'app-legal-page',
-  imports: [CommonModule, Header, Footer],
+  imports: [CommonModule, Header, Footer, 
+           ],
   templateUrl: './legal-page.html',
   styleUrl: './legal-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
