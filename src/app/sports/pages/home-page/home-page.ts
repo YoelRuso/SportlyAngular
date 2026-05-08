@@ -14,6 +14,7 @@ import { SportsData } from '../../services/sports-data';
 import { Footer } from '../../components/footer/footer';
 import { FavoriteSports } from '../../services/favorite-sports';
 import { MatchPopup } from '../../components/match-popup/match-popup';
+import { IonContent } from '@ionic/angular/standalone';
 
 type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
 
@@ -21,7 +22,7 @@ const PAGE_SIZE = 9;
 
 @Component({
   selector: 'app-home-page',
-  imports: [Header, HeroBanner, Navbar, CardInit, Footer, MatchPopup],
+  imports: [IonContent, Header, HeroBanner, Navbar, CardInit, Footer, MatchPopup],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
