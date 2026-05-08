@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="reg-shell">
 
-    <!-- Cabecera estilo login -->
+    <!-- Cabecera -->
     <div class="brand-panel">
       <p class="eyebrow">SPORTLY</p>
       <h1>Crear cuenta</h1>
@@ -16,7 +16,27 @@
 
       <form #registrationForm="ngForm" (ngSubmit)="onRegistration(registrationForm)">
 
-        <!-- Email Field -->
+        <!-- Foto de perfil -->
+        <div class="avatar-section">
+          <div class="avatar-preview" (click)="fileInput.click()">
+            <img *ngIf="avatarPreview" [src]="avatarPreview" alt="Foto de perfil" class="avatar-img" />
+            <div *ngIf="!avatarPreview" class="avatar-placeholder">
+              <ion-icon name="camera-outline"></ion-icon>
+              <span>Añadir foto</span>
+            </div>
+          </div>
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            style="display:none"
+            (change)="onFileSelected($event)"
+          />
+          <p class="avatar-hint">Toca para seleccionar una foto de perfil</p>
+          <p *ngIf="submitted && !avatarFile" class="avatar-error">La foto de perfil es obligatoria</p>
+        </div>
+
+        <!-- Email -->
         <div class="field-group">
           <ion-item>
             <ion-label position="floating">Correo electrónico</ion-label>
@@ -37,7 +57,7 @@
           <ion-note *ngIf="!serverEmailError && emailControl.invalid && (emailControl.touched || submitted)" color="danger" class="error-note">Correo inválido</ion-note>
         </div>
 
-        <!-- Password Field -->
+        <!-- Contraseña -->
         <div class="field-group">
           <ion-item>
             <ion-label position="floating">Contraseña</ion-label>
@@ -61,7 +81,7 @@
           </ion-note>
         </div>
 
-        <!-- Confirm Password Field -->
+        <!-- Confirmar contraseña -->
         <div class="field-group">
           <ion-item>
             <ion-label position="floating">Confirmar contraseña</ion-label>
@@ -84,38 +104,31 @@
           </ion-note>
         </div>
 
-        <!-- Terms Checkbox -->
+        <!-- Términos -->
         <ion-item lines="none" class="terms-item">
-          <ion-checkbox
-            name="terms"
-            [(ngModel)]="termsAccepted"
-            #termsControl="ngModel"
-            required
-          ></ion-checkbox>
+          <ion-checkbox name="terms" [(ngModel)]="termsAccepted" required></ion-checkbox>
           <ion-label class="ion-text-wrap">Acepto los términos y condiciones</ion-label>
         </ion-item>
         <ion-note *ngIf="submitted && !termsAccepted" color="danger" class="error-note">
           Es necesario aceptar los términos y condiciones
         </ion-note>
 
-        <!-- Submit Button -->
+        <!-- Botón -->
         <ion-button expand="block" type="submit" [disabled]="loading" class="submit-btn">
           {{ loading ? 'Registrando...' : 'REGISTRARSE' }}
         </ion-button>
 
-        <!-- General Error -->
+        <!-- Error general -->
         <ion-text *ngIf="error" color="danger" class="error-text">
           <p>{{ error }}</p>
         </ion-text>
 
       </form>
 
-      <!-- Login Link -->
       <div class="login-link">
         <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión</a></p>
       </div>
 
     </div>
-
   </div>
 </ion-content>

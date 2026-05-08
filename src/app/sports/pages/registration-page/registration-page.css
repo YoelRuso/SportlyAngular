@@ -2,6 +2,68 @@
   display: block;
 }
 
+/* ── Avatar ── */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.avatar-preview {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2px dashed rgba(0, 255, 136, 0.4);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24, 34, 49, 0.8);
+  transition: border-color 0.2s;
+}
+
+.avatar-preview:hover {
+  border-color: #00ff88;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.avatar-placeholder ion-icon {
+  font-size: 1.8rem;
+  color: rgba(0, 255, 136, 0.6);
+}
+
+.avatar-placeholder span {
+  font-size: 0.75rem;
+}
+
+.avatar-hint {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.78rem;
+  margin: 0;
+}
+
+.avatar-error {
+  color: #ff9a9a;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
 /* ── Fondo ── */
 ion-content {
   --background:

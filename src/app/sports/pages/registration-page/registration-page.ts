@@ -4,37 +4,23 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Authentication } from '../../services/authentication';
 import { addIcons } from 'ionicons';
-import { eye, eyeOff } from 'ionicons/icons';
+import { eye, eyeOff, cameraOutline } from 'ionicons/icons';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { doc, setDoc } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
-// Ionic imports
 import {
-  IonContent,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonButton,
-  IonText,
-  IonCheckbox,
-  IonIcon,
-  IonNote,
+  IonContent, IonItem, IonLabel, IonInput,
+  IonButton, IonText, IonCheckbox, IonIcon, IonNote
 } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-registration-page',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    RouterLink,
-    IonContent,
-    IonItem,
-    IonLabel,
-    IonInput,
-    IonButton,
-    IonText,
-    IonCheckbox,
-    IonIcon,
-    IonNote,
+    CommonModule, FormsModule, RouterLink,
+    IonContent, IonItem, IonLabel, IonInput,
+    IonButton, IonText, IonCheckbox, IonIcon, IonNote
   ],
   templateUrl: './registration-page.html',
   styleUrls: ['./registration-page.css'],
@@ -43,39 +29,73 @@ export default class RegistrationPage {
   auth = inject(Authentication);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
+  storage = inject(Storage);
+  firestore = inject(Firestore);
 
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  termsAccepted: boolean = false;
-  submitted: boolean = false;
-  serverEmailError: string = '';
-  error: string = '';
-  loading: boolean = false;
-  showPassword: boolean = false;
-  showConfirmPassword: boolean = false;
+  email = '';
+  password = '';
+  confirmPassword = '';
+  termsAccepted = false;
+  submitted = false;
+  serverEmailError = '';
+  error = '';
+  loading = false;
+  showPassword = false;
+  showConfirmPassword = false;
+
+  avatarFile: File | null = null;
+  avatarPreview: string | null = null;
 
   emailPattern = '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$';
   passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d]).{7,}$';
 
   constructor() {
-    // Registrar los iconos para poder usarlos por nombre en el HTML
-    addIcons({ eye, eyeOff });
+    addIcons({ eye, eyeOff, cameraOutline });
   }
 
-  async onRegistration(form: NgForm) {
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.avatarFile = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.avatarPreview = reader.result as string;
+      this.cdr.detectChanges();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async onRegistration(form: NgForm): Promise<void> {
     this.submitted = true;
     this.serverEmailError = '';
     this.error = '';
 
-    if (form.invalid || this.password !== this.confirmPassword || !this.termsAccepted) {
+    if (form.invalid || this.password !== this.confirmPassword || !this.termsAccepted || !this.avatarFile) {
       return;
     }
 
     this.loading = true;
 
     try {
-      await this.auth.register(this.email, this.password);
+      // 1. Crear usuario en Firebase Auth
+      const userCredential = await this.auth.register(this.email, this.password);
+      const uid = userCredential.uid;
+
+      // 2. Subir foto a Firebase Storage
+      const storageRef = ref(this.storage, `avatars/${uid}`);
+      await uploadBytes(storageRef, this.avatarFile);
+      const photoURL = await getDownloadURL(storageRef);
+
+      // 3. Guardar datos del usuario en Firestore
+      await setDoc(doc(this.firestore, 'users', uid), {
+        email: this.email,
+        photoURL,
+        createdAt: new Date(),
+      });
+
       console.log('Registration processed!');
       this.router.navigate(['/login']);
     } catch (err: any) {
@@ -96,11 +116,6 @@ export default class RegistrationPage {
     }
   }
 
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
-  }
-
-  toggleConfirmPassword(): void {
-    this.showConfirmPassword = !this.showConfirmPassword;
-  }
+  togglePassword(): void { this.showPassword = !this.showPassword; }
+  toggleConfirmPassword(): void { this.showConfirmPassword = !this.showConfirmPassword; }
 }
