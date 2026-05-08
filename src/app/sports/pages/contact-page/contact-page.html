@@ -1,38 +1,45 @@
-<div class="contact-wrapper">
-  <app-header />
+<app-header />
 
-  <main class="contact-shell">
+<ion-content [fullscreen]="true" class="contact-content">
+  <div class="contact-shell">
 
     @if (loading) {
-      <div class="contact-box">
+      <div class="contact-box centered">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
         <p class="contact-status">Cargando...</p>
       </div>
     } @else if (error || !contact) {
-      <div class="contact-box">
+      <div class="contact-box centered">
+        <ion-icon name="alert-circle-outline" color="danger" size="large"></ion-icon>
         <p class="contact-status">Error al cargar el contenido.</p>
+        <ion-button fill="clear" (click)="ngOnInit()">Reintentar</ion-button>
       </div>
     } @else {
       <div class="contact-box">
         <h1>{{ contact.title }}</h1>
-        <p>{{ contact.description }}</p>
+        <p class="description">{{ contact.description }}</p>
 
-        @for (item of contact.items; track item.value) {
-          <div class="contact-item">
-            <i [className]="item.icon"></i>
-            @if (item.type === 'text') {
-              <span>{{ item.value }}</span>
-            } @else {
-              <a [href]="item.href"
-                 [attr.target]="item.type === 'link' ? '_blank' : null"
-                 rel="noopener">{{ item.value }}</a>
-            }
-          </div>
-        }
+        <ion-list lines="none" class="contact-list">
+          @for (item of contact.items; track item.value) {
+            <ion-item
+              class="contact-item"
+              [href]="item.href"
+              [detail]="false"
+              [button]="item.type !== 'text'"
+              [attr.target]="item.type === 'link' ? '_blank' : null">
 
+              <ion-icon [name]="item.icon" slot="start"></ion-icon>
+
+              <ion-label>
+                <span class="value-text">{{ item.value }}</span>
+              </ion-label>
+
+            </ion-item>
+          }
+        </ion-list>
       </div>
     }
 
-  </main>
-
+  </div>
   <app-footer />
-</div>
+</ion-content>
