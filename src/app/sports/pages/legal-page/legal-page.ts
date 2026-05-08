@@ -2,22 +2,16 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject }
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Header } from '../../components/header/header';
+import { Footer } from '../../components/footer/footer';
 
-// Ionic + Icons
+// Ionic imports
 import {
-  IonContent, IonHeader, IonToolbar, IonTitle,
-  IonList, IonItem, IonLabel, IonButton,
-  IonMenu, IonMenuButton, IonSplitPane,
-  IonButtons, IonSpinner, IonIcon, MenuController
+  IonContent, IonList, IonItem, IonLabel,
+  IonMenu, IonMenuButton, IonMenuToggle,
+  IonSplitPane, IonButtons, IonHeader,
+  IonToolbar, IonTitle
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import {
-  documentTextOutline,
-  chevronForward,
-  alertCircleOutline,
-  refresh,
-  documentText
-} from 'ionicons/icons';
 
 interface LegalSection {
   id: string;
@@ -30,38 +24,31 @@ interface LegalSection {
   standalone: true,
   imports: [
     CommonModule,
-    IonContent, IonHeader, IonToolbar, IonTitle,
-    IonList, IonItem, IonLabel, IonButton,
-    IonMenu, IonMenuButton, IonSplitPane,
-    IonButtons, IonSpinner, IonIcon
+    Header,
+    Footer,
+    IonContent, IonList, IonItem, IonLabel,
+    IonMenu, IonMenuButton, IonMenuToggle,
+    IonSplitPane, IonButtons, IonHeader,
+    IonToolbar, IonTitle
   ],
   templateUrl: './legal-page.html',
   styleUrl: './legal-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LegalPage implements OnInit {
-  private firestore = inject(Firestore);
-  private route = inject(ActivatedRoute);
-  private cdr = inject(ChangeDetectorRef);
-  private menuCtrl = inject(MenuController);
-
+  firestore = inject(Firestore);
   sections: LegalSection[] = [];
   active: LegalSection | null = null;
+  sidebarOpen = false;
   loading = true;
   error = false;
 
   private pendingFragment: string | null = null;
 
-  constructor() {
-    // Registrar iconos para que funcionen en modo standalone
-    addIcons({
-      documentTextOutline,
-      chevronForward,
-      alertCircleOutline,
-      refresh,
-      documentText
-    });
-  }
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.route.fragment.subscribe((fragment) => {
@@ -73,31 +60,28 @@ export default class LegalPage implements OnInit {
     this.loadLegal();
   }
 
-  async select(section: LegalSection) {
+  select(section: LegalSection): void {
     this.active = section;
+    this.sidebarOpen = false;
     this.cdr.markForCheck();
-    // Cierra el menú lateral (solo tiene efecto en móvil)
-    await this.menuCtrl.close('legal-menu');
   }
 
-  async loadLegal(): Promise<void> {
-    this.loading = true;
-    this.error = false;
+  toggleSidebar(): void {
+    this.sidebarOpen = !this.sidebarOpen;
     this.cdr.markForCheck();
+  }
 
+  private async loadLegal(): Promise<void> {
     try {
       const snapshot = await getDocs(collection(this.firestore, 'legal'));
-      this.sections = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
-      } as LegalSection));
+      this.sections = snapshot.docs.map((doc) => doc.data() as LegalSection);
 
       const ORDER = ['aviso-legal', 'privacidad', 'cookies', 'accesibilidad'];
       this.sections.sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
 
       this.applyFragment();
     } catch (e) {
-      console.error('Error:', e);
+      console.error('Error cargando legal desde Firebase:', e);
       this.error = true;
     } finally {
       this.loading = false;
@@ -107,6 +91,7 @@ export default class LegalPage implements OnInit {
 
   private applyFragment(): void {
     if (this.sections.length === 0) return;
+
     if (this.pendingFragment) {
       const found = this.sections.find((s) => s.id === this.pendingFragment);
       this.active = found ?? this.sections[0];

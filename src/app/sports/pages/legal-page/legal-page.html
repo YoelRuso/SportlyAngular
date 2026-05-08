@@ -1,66 +1,53 @@
-<ion-split-pane contentId="legal-content" when="lg">
+<app-header />
 
-  <!-- SIDEBAR ÚNICO (Se oculta solo en móvil) -->
-  <ion-menu contentId="legal-content" menuId="legal-menu">
-    <ion-header>
-      <ion-toolbar class="sidebar-toolbar">
-        <ion-title class="sidebar-title">Legal</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="sidebar-content">
-      <ion-list lines="none" class="sidebar-list">
+<div class="legal-container">
+
+  <!-- Botón hamburguesa (solo móvil) -->
+  <button class="menu-toggle-legal" (click)="toggleSidebar()" aria-label="Abrir menú legal">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+    </svg>
+  </button>
+
+  <!-- Overlay oscuro al abrir sidebar en móvil -->
+  <div
+    class="sidebar-overlay"
+    [class.sidebar-overlay--open]="sidebarOpen"
+    (click)="toggleSidebar()"
+  ></div>
+
+  <!-- SIDEBAR -->
+  <aside class="legal-sidebar" [class.legal-sidebar--open]="sidebarOpen">
+    <h2>Legal</h2>
+    <nav>
+      <ul>
         @for (section of sections; track section.id) {
-          <ion-item
-            button
-            [class.active-item]="active?.id === section.id"
-            (click)="select(section)"
-            class="sidebar-item"
-          >
-            <ion-icon name="document-text-outline" slot="start" class="sidebar-icon"></ion-icon>
-            <ion-label class="sidebar-label">{{ section.title }}</ion-label>
-            <ion-icon name="chevron-forward" slot="end" class="sidebar-arrow"></ion-icon>
-          </ion-item>
+          <li>
+            <button
+              class="sidebar-btn"
+              [class.active]="active?.id === section.id"
+              (click)="select(section)"
+            >
+              {{ section.title }}
+            </button>
+          </li>
         }
-      </ion-list>
-    </ion-content>
-  </ion-menu>
+      </ul>
+    </nav>
+  </aside>
 
-  <!-- CONTENIDO PRINCIPAL ÚNICO -->
-  <div class="ion-page" id="legal-content">
-    <ion-header class="main-header">
-      <ion-toolbar class="main-toolbar">
-        <ion-buttons slot="start">
-          <!-- El botón de menú aparecerá automáticamente SOLO en móvil -->
-          <ion-menu-button menu="legal-menu"></ion-menu-button>
-        </ion-buttons>
-        <ion-title class="main-title">{{ active?.title ?? 'Legal' }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <!-- CONTENIDO -->
+  <main class="legal-content">
+    @if (loading) {
+      <p class="legal-status">Cargando...</p>
+    } @else if (error) {
+      <p class="legal-status">Error al cargar el contenido.</p>
+    } @else if (active) {
+      <h1>{{ active.title }}</h1>
+      <div class="legal-text" [innerHTML]="active.content"></div>
+    }
+  </main>
 
-    <ion-content class="legal-content ion-padding">
-      @if (loading) {
-        <div class="loading-container">
-          <ion-spinner name="crescent" color="primary"></ion-spinner>
-          <p class="loading-text">Cargando contenido legal...</p>
-        </div>
-      } @else if (error) {
-        <div class="error-container">
-          <ion-icon name="alert-circle-outline" color="danger" size="large"></ion-icon>
-          <h3 class="error-title">Error al cargar</h3>
-          <p class="error-text">No se pudo cargar el contenido legal.</p>
-          <ion-button fill="outline" (click)="loadLegal()">
-            <ion-icon name="refresh" slot="start"></ion-icon>
-            Reintentar
-          </ion-button>
-        </div>
-      } @else if (active) {
-        <div class="content-wrapper">
-          <div class="title-section">
-            <h1 class="legal-title">{{ active.title }}</h1>
-          </div>
-          <div class="legal-text" [innerHTML]="active.content"></div>
-        </div>
-      }
-    </ion-content>
-  </div>
-</ion-split-pane>
+</div>
+
+<app-footer />
