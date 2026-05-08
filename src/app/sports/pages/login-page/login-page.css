@@ -1,191 +1,212 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+:host {
+  display: block;
 }
 
-.login-wrapper {
-    background-color: #0f0f0f;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* mejor que height */
-    color: #ffffff;
-    padding: 20px;
+.login-content {
+  --background:
+    radial-gradient(circle at top, rgba(0, 255, 136, 0.14), transparent 34%),
+    linear-gradient(180deg, #0f141b 0%, #090c12 100%);
 }
 
-/* TARJETA LOGIN */
-section {
-    background: #1a1a1a;
-    padding: 2.5rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    max-width: 400px;
-    border: 1px solid #333;
+.login-shell {
+  min-height: 100%;
+  display: grid;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem;
 }
 
-h1 {
-    font-size: 1.6rem;
-    color: #ffffff;
-    margin-bottom: 2rem;
-    text-align: center;
-    font-weight: bold;
+.brand-panel {
+  max-width: 38rem;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--text-1);
 }
 
-form div {
-    margin-bottom: 1.2rem;
+.brand-badge {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: inline-grid;
+  place-items: center;
+  margin-bottom: 0.9rem;
+  border-radius: 1.1rem;
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(0, 255, 136, 0.2) inset;
 }
 
-label {
-    display: block;
-    margin-bottom: 0.6rem;
-    color: #aaaaaa;
-    font-size: 0.9rem;
+.brand-badge ion-icon {
+  font-size: 1.5rem;
 }
 
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 0.85rem;
-    background-color: #2a2a2a;
-    border: 1px solid #444;
-    border-radius: 10px;
-    outline: none;
-    color: white;
-    transition: border-color 0.3s;
+.eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  font-size: 0.76rem;
+  font-weight: 700;
 }
 
-input.invalid {
-    border-color: #ff6b6b;
+.brand-panel h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1;
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus {
-    border-color: #00ff88;
+.lead {
+  max-width: 34rem;
+  margin: 0.85rem auto 0;
+  color: var(--text-2);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.login-card {
+  width: min(100%, 30rem);
+  margin: 0 auto;
+  border-radius: 1.5rem;
+  background: rgba(19, 27, 38, 0.9);
+  border: 1px solid rgba(151, 173, 205, 0.16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.login-card ion-card-header {
+  padding: 1.5rem 1.5rem 0.75rem;
+}
+
+.login-card h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.login-card ion-card-header p {
+  margin: 0.4rem 0 0;
+  color: var(--text-2);
+}
+
+.login-card ion-card-content {
+  padding: 0 1.25rem 1.35rem;
+}
+
+form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.field {
+  --background: rgba(24, 34, 49, 0.8);
+  --padding-start: 0.95rem;
+  --padding-end: 0.75rem;
+  --inner-padding-end: 0;
+  --border-radius: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(151, 173, 205, 0.14);
+}
+
+.field.invalid {
+  border-color: rgba(255, 107, 107, 0.75);
+}
+
+.field ion-label {
+  color: var(--text-2);
+  font-size: 0.92rem;
+  margin-bottom: 0.45rem;
+}
+
+.field ion-input {
+  --color: var(--text-1);
+  --placeholder-color: rgba(231, 237, 246, 0.45);
+  font-size: 1rem;
+}
+
+.password-field {
+  align-items: center;
+}
+
+.password-toggle {
+  --padding-start: 0.25rem;
+  --padding-end: 0.25rem;
+  --color: var(--text-2);
+  height: 2.25rem;
+}
+
+.password-toggle ion-icon {
+  font-size: 1.15rem;
+}
+
+ion-note {
+  margin: 0.05rem 0 0.15rem 0.2rem;
+  font-size: 0.82rem;
+}
+
+.options-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.2rem 0.15rem 0.15rem;
+  flex-wrap: wrap;
+}
+
+.options-row ion-checkbox {
+  --checkbox-background-checked: var(--accent);
+  --border-color-checked: var(--accent);
+  --checkmark-color: #04110a;
+  color: var(--text-1);
+  font-size: 0.92rem;
+}
+
+.options-row a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.options-row a:hover {
+  text-decoration: underline;
 }
 
 .form-error {
-    color: #ff6b6b;
-    margin-top: 10px;
-    text-align: center;
-    min-height: 20px;
+  display: block;
 }
 
-/* OPCIONES (checkbox + link) */
-.options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.85rem;
-    margin-bottom: 1.5rem;
+.form-error p {
+  margin: 0;
+  color: #ff9a9a;
+  font-size: 0.93rem;
 }
 
-.options label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+.submit-btn {
+  margin-top: 0.4rem;
+  --background: linear-gradient(135deg, var(--accent) 0%, #38e6a3 100%);
+  --background-hover: linear-gradient(135deg, #33f39b 0%, #20d58a 100%);
+  --color: #04110a;
+  --border-radius: 999px;
+  min-height: 3rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
-a {
-    color: #00ff88;
-    text-decoration: none;
-    font-weight: 500;
+@media (min-width: 768px) {
+  .login-shell {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 2rem;
+  }
+
+  .login-card {
+    transform: translateY(-0.25rem);
+  }
 }
 
-a:hover {
-    text-decoration: underline;
-}
+@media (min-width: 960px) {
+  .login-shell {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 2rem;
+  }
 
-button {
-    width: 100%;
-    padding: 0.85rem;
-    background-color: #00ff88;
-    color: #000000;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: transform 0.2s, background-color 0.3s;
-}
-
-button:hover {
-    background-color: #00cc6e;
-    transform: translateY(-2px);
-}
-
-p {
-    text-align: center;
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: #888888;
-}
-/*Formato en ver contraseña*/
-input[type="text"] {
-    width: 100%;
-    padding: 0.85rem;
-    background-color: #2a2a2a;
-    border: 1px solid #444;
-    border-radius: 10px;
-    outline: none;
-    color: white;
-    transition: border-color 0.3s;
-}
-
-input[type="text"]:focus {
-    border-color: #00ff88;
-}
-
-/* ========================= */
-/* TABLET ≤ 834px */
-/* ========================= */
-
-@media (max-width: 834px) {
-
-    section {
-        max-width: 420px;
-        padding: 2rem;
-    }
-
-    h1 {
-        font-size: 1.4rem;
-    }
-
-}
-
-/* ========================= */
-/* MOBILE ≤ 430px */
-/* ========================= */
-
-@media (max-width: 430px) {
-
-    body {
-        align-items: flex-start;
-        padding-top: 60px;
-    }
-
-    section {
-        padding: 1.6rem;
-        border-radius: 16px;
-    }
-
-    h1 {
-        font-size: 1.3rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .options {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    button {
-        padding: 0.8rem;
-        font-size: 0.95rem;
-    }
-
+  .brand-panel {
+    margin-bottom: 0.25rem;
+  }
 }
