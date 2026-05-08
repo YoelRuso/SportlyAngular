@@ -4,224 +4,13 @@ ion-content {
   --color: #ffffff;
 }
 
-/* Header / Toolbar */
-ion-header,
-ion-toolbar {
-  --background: #0f0f0f;
-  --color: #ffffff;
-}
-
-ion-title {
+/* Título del formulario */
+.form-title {
+  color: #ffffff;
+  font-size: 1.5rem;
   font-weight: bold;
-  font-size: 1.4rem;
-}
-
-/* Formulario */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 1.5rem;
-}
-
-/* Items */
-ion-item {
-  --background: #1a1a1a;
-  --border-color: #333;
-  --border-radius: 10px;
-  --padding-start: 16px;
-  --inner-padding-end: 16px;
-  --highlight-color-focused: #00ff88;
-  margin-bottom: 0.3rem;
-}
-
-/* Labels */
-ion-label {
-  color: #aaaaaa !important;
-  font-size: 0.9rem;
-}
-
-/* Inputs */
-ion-input {
-  --color: #ffffff;
-  --placeholder-color: #666;
-  --padding-start: 0;
-  font-size: 1rem;
-}
-
-/* Botón toggle "ver contraseña" */
-ion-button[fill="clear"] {
-  --color: #aaaaaa;
-}
-
-/* Botón principal */
-ion-button[expand="block"] {
-  --background: #00ff88;
-  --color: #000000;
-  --border-radius: 10px;
-  --background-hover: #00cc6e;
-  --background-activated: #00cc6e;
-  font-weight: bold;
-  font-size: 1rem;
-  height: 48px;
-  margin-top: 0.5rem;
-}
-
-ion-button[expand="block"][disabled] {
-  --background: #444;
-  --color: #888;
-  opacity: 1;
-}
-
-/* Checkbox */
-ion-checkbox {
-  --background: #2a2a2a;
-  --background-checked: #00ff88;
-  --border-color: #444;
-  --border-color-checked: #00ff88;
-  --checkmark-color: #000000;
-  --size: 20px;
-}
-
-/* Notas de error */
-ion-note.error-note {
-  display: block;
-  padding-left: 16px;
-  padding-bottom: 6px;
-  font-size: 0.82rem;
-}
-
-/* Texto de error general */
-.error-text {
   text-align: center;
-  margin-top: 0.8rem;
-}
-
-.error-text p {
-  font-size: 0.9rem;
-}
-
-/* Link de login */
-.login-link {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.login-link p {
-  color: #888888;
-  font-size: 0.9rem;
-}
-
-.login-link a {
-  color: #00ff88;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.login-link a:hover {
-  text-decoration: underline;
-}
-/* Fondo e ion-content */
-ion-content {
-  --background: #0f0f0f;
-  --color: #ffffff;
-}
-
-/* Header / Toolbar */
-ion-header,
-ion-toolbar {
-  --background: #0f0f0f;
-  --color: #ffffff;
-}
-
-ion-title {
-  font-weight: bold;
-  font-size: 1.4rem;
-}
-
-/* Formulario */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 1.5rem;
-}
-
-/* Items */
-ion-item {
-  --background: #1a1a1a;
-  --border-color: #333;
-  --border-radius: 10px;
-  --padding-start: 16px;
-  --inner-padding-end: 16px;
-  --highlight-color-focused: #00ff88;
-  margin-bottom: 0.3rem;
-}
-
-/* Labels */
-ion-label {
-  color: #aaaaaa !important;
-  font-size: 0.9rem;
-}
-
-/* Inputs */
-ion-input {
-  --color: #ffffff;
-  --placeholder-color: #666;
-  --padding-start: 0;
-  font-size: 1rem;
-}
-
-/* Botón toggle "ver contraseña" */
-ion-button[fill="clear"] {
-  --color: #aaaaaa;
-}
-
-/* Botón principal */
-ion-button[expand="block"] {
-  --background: #00ff88;
-  --color: #000000;
-  --border-radius: 10px;
-  --background-hover: #00cc6e;
-  --background-activated: #00cc6e;
-  font-weight: bold;
-  font-size: 1rem;
-  height: 48px;
-  margin-top: 0.5rem;
-}
-
-ion-button[expand="block"][disabled] {
-  --background: #444;
-  --color: #888;
-  opacity: 1;
-}
-
-/* Checkbox */
-ion-checkbox {
-  --background: #2a2a2a;
-  --background-checked: #00ff88;
-  --border-color: #444;
-  --border-color-checked: #00ff88;
-  --checkmark-color: #000000;
-  --size: 20px;
-}
-
-/* Notas de error */
-ion-note.error-note {
-  display: block;
-  padding-left: 16px;
-  padding-bottom: 6px;
-  font-size: 0.82rem;
-}
-
-/* Texto de error general */
-.error-text {
-  text-align: center;
-  margin-top: 0.8rem;
-}
-
-.error-text p {
-  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Contenedor centrado para escritorio */
@@ -233,6 +22,91 @@ ion-note.error-note {
   border-radius: 20px;
   border: 1px solid #333;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 1.5rem;
+}
+
+/* Items */
+ion-item {
+  --background: #1a1a1a;
+  --border-color: #333;
+  --border-radius: 10px;
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  --highlight-color-focused: #00ff88;
+  margin-bottom: 0.3rem;
+}
+
+/* Labels */
+ion-label {
+  color: #aaaaaa !important;
+  font-size: 0.9rem;
+}
+
+/* Inputs */
+ion-input {
+  --color: #ffffff;
+  --placeholder-color: #666;
+  --padding-start: 0;
+  font-size: 1rem;
+}
+
+/* Botón toggle "ver contraseña" */
+ion-button[fill="clear"] {
+  --color: #aaaaaa;
+}
+
+/* Botón principal */
+ion-button[expand="block"] {
+  --background: #00ff88;
+  --color: #000000;
+  --border-radius: 10px;
+  --background-hover: #00cc6e;
+  --background-activated: #00cc6e;
+  font-weight: bold;
+  font-size: 1rem;
+  height: 48px;
+  margin-top: 0.5rem;
+}
+
+ion-button[expand="block"][disabled] {
+  --background: #444;
+  --color: #888;
+  opacity: 1;
+}
+
+/* Checkbox */
+ion-checkbox {
+  --background: #2a2a2a;
+  --background-checked: #00ff88;
+  --border-color: #444;
+  --border-color-checked: #00ff88;
+  --checkmark-color: #000000;
+  --size: 20px;
+}
+
+/* Notas de error */
+ion-note.error-note {
+  display: block;
+  padding-left: 16px;
+  padding-bottom: 6px;
+  font-size: 0.82rem;
+}
+
+/* Texto de error general */
+.error-text {
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+.error-text p {
+  font-size: 0.9rem;
 }
 
 /* Link de login */

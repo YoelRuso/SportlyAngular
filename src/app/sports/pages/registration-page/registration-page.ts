@@ -9,9 +9,6 @@ import { eye, eyeOff } from 'ionicons/icons';
 // Ionic imports
 import {
   IonContent,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonItem,
   IonLabel,
   IonInput,
@@ -30,9 +27,6 @@ import {
     FormsModule,
     RouterLink,
     IonContent,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonItem,
     IonLabel,
     IonInput,
