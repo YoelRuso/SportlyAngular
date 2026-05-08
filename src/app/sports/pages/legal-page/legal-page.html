@@ -1,53 +1,55 @@
-<app-header />
+<ion-content [scrollY]="true">
+  <app-header />
 
-<div class="legal-container">
+  <div class="legal-container">
 
-  <!-- Botón hamburguesa (solo móvil) -->
-  <button class="menu-toggle-legal" (click)="toggleSidebar()" aria-label="Abrir menú legal">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-    </svg>
-  </button>
+    <!-- Overlay oscuro al abrir sidebar en móvil -->
+    <div
+      class="sidebar-overlay"
+      [class.sidebar-overlay--open]="sidebarOpen"
+      (click)="toggleSidebar()"
+    ></div>
 
-  <!-- Overlay oscuro al abrir sidebar en móvil -->
-  <div
-    class="sidebar-overlay"
-    [class.sidebar-overlay--open]="sidebarOpen"
-    (click)="toggleSidebar()"
-  ></div>
+    <!-- SIDEBAR -->
+    <aside class="legal-sidebar" [class.legal-sidebar--open]="sidebarOpen">
+      <h2>Legal</h2>
+      <nav>
+        <ul>
+          @for (section of sections; track section.id) {
+            <li>
+              <button
+                class="sidebar-btn"
+                [class.active]="active?.id === section.id"
+                (click)="select(section)"
+              >
+                {{ section.title }}
+              </button>
+            </li>
+          }
+        </ul>
+      </nav>
+    </aside>
 
-  <!-- SIDEBAR -->
-  <aside class="legal-sidebar" [class.legal-sidebar--open]="sidebarOpen">
-    <h2>Legal</h2>
-    <nav>
-      <ul>
-        @for (section of sections; track section.id) {
-          <li>
-            <button
-              class="sidebar-btn"
-              [class.active]="active?.id === section.id"
-              (click)="select(section)"
-            >
-              {{ section.title }}
-            </button>
-          </li>
-        }
-      </ul>
-    </nav>
-  </aside>
+    <!-- CONTENIDO -->
+    <main class="legal-content">
+      <!-- Botón hamburguesa (solo móvil) -->
+      <button class="menu-toggle-legal" (click)="toggleSidebar()" aria-label="Abrir menú legal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+      </button>
 
-  <!-- CONTENIDO -->
-  <main class="legal-content">
-    @if (loading) {
-      <p class="legal-status">Cargando...</p>
-    } @else if (error) {
-      <p class="legal-status">Error al cargar el contenido.</p>
-    } @else if (active) {
-      <h1>{{ active.title }}</h1>
-      <div class="legal-text" [innerHTML]="active.content"></div>
-    }
-  </main>
+      @if (loading) {
+        <p class="legal-status">Cargando...</p>
+      } @else if (error) {
+        <p class="legal-status">Error al cargar el contenido.</p>
+      } @else if (active) {
+        <h1>{{ active.title }}</h1>
+        <div class="legal-text" [innerHTML]="active.content"></div>
+      }
+    </main>
 
-</div>
+  </div>
 
-<app-footer />
+  <app-footer />
+</ion-content>

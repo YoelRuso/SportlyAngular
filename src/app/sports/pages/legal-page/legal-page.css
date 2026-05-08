@@ -1,7 +1,13 @@
+.legal-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* ── Layout ── */
 .legal-container {
   display: flex;
-  min-height: 60vh;
+  flex: 1;
 }
 
 /* ── Sidebar ── */
@@ -102,28 +108,9 @@
   border-radius: 10px;
 }
 
-/* ── Tablet ≤ 834px ── */
-@media (max-width: 834px) {
-  .legal-content {
-    padding: 2rem 1.5rem;
-  }
-
-  .legal-content h1 {
-    font-size: 1.4rem;
-  }
-
-  .legal-text {
-    font-size: 0.88rem;
-  }
-}
-
 /* ── Botón hamburguesa (solo móvil) ── */
 .menu-toggle-legal {
   display: none;
-  position: fixed;
-  top: 70px;
-  left: 12px;
-  z-index: 50;
   background: #0c121c;
   border: 1px solid #273244;
   color: #e7edf6;
@@ -133,6 +120,7 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  margin: 12px 0 0 12px;
 }
 
 /* ── Overlay ── */
@@ -146,6 +134,21 @@
 
 .sidebar-overlay--open {
   display: block;
+}
+
+/* ── Tablet ≤ 834px ── */
+@media (max-width: 834px) {
+  .legal-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .legal-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .legal-text {
+    font-size: 0.88rem;
+  }
 }
 
 /* ── Móvil ≤ 430px ── */
@@ -170,7 +173,7 @@
   }
 
   .legal-content {
-    padding: 1.5rem 1rem 1.5rem 2.8rem;
+    padding: 1.5rem 1rem 1.5rem 1rem;
   }
 
   .legal-content h1 {
@@ -182,4 +185,12 @@
     font-size: 0.85rem;
     line-height: 1.65;
   }
+}
+html, body {
+  height: 100%;
+  overflow-y: auto;
+}
+
+ion-app {
+  overflow-y: auto;
 }
