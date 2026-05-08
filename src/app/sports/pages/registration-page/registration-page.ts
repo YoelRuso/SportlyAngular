@@ -1,12 +1,47 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Authentication } from '../../services/authentication';
+import { addIcons } from 'ionicons';
+import { eye, eyeOff } from 'ionicons/icons';
+
+// Ionic imports
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonText,
+  IonCheckbox,
+  IonIcon,
+  IonNote,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-registration-page',
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonButton,
+    IonText,
+    IonCheckbox,
+    IonIcon,
+    IonNote,
+  ],
   templateUrl: './registration-page.html',
   styleUrls: ['./registration-page.css'],
 })
@@ -23,13 +58,19 @@ export default class RegistrationPage {
   serverEmailError: string = '';
   error: string = '';
   loading: boolean = false;
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   emailPattern = '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$';
   passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d]).{7,}$';
 
+  constructor() {
+    // Registrar los iconos para poder usarlos por nombre en el HTML
+    addIcons({ eye, eyeOff });
+  }
+
   async onRegistration(form: NgForm) {
     this.submitted = true;
-
     this.serverEmailError = '';
     this.error = '';
 
@@ -41,7 +82,7 @@ export default class RegistrationPage {
 
     try {
       await this.auth.register(this.email, this.password);
-      console.log('Registration proccessed!');
+      console.log('Registration processed!');
       this.router.navigate(['/login']);
     } catch (err: any) {
       const code = err.code || '';
@@ -60,8 +101,6 @@ export default class RegistrationPage {
       this.cdr.detectChanges();
     }
   }
-  showPassword = false;
-  showConfirmPassword = false;
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
