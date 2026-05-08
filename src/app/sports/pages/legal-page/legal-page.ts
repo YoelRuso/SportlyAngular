@@ -1,10 +1,15 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { collection, getDocs } from '@angular/fire/firestore'
-import { Header } from '../../components/header/header';
-import { Footer } from '../../components/footer/footer';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+
+// Ionic imports
+import {
+  IonContent, IonHeader, IonToolbar, IonTitle,
+  IonList, IonItem, IonLabel, IonButton,
+  IonMenu, IonMenuButton, IonMenuToggle,
+  IonSplitPane, IonButtons
+} from '@ionic/angular/standalone';
 
 interface LegalSection {
   id: string;
@@ -14,8 +19,14 @@ interface LegalSection {
 
 @Component({
   selector: 'app-legal-page',
-  imports: [CommonModule, Header, Footer, 
-           ],
+  standalone: true,
+  imports: [
+    CommonModule,
+    IonContent, IonHeader, IonToolbar, IonTitle,
+    IonList, IonItem, IonLabel, IonButton,
+    IonMenu, IonMenuButton, IonMenuToggle,
+    IonSplitPane, IonButtons
+  ],
   templateUrl: './legal-page.html',
   styleUrl: './legal-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,7 +35,6 @@ export default class LegalPage implements OnInit {
   firestore = inject(Firestore);
   sections: LegalSection[] = [];
   active: LegalSection | null = null;
-  sidebarOpen = false;
   loading = true;
   error = false;
 
@@ -47,12 +57,6 @@ export default class LegalPage implements OnInit {
 
   select(section: LegalSection): void {
     this.active = section;
-    this.sidebarOpen = false;
-    this.cdr.markForCheck();
-  }
-
-  toggleSidebar(): void {
-    this.sidebarOpen = !this.sidebarOpen;
     this.cdr.markForCheck();
   }
 
@@ -61,7 +65,6 @@ export default class LegalPage implements OnInit {
       const snapshot = await getDocs(collection(this.firestore, 'legal'));
       this.sections = snapshot.docs.map((doc) => doc.data() as LegalSection);
 
-      // Orden fijo del sidebar
       const ORDER = ['aviso-legal', 'privacidad', 'cookies', 'accesibilidad'];
       this.sections.sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
 
