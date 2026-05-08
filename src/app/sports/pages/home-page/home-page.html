@@ -1,72 +1,74 @@
-<div class="home-wrapper">
-  <app-header />
+<ion-content class="home-content" [fullscreen]="true" [scrollY]="true">
+  <div class="home-wrapper">
+    <app-header />
 
-  <main class="home-shell">
-    <section class="home-grid" aria-label="Portada deportiva">
-      <app-hero-banner />
-      <app-navbar (sportSelected)="onSportSelected($event)" />
+    <main class="home-shell">
+      <section class="home-grid" aria-label="Portada deportiva">
+        <app-hero-banner />
+        <app-navbar (sportSelected)="onSportSelected($event)" />
 
-      <div class="container-fluid py-4">
-        <div class="row g-4">
-          @for (event of events; track event.idEvent ?? $index) {
-            <div class="col-12 col-md-6 col-lg-4">
-              <app-card-init
-                [event]="event"
-                [isFavorite]="favoriteSportsService.favoriteSportIds().find(s => s.idEvent === event.idEvent) != null"
-                (cardClick)="openMatchPopup($event)"
-                (favoriteClick)="toggleFavorite($event)"
-              />
-            </div>
-          } @empty {
-            <div class="col-12">
-              @if (hasLoadError) {
-                <p class="text-center text-secondary m-0">No se pudo conectar con Firebase.</p>
-              } @else {
-                <p class="text-center text-secondary m-0">No hay eventos disponibles.</p>
+        <div class="container-fluid py-4">
+          <div class="row g-4">
+            @for (event of events; track event.idEvent ?? $index) {
+              <div class="col-12 col-md-6 col-lg-4">
+                <app-card-init
+                  [event]="event"
+                  [isFavorite]="favoriteSportsService.favoriteSportIds().find(s => s.idEvent === event.idEvent) != null"
+                  (cardClick)="openMatchPopup($event)"
+                  (favoriteClick)="toggleFavorite($event)"
+                />
+              </div>
+            } @empty {
+              <div class="col-12">
+                @if (hasLoadError) {
+                  <p class="text-center text-secondary m-0">No se pudo conectar con Firebase.</p>
+                } @else {
+                  <p class="text-center text-secondary m-0">No hay eventos disponibles.</p>
+                }
+              </div>
+            }
+          </div>
+
+          @if (totalPages > 1) {
+            <nav class="pagination-nav" aria-label="Paginación">
+              <button
+                class="page-btn"
+                [class.disabled]="currentPage === 1"
+                (click)="goToPage(currentPage - 1)"
+                aria-label="Página anterior"
+              >&lt;</button>
+
+              @for (page of compactPages; track page ?? $index) {
+                @if (page === null) {
+                  <span class="page-ellipsis">...</span>
+                } @else {
+                  <button
+                    class="page-btn"
+                    [class.active]="page === currentPage"
+                    (click)="goToPage(page)"
+                  >{{ page }}</button>
+                }
               }
-            </div>
+
+              <button
+                class="page-btn"
+                [class.disabled]="currentPage === totalPages"
+                (click)="goToPage(currentPage + 1)"
+                aria-label="Página siguiente"
+              >&gt;</button>
+            </nav>
           }
         </div>
+      </section>
+    </main>
 
-        @if (totalPages > 1) {
-          <nav class="pagination-nav" aria-label="Paginación">
-            <button
-              class="page-btn"
-              [class.disabled]="currentPage === 1"
-              (click)="goToPage(currentPage - 1)"
-              aria-label="Página anterior"
-            >&lt;</button>
+    <app-footer />
 
-            @for (page of compactPages; track page ?? $index) {
-              @if (page === null) {
-                <span class="page-ellipsis">...</span>
-              } @else {
-                <button
-                  class="page-btn"
-                  [class.active]="page === currentPage"
-                  (click)="goToPage(page)"
-                >{{ page }}</button>
-              }
-            }
-
-            <button
-              class="page-btn"
-              [class.disabled]="currentPage === totalPages"
-              (click)="goToPage(currentPage + 1)"
-              aria-label="Página siguiente"
-            >&gt;</button>
-          </nav>
-        }
-      </div>
-    </section>
-  </main>
-
-  <app-footer />
-
-  @if (selectedEvent) {
-    <app-match-popup
-      [event]="selectedEvent"
-      (close)="closePopup()"
-    />
-  }
-</div>
+    @if (selectedEvent) {
+      <app-match-popup
+        [event]="selectedEvent"
+        (close)="closePopup()"
+      />
+    }
+  </div>
+</ion-content>
