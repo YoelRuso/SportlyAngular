@@ -8,7 +8,7 @@ import {
   IonContent, IonHeader, IonToolbar, IonTitle,
   IonList, IonItem, IonLabel, IonButton,
   IonMenu, IonMenuButton, IonMenuToggle,
-  IonSplitPane, IonButtons
+  IonSplitPane, IonButtons, IonSpinner, IonIcon
 } from '@ionic/angular/standalone';
 
 interface LegalSection {
@@ -25,7 +25,7 @@ interface LegalSection {
     IonContent, IonHeader, IonToolbar, IonTitle,
     IonList, IonItem, IonLabel, IonButton,
     IonMenu, IonMenuButton, IonMenuToggle,
-    IonSplitPane, IonButtons
+    IonSplitPane, IonButtons, IonSpinner, IonIcon
   ],
   templateUrl: './legal-page.html',
   styleUrl: './legal-page.css',
@@ -60,7 +60,11 @@ export default class LegalPage implements OnInit {
     this.cdr.markForCheck();
   }
 
-  private async loadLegal(): Promise<void> {
+  async loadLegal(): Promise<void> {
+    this.loading = true;
+    this.error = false;
+    this.cdr.markForCheck();
+
     try {
       const snapshot = await getDocs(collection(this.firestore, 'legal'));
       this.sections = snapshot.docs.map((doc) => doc.data() as LegalSection);
