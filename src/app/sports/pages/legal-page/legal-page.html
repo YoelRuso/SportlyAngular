@@ -1,7 +1,6 @@
-<!-- ion-split-pane divide automáticamente sidebar + contenido en tablet/desktop -->
-<ion-split-pane contentId="legal-content" when="md">
-
-  <!-- SIDEBAR -->
+<!-- SPLIT-PANE SOLO EN TABLET/DESKTOP -->
+<ion-split-pane contentId="legal-content" when="(min-width: 1024px)">
+  <!-- SIDEBAR (split-pane) -->
   <ion-menu contentId="legal-content" menuId="legal-menu">
     <ion-header>
       <ion-toolbar class="sidebar-toolbar">
@@ -26,18 +25,13 @@
     </ion-content>
   </ion-menu>
 
-  <!-- CONTENIDO PRINCIPAL -->
+  <!-- CONTENIDO PRINCIPAL SPLIT-PANE -->
   <div id="legal-content">
     <ion-header class="main-header">
       <ion-toolbar class="main-toolbar">
-        <!-- Botón hamburguesa (solo visible en móvil) -->
-        <ion-buttons slot="start">
-          <ion-menu-button class="menu-button"></ion-menu-button>
-        </ion-buttons>
         <ion-title class="main-title">{{ active?.title ?? 'Legal' }}</ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content class="legal-content ion-padding">
       @if (loading) {
         <div class="loading-container">
@@ -65,5 +59,68 @@
       }
     </ion-content>
   </div>
-
 </ion-split-pane>
+
+<!-- SOLO EN MÓVIL: MENU OVERLAY Y CONTENIDO OCUPA TODA LA PANTALLA -->
+<div class="mobile-legal-wrapper" *ngIf="false"><!-- placeholder para Angular, reemplazado abajo --></div>
+<ng-container *ngIf="!(window.innerWidth >= 1024)">
+  <ion-menu contentId="legal-content-mobile" menuId="legal-menu-mobile" type="overlay">
+    <ion-header>
+      <ion-toolbar class="sidebar-toolbar">
+        <ion-title class="sidebar-title">Legal</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="sidebar-content">
+      <ion-list lines="none" class="sidebar-list">
+        @for (section of sections; track section.id) {
+          <ion-item
+            button
+            [class.active-item]="active?.id === section.id"
+            (click)="select(section); $event.target.closest('ion-menu').close()"
+            class="sidebar-item"
+          >
+            <ion-icon name="document-text-outline" slot="start" class="sidebar-icon"></ion-icon>
+            <ion-label class="sidebar-label">{{ section.title }}</ion-label>
+            <ion-icon name="chevron-forward" slot="end" class="sidebar-arrow"></ion-icon>
+          </ion-item>
+        }
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <div id="legal-content-mobile">
+    <ion-header class="main-header">
+      <ion-toolbar class="main-toolbar">
+        <ion-buttons slot="start">
+          <ion-menu-button menu="legal-menu-mobile" class="menu-button"></ion-menu-button>
+        </ion-buttons>
+        <ion-title class="main-title">{{ active?.title ?? 'Legal' }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="legal-content ion-padding">
+      @if (loading) {
+        <div class="loading-container">
+          <ion-spinner name="crescent" color="primary"></ion-spinner>
+          <p class="loading-text">Cargando contenido legal...</p>
+        </div>
+      } @else if (error) {
+        <div class="error-container">
+          <ion-icon name="alert-circle-outline" color="danger" size="large"></ion-icon>
+          <h3 class="error-title">Error al cargar</h3>
+          <p class="error-text">No se pudo cargar el contenido legal. Inténtalo de nuevo más tarde.</p>
+          <ion-button fill="outline" color="primary" (click)="loadLegal()">
+            <ion-icon name="refresh" slot="start"></ion-icon>
+            Reintentar
+          </ion-button>
+        </div>
+      } @else if (active) {
+        <div class="content-wrapper">
+          <div class="title-section">
+            <ion-icon name="document-text" color="primary" class="title-icon"></ion-icon>
+            <h1 class="legal-title">{{ active.title }}</h1>
+          </div>
+          <div class="legal-text" [innerHTML]="active.content"></div>
+        </div>
+      }
+    </ion-content>
+  </div>
+</ng-container>
