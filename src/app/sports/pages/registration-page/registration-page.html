@@ -1,131 +1,121 @@
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true">
+  <div class="reg-shell">
 
-  <div class="form-wrapper">
+    <!-- Cabecera estilo login -->
+    <div class="brand-panel">
+      <p class="eyebrow">SPORTLY</p>
+      <h1>Crear cuenta</h1>
+      <p class="lead">Regístrate y empieza a seguir tu deporte favorito desde cualquier dispositivo.</p>
+    </div>
 
-    <h2 class="form-title">Crear Cuenta en Sportly</h2>
+    <!-- Tarjeta del formulario -->
+    <div class="form-wrapper">
 
-    <form #registrationForm="ngForm" (ngSubmit)="onRegistration(registrationForm)">
+      <h2 class="form-card-title">Bienvenido</h2>
+      <p class="form-card-subtitle">Rellena los campos para crear tu cuenta.</p>
 
-      <!-- Email Field -->
-      <ion-item>
-        <ion-label position="stacked">Correo Electrónico</ion-label>
-        <ion-input
-          type="email"
-          name="email"
-          placeholder="tu@correo.com"
-          [(ngModel)]="email"
-          (ngModelChange)="serverEmailError = ''"
-          required
-          [pattern]="emailPattern"
-          #emailControl="ngModel"
-          [class.ion-invalid]="(emailControl.invalid || serverEmailError) && (emailControl.touched || submitted)"
-          [class.ion-touched]="emailControl.touched || submitted"
-        ></ion-input>
-      </ion-item>
+      <form #registrationForm="ngForm" (ngSubmit)="onRegistration(registrationForm)">
 
-      <ion-note *ngIf="serverEmailError" color="danger" class="error-note">
-        {{ serverEmailError }}
-      </ion-note>
-      <ion-note
-        *ngIf="!serverEmailError && emailControl.invalid && (emailControl.touched || submitted)"
-        color="danger"
-        class="error-note"
-      >
-        Correo inválido
-      </ion-note>
+        <!-- Email Field -->
+        <div class="field-group">
+          <ion-item>
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input
+              type="email"
+              name="email"
+              placeholder="tu@correo.com"
+              [(ngModel)]="email"
+              (ngModelChange)="serverEmailError = ''"
+              required
+              [pattern]="emailPattern"
+              #emailControl="ngModel"
+              [class.ion-invalid]="(emailControl.invalid || serverEmailError) && (emailControl.touched || submitted)"
+              [class.ion-touched]="emailControl.touched || submitted"
+            ></ion-input>
+          </ion-item>
+          <ion-note *ngIf="serverEmailError" color="danger" class="error-note">{{ serverEmailError }}</ion-note>
+          <ion-note *ngIf="!serverEmailError && emailControl.invalid && (emailControl.touched || submitted)" color="danger" class="error-note">Correo inválido</ion-note>
+        </div>
 
-      <!-- Password Field -->
-      <ion-item>
-        <ion-label position="stacked">Contraseña</ion-label>
-        <ion-input
-          [type]="showPassword ? 'text' : 'password'"
-          name="password"
-          placeholder="Contraseña"
-          [(ngModel)]="password"
-          required
-          [pattern]="passwordPattern"
-          #passwordControl="ngModel"
-          [class.ion-invalid]="passwordControl.invalid && (passwordControl.touched || submitted)"
-          [class.ion-touched]="passwordControl.touched || submitted"
-        ></ion-input>
-        <ion-button fill="clear" slot="end" (click)="togglePassword()">
-          <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" slot="icon-only"></ion-icon>
+        <!-- Password Field -->
+        <div class="field-group">
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              placeholder="Contraseña"
+              [(ngModel)]="password"
+              required
+              [pattern]="passwordPattern"
+              #passwordControl="ngModel"
+              [class.ion-invalid]="passwordControl.invalid && (passwordControl.touched || submitted)"
+              [class.ion-touched]="passwordControl.touched || submitted"
+            ></ion-input>
+            <ion-button fill="clear" slot="end" (click)="togglePassword()">
+              <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-note *ngIf="passwordControl.invalid && (passwordControl.touched || submitted)" color="danger" class="error-note">
+            Mín. 7 caracteres, mayúscula, minúscula, número y símbolo
+          </ion-note>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="field-group">
+          <ion-item>
+            <ion-label position="floating">Confirmar contraseña</ion-label>
+            <ion-input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              name="confirmPassword"
+              placeholder="Confirmar contraseña"
+              [(ngModel)]="confirmPassword"
+              required
+              #confirmControl="ngModel"
+              [class.ion-invalid]="(confirmControl.touched || submitted) && password !== confirmPassword"
+              [class.ion-touched]="confirmControl.touched || submitted"
+            ></ion-input>
+            <ion-button fill="clear" slot="end" (click)="toggleConfirmPassword()">
+              <ion-icon [name]="showConfirmPassword ? 'eye-off' : 'eye'" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-note *ngIf="(confirmControl.touched || submitted) && password !== confirmPassword" color="danger" class="error-note">
+            Las contraseñas no coinciden
+          </ion-note>
+        </div>
+
+        <!-- Terms Checkbox -->
+        <ion-item lines="none" class="terms-item">
+          <ion-checkbox
+            name="terms"
+            [(ngModel)]="termsAccepted"
+            #termsControl="ngModel"
+            required
+          ></ion-checkbox>
+          <ion-label class="ion-text-wrap">Acepto los términos y condiciones</ion-label>
+        </ion-item>
+        <ion-note *ngIf="submitted && !termsAccepted" color="danger" class="error-note">
+          Es necesario aceptar los términos y condiciones
+        </ion-note>
+
+        <!-- Submit Button -->
+        <ion-button expand="block" type="submit" [disabled]="loading" class="submit-btn">
+          {{ loading ? 'Registrando...' : 'REGISTRARSE' }}
         </ion-button>
-      </ion-item>
 
-      <ion-note
-        *ngIf="passwordControl.invalid && (passwordControl.touched || submitted)"
-        color="danger"
-        class="error-note"
-      >
-        Mín. 7 caracteres, mayúscula, minúscula, número y símbolo
-      </ion-note>
+        <!-- General Error -->
+        <ion-text *ngIf="error" color="danger" class="error-text">
+          <p>{{ error }}</p>
+        </ion-text>
 
-      <!-- Confirm Password Field -->
-      <ion-item>
-        <ion-label position="stacked">Confirmar contraseña</ion-label>
-        <ion-input
-          [type]="showConfirmPassword ? 'text' : 'password'"
-          name="confirmPassword"
-          placeholder="Confirmar contraseña"
-          [(ngModel)]="confirmPassword"
-          required
-          #confirmControl="ngModel"
-          [class.ion-invalid]="(confirmControl.touched || submitted) && password !== confirmPassword"
-          [class.ion-touched]="confirmControl.touched || submitted"
-        ></ion-input>
-        <ion-button fill="clear" slot="end" (click)="toggleConfirmPassword()">
-          <ion-icon [name]="showConfirmPassword ? 'eye-off' : 'eye'" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-item>
+      </form>
 
-      <ion-note
-        *ngIf="(confirmControl.touched || submitted) && password !== confirmPassword"
-        color="danger"
-        class="error-note"
-      >
-        Las contraseñas no coinciden
-      </ion-note>
+      <!-- Login Link -->
+      <div class="login-link">
+        <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión</a></p>
+      </div>
 
-      <!-- Terms Checkbox -->
-      <ion-item lines="none">
-        <ion-checkbox
-          name="terms"
-          [(ngModel)]="termsAccepted"
-          #termsControl="ngModel"
-          required
-        ></ion-checkbox>
-        <ion-label class="ion-text-wrap">
-          Acepto los términos y condiciones
-        </ion-label>
-      </ion-item>
-
-      <ion-note *ngIf="submitted && !termsAccepted" color="danger" class="error-note">
-        Es necesario aceptar los términos y condiciones
-      </ion-note>
-
-      <!-- Submit Button -->
-      <ion-button
-        expand="block"
-        type="submit"
-        [disabled]="loading"
-        class="ion-margin-top"
-      >
-        {{ loading ? 'Registrando...' : 'Registrarse' }}
-      </ion-button>
-
-      <!-- General Error -->
-      <ion-text *ngIf="error" color="danger" class="error-text">
-        <p>{{ error }}</p>
-      </ion-text>
-
-    </form>
-
-    <!-- Login Link -->
-    <div class="login-link">
-      <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión</a></p>
     </div>
 
   </div>
-
 </ion-content>

@@ -1,132 +1,212 @@
-/* Fondo e ion-content */
+:host {
+  display: block;
+}
+
+/* ── Fondo ── */
 ion-content {
-  --background: #0f0f0f;
-  --color: #ffffff;
+  --background:
+    radial-gradient(circle at top, rgba(0, 255, 136, 0.14), transparent 34%),
+    linear-gradient(180deg, #0f141b 0%, #090c12 100%);
 }
 
-/* Título del formulario */
-.form-title {
-  color: #ffffff;
-  font-size: 1.5rem;
-  font-weight: bold;
+/* ── Shell ── */
+.reg-shell {
+  min-height: 100%;
+  display: grid;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem;
+}
+
+/* ── Panel de marca ── */
+.brand-panel {
+  max-width: 38rem;
+  margin: 0 auto;
   text-align: center;
-  margin-bottom: 1.5rem;
+  color: var(--text-1);
 }
 
-/* Contenedor centrado para escritorio */
+.eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.brand-panel h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1;
+}
+
+.lead {
+  max-width: 34rem;
+  margin: 0.85rem auto 0;
+  color: var(--text-2);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ── Tarjeta ── */
 .form-wrapper {
-  max-width: 420px;
-  margin: 3rem auto 0;
-  padding: 2rem 1.5rem;
-  background: #1a1a1a;
-  border-radius: 20px;
-  border: 1px solid #333;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  width: min(100%, 30rem);
+  margin: 0 auto;
+  border-radius: 1.5rem;
+  background: rgba(19, 27, 38, 0.9);
+  border: 1px solid rgba(151, 173, 205, 0.16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+  padding: 1.5rem 1.25rem 1.35rem;
 }
 
-/* Formulario */
+.form-card-title {
+  margin: 0;
+  font-size: 1.35rem;
+  color: var(--text-1);
+  font-weight: 700;
+}
+
+.form-card-subtitle {
+  margin: 0.4rem 0 1rem;
+  color: var(--text-2);
+  font-size: 0.92rem;
+}
+
+/* ── Formulario ── */
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.8rem;
 }
 
-/* Items */
+/* ── Grupos de campo ── */
+.field-group {
+  display: grid;
+  gap: 0.1rem;
+}
+
+/* ── Items ── */
 ion-item {
-  --background: #1a1a1a;
-  --border-color: #333;
-  --border-radius: 10px;
-  --padding-start: 16px;
-  --inner-padding-end: 16px;
-  --highlight-color-focused: #00ff88;
-  margin-bottom: 0.3rem;
+  --background: rgba(24, 34, 49, 0.8);
+  --padding-start: 0.95rem;
+  --padding-end: 0.75rem;
+  --inner-padding-end: 0;
+  --border-radius: 1rem;
+  --border-color: rgba(151, 173, 205, 0.14);
+  --border-width: 1px;
+  --highlight-color-focused: var(--accent, #00ff88);
+  --color: var(--text-1);
+  --min-height: 64px;
+  border-radius: 1rem;
+  border: 1px solid rgba(151, 173, 205, 0.14);
 }
 
-/* Labels */
+/* ── Labels ── */
 ion-label {
-  color: #aaaaaa !important;
-  font-size: 0.9rem;
+  color: var(--text-2) !important;
+  font-size: 0.92rem !important;
+  margin-bottom: 0.45rem !important;
 }
 
-/* Inputs */
+/* ── Inputs ── */
 ion-input {
-  --color: #ffffff;
-  --placeholder-color: #666;
-  --padding-start: 0;
+  --color: var(--text-1);
+  --placeholder-color: rgba(231, 237, 246, 0.45);
   font-size: 1rem;
 }
 
-/* Botón toggle "ver contraseña" */
+/* ── Botón ojo ── */
 ion-button[fill="clear"] {
-  --color: #aaaaaa;
+  --padding-start: 0.25rem;
+  --padding-end: 0.25rem;
+  --color: var(--text-2);
+  height: 2.25rem;
 }
 
-/* Botón principal */
-ion-button[expand="block"] {
-  --background: #00ff88;
-  --color: #000000;
-  --border-radius: 10px;
-  --background-hover: #00cc6e;
-  --background-activated: #00cc6e;
-  font-weight: bold;
-  font-size: 1rem;
-  height: 48px;
-  margin-top: 0.5rem;
+/* ── Terms ── */
+.terms-item {
+  --background: transparent;
+  --border-color: transparent;
+  --border-width: 0;
+  --min-height: 44px;
+  border: none !important;
+  margin-top: 0.2rem;
 }
 
-ion-button[expand="block"][disabled] {
-  --background: #444;
-  --color: #888;
-  opacity: 1;
-}
-
-/* Checkbox */
 ion-checkbox {
-  --background: #2a2a2a;
-  --background-checked: #00ff88;
-  --border-color: #444;
-  --border-color-checked: #00ff88;
-  --checkmark-color: #000000;
+  --checkbox-background-checked: var(--accent, #00ff88);
+  --border-color-checked: var(--accent, #00ff88);
+  --checkmark-color: #04110a;
   --size: 20px;
+  color: var(--text-1);
+  font-size: 0.92rem;
   margin-right: 10px;
 }
 
-/* Notas de error */
-ion-note.error-note {
-  display: block;
-  padding-left: 16px;
-  padding-bottom: 6px;
+/* ── Notas de error ── */
+ion-note {
+  margin: 0.05rem 0 0.15rem 0.2rem;
   font-size: 0.82rem;
 }
 
-/* Texto de error general */
+/* ── Botón principal ── */
+.submit-btn {
+  margin-top: 0.4rem;
+  --background: linear-gradient(135deg, var(--accent, #00ff88) 0%, #38e6a3 100%);
+  --background-hover: linear-gradient(135deg, #33f39b 0%, #20d58a 100%);
+  --color: #04110a;
+  --border-radius: 999px;
+  min-height: 3rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.submit-btn[disabled] {
+  --background: rgba(255,255,255,0.08);
+  --color: rgba(255,255,255,0.3);
+  opacity: 1;
+}
+
+/* ── Error general ── */
 .error-text {
   text-align: center;
   margin-top: 0.8rem;
 }
 
 .error-text p {
-  font-size: 0.9rem;
+  margin: 0;
+  color: #ff9a9a;
+  font-size: 0.93rem;
 }
 
-/* Link de login */
+/* ── Link login ── */
 .login-link {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .login-link p {
-  color: #888888;
-  font-size: 0.9rem;
+  color: var(--text-2);
+  font-size: 0.88rem;
 }
 
 .login-link a {
-  color: #00ff88;
+  color: var(--accent, #00ff88);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+/* ── Responsive ── */
+@media (min-width: 768px) {
+  .reg-shell {
+    padding: 2rem;
+  }
+
+  .form-wrapper {
+    transform: translateY(-0.25rem);
+  }
 }
