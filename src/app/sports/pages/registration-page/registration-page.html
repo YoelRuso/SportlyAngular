@@ -25,15 +25,49 @@
               <span>Añadir foto</span>
             </div>
           </div>
-          <input
-            #fileInput
-            type="file"
-            accept="image/*"
-            style="display:none"
-            (change)="onFileSelected($event)"
-          />
+          <input #fileInput type="file" accept="image/*" style="display:none" (change)="onFileSelected($event)" />
           <p class="avatar-hint">Toca para seleccionar una foto de perfil</p>
           <p *ngIf="submitted && !avatarFile" class="avatar-error">La foto de perfil es obligatoria</p>
+        </div>
+
+        <!-- Nombre -->
+        <div class="field-group">
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input
+              type="text"
+              name="nombre"
+              placeholder="Tu nombre"
+              [(ngModel)]="nombre"
+              required
+              #nombreControl="ngModel"
+              [class.ion-invalid]="nombreControl.invalid && (nombreControl.touched || submitted)"
+              [class.ion-touched]="nombreControl.touched || submitted"
+            ></ion-input>
+          </ion-item>
+          <ion-note *ngIf="nombreControl.invalid && (nombreControl.touched || submitted)" color="danger" class="error-note">
+            El nombre es obligatorio
+          </ion-note>
+        </div>
+
+        <!-- Apellidos -->
+        <div class="field-group">
+          <ion-item>
+            <ion-label position="floating">Apellidos</ion-label>
+            <ion-input
+              type="text"
+              name="apellidos"
+              placeholder="Tus apellidos"
+              [(ngModel)]="apellidos"
+              required
+              #apellidosControl="ngModel"
+              [class.ion-invalid]="apellidosControl.invalid && (apellidosControl.touched || submitted)"
+              [class.ion-touched]="apellidosControl.touched || submitted"
+            ></ion-input>
+          </ion-item>
+          <ion-note *ngIf="apellidosControl.invalid && (apellidosControl.touched || submitted)" color="danger" class="error-note">
+            Los apellidos son obligatorios
+          </ion-note>
         </div>
 
         <!-- Email -->

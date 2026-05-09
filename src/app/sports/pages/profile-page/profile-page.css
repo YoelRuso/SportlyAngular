@@ -228,3 +228,47 @@
     flex: 1;
   }
 }
+/* ── Avatar ── */
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+}
+
+.avatar-fallback {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(0, 255, 136, 0.12);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.avatar-placeholder-skeleton {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Nombre destacado ── */
+.user-info strong {
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}

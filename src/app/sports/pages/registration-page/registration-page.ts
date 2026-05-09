@@ -5,9 +5,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Authentication } from '../../services/authentication';
 import { addIcons } from 'ionicons';
 import { eye, eyeOff, cameraOutline } from 'ionicons/icons';
-import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
-import { doc, setDoc } from '@angular/fire/firestore';
-import { Firestore } from '@angular/fire/firestore';
+import { doc, setDoc, Firestore } from '@angular/fire/firestore';
 
 import {
   IonContent, IonItem, IonLabel, IonInput,
@@ -29,12 +27,13 @@ export default class RegistrationPage {
   auth = inject(Authentication);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
-  storage = inject(Storage);
   firestore = inject(Firestore);
 
   email = '';
   password = '';
   confirmPassword = '';
+  nombre = '';
+  apellidos = '';
   termsAccepted = false;
   submitted = false;
   serverEmailError = '';
@@ -57,13 +56,23 @@ export default class RegistrationPage {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
-
     this.avatarFile = file;
 
+    // Comprimir antes de convertir a base64
+    const img = new Image();
     const reader = new FileReader();
-    reader.onload = () => {
-      this.avatarPreview = reader.result as string;
-      this.cdr.detectChanges();
+    reader.onload = (e) => {
+      img.src = e.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 256;
+        const ratio = Math.min(MAX / img.width, MAX / img.height);
+        canvas.width = img.width * ratio;
+        canvas.height = img.height * ratio;
+        canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        this.avatarPreview = canvas.toDataURL('image/jpeg', 0.8);
+        this.cdr.detectChanges();
+      };
     };
     reader.readAsDataURL(file);
   }
@@ -73,35 +82,33 @@ export default class RegistrationPage {
     this.serverEmailError = '';
     this.error = '';
 
-    if (form.invalid || this.password !== this.confirmPassword || !this.termsAccepted || !this.avatarFile) {
-      return;
-    }
+    if (
+      form.invalid ||
+      this.password !== this.confirmPassword ||
+      !this.termsAccepted ||
+      !this.avatarFile
+    ) return;
 
     this.loading = true;
 
     try {
       // 1. Crear usuario en Firebase Auth
-      const userCredential = await this.auth.register(this.email, this.password);
-      const uid = userCredential.uid;
+      const user = await this.auth.register(this.email, this.password);
+      const uid = user.uid;
 
-      // 2. Subir foto a Firebase Storage
-      const storageRef = ref(this.storage, `avatars/${uid}`);
-      await uploadBytes(storageRef, this.avatarFile);
-      const photoURL = await getDownloadURL(storageRef);
-
-      // 3. Guardar datos del usuario en Firestore
+      // 2. Guardar perfil en Firestore con foto en base64
       await setDoc(doc(this.firestore, 'users', uid), {
         email: this.email,
-        photoURL,
+        nombre: this.nombre,
+        apellidos: this.apellidos,
+        photoBase64: this.avatarPreview,
         createdAt: new Date(),
       });
 
-      console.log('Registration processed!');
       this.router.navigate(['/login']);
     } catch (err: any) {
       const code = err.code || '';
       const message = err.message || '';
-
       if (
         code === 'auth/email-already-in-use' ||
         message.toLowerCase().includes('email-already-in-use')

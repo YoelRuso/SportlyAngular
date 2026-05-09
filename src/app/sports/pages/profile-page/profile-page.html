@@ -1,5 +1,6 @@
 <div class="profile-wrapper">
   <div class="dashboard">
+
     <!-- PANEL IZQUIERDO -->
     <div class="profile-section">
       <div class="title-with-btn-back" id="perfil-title-with-btn-back">
@@ -7,7 +8,23 @@
         <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="perfil-btn-back">← Volver</a>
         <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="mobile-btn-back">←</a>
       </div>
+
+      <!-- Foto de perfil -->
+      @if (loadingProfile()) {
+        <div class="avatar-placeholder-skeleton"></div>
+      } @else if (profile()?.photoBase64) {
+        <img [src]="profile()!.photoBase64" alt="Foto de perfil" class="profile-avatar" />
+      } @else {
+        <div class="avatar-fallback">
+          {{ profile()?.nombre?.charAt(0) ?? email?.charAt(0) ?? '?' }}
+        </div>
+      }
+
+      <!-- Info del usuario -->
       <div class="user-info">
+        @if (profile()) {
+          <p><strong>{{ profile()!.nombre }} {{ profile()!.apellidos }}</strong></p>
+        }
         <p><strong>Email: </strong>{{ email }}</p>
         <p><strong>ID: </strong>{{ userUUID }}</p>
       </div>
@@ -52,5 +69,6 @@
         }
       </div>
     </div>
+
   </div>
 </div>
