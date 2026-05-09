@@ -7,22 +7,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
-// Ionic Imports
-import {
-  IonContent,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonButtons,
-  IonBackButton,
-  IonSpinner,
-  IonIcon,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonText,
-  IonButton,
-} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   mailOutline,
@@ -31,13 +15,24 @@ import {
   callOutline,
   logoGithub,
   logoLinkedin,
+  alertCircleOutline,
 } from 'ionicons/icons';
+
+import {
+  IonContent,
+  IonSpinner,
+  IonIcon,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonButton,
+} from '@ionic/angular/standalone';
 
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 
 interface ContactItem {
-  icon: string; // Nombre del icono de Ionic (ej: 'mail-outline')
+  icon: string;
   type: 'email' | 'link' | 'text';
   value: string;
   href: string;
@@ -57,17 +52,11 @@ interface ContactInfo {
     Header,
     Footer,
     IonContent,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonBackButton,
     IonSpinner,
     IonIcon,
     IonList,
     IonItem,
     IonLabel,
-    IonText,
     IonButton,
   ],
   templateUrl: './contact-page.html',
@@ -83,8 +72,15 @@ export default class ContactPage implements OnInit {
   error = false;
 
   constructor() {
-    // Registra aquí los iconos que vayas a usar en tu base de datos
-    addIcons({ mailOutline, linkOutline, schoolOutline, callOutline, logoGithub, logoLinkedin });
+    addIcons({
+      mailOutline,
+      linkOutline,
+      schoolOutline,
+      callOutline,
+      logoGithub,
+      logoLinkedin,
+      alertCircleOutline,
+    });
   }
 
   ngOnInit(): void {
@@ -92,6 +88,10 @@ export default class ContactPage implements OnInit {
   }
 
   private async loadContact(): Promise<void> {
+    this.loading = true;
+    this.error = false;
+    this.cdr.markForCheck();
+
     try {
       const snapshot = await getDoc(doc(this.firestore, 'contact', 'info'));
       if (snapshot.exists()) {

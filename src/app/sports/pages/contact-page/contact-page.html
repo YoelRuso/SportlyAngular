@@ -1,6 +1,7 @@
-<app-header />
-
 <ion-content [fullscreen]="true" class="contact-content">
+
+  <app-header />
+
   <div class="contact-shell">
 
     @if (loading) {
@@ -27,13 +28,10 @@
               [detail]="false"
               [button]="item.type !== 'text'"
               [attr.target]="item.type === 'link' ? '_blank' : null">
-
               <ion-icon [name]="item.icon" slot="start"></ion-icon>
-
               <ion-label>
                 <span class="value-text">{{ item.value }}</span>
               </ion-label>
-
             </ion-item>
           }
         </ion-list>
@@ -41,5 +39,7 @@
     }
 
   </div>
+
   <app-footer />
+
 </ion-content>

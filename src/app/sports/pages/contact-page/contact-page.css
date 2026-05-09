@@ -1,17 +1,20 @@
-/* Estructura Base */
+/* ── Fondo ── */
 .contact-content {
-  --background: transparent; /* Permite ver el fondo del wrapper si tienes uno */
+  --background:
+    radial-gradient(circle at top, rgba(0, 255, 136, 0.08), transparent 40%),
+    linear-gradient(180deg, #0f141b 0%, #090c12 100%);
 }
 
+/* ── Shell ── */
 .contact-shell {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
-  padding: 1rem;
+  min-height: 70vh;
+  padding: 2rem 1rem;
 }
 
-/* Caja de Contacto */
+/* ── Caja principal ── */
 .contact-box {
   background: linear-gradient(180deg, #0f1622 0%, #0c121c 100%);
   border: 1px solid rgba(60, 247, 177, 0.2);
@@ -30,9 +33,9 @@
   gap: 1rem;
 }
 
-/* Tipografía */
+/* ── Tipografía ── */
 .contact-box h1 {
-  color: #3cf7b1; /* O tu variable --accent */
+  color: var(--accent, #3cf7b1);
   font-size: 1.8rem;
   font-weight: 800;
   text-align: center;
@@ -47,7 +50,7 @@
   line-height: 1.5;
 }
 
-/* Lista de Ionic personalizada */
+/* ── Lista ── */
 .contact-list {
   background: transparent;
   padding: 0;
@@ -55,47 +58,55 @@
 
 .contact-item {
   --background: transparent;
-  --background-hover: #3cf7b1;
+  --background-hover: rgba(60, 247, 177, 0.1);
   --color: #f8fafc;
   --border-radius: 12px;
   --border-width: 1px;
   --border-style: solid;
   --border-color: rgba(60, 247, 177, 0.3);
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  --min-height: 56px;
   margin-bottom: 12px;
-  transition: transform 0.2s ease;
+  border-radius: 12px;
+  border: 1px solid rgba(60, 247, 177, 0.3);
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .contact-item:hover {
   transform: translateY(-2px);
-  --color: #0c121c;
+  border-color: rgba(60, 247, 177, 0.6);
 }
 
 .contact-item ion-icon {
-  color: #3cf7b1;
+  color: var(--accent, #3cf7b1);
   font-size: 1.4rem;
-}
-
-.contact-item:hover ion-icon {
-  color: #0c121c;
+  margin-right: 4px;
 }
 
 .value-text {
   font-weight: 600;
   font-size: 0.95rem;
+  color: #f8fafc;
 }
 
-/* Status */
+/* ── Status ── */
 .contact-status {
   color: #94a3b8;
   font-size: 0.9rem;
 }
 
-/* Responsive */
+/* ── Responsive ── */
 @media (max-width: 480px) {
   .contact-box {
     padding: 1.5rem 1rem;
     border: none;
     background: transparent;
     box-shadow: none;
+  }
+
+  .contact-shell {
+    align-items: flex-start;
+    padding-top: 1.5rem;
   }
 }
