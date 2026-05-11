@@ -54,9 +54,9 @@
       <button
         type="button"
         class="fav-btn"
-        [ngClass]="{ 'fav-btn--active': isFavorite }"
-        [attr.aria-label]="isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'"
-        [title]="isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+        [ngClass]="{ 'fav-btn--active': isFavorite, 'fav-btn--disabled': favoriteDisabled }"
+        [attr.aria-label]="favoriteDisabled ? 'Inicia sesión para guardar favoritos' : (isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos')"
+        [title]="favoriteDisabled ? 'Inicia sesión para guardar favoritos' : (isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos')"
         (click)="onFavClick($event)"
       >
         ♥
