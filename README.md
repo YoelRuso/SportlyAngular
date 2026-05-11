@@ -5,6 +5,7 @@
 npm install @angular/fire --legacy-peer-deps
 npm install @ionic/angular ionicons --legacy-peer-deps
 npm install @ionic/angular-toolkit --save-dev --legacy-peer-deps
+npm install -g @ionic/cli
 npm install @capacitor-community/sqlite --legacy-peer-deps
 npm install jeep-sqlite sql.js --legacy-peer-deps
 ```
