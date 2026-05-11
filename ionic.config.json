@@ -1,0 +1,13 @@
+{
+  "defaultProject": "SPORTLY",
+  "projects": {
+    "SPORTLY": {
+      "name": "SPORTLY",
+      "integrations": {
+        "capacitor": {}
+      },
+      "type": "angular",
+      "root": ""
+    }
+  }
+}
