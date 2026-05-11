@@ -74,6 +74,10 @@ export default class HomePage implements OnInit {
     this.loadAllEvents();
   }
 
+  ionViewWillEnter(): void {
+    void this.favoriteSportsService.reloadFavorites();
+  }
+
   goToPage(page: number): void {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;

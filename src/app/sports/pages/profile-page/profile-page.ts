@@ -17,4 +17,8 @@ export default class ProfilePage {
   userUUID = this.auth.getCurrentUser()?.uid;
 
   sports = this.favoriteSportsService.favoriteSportEvents;
+
+  ionViewWillEnter(): void {
+    void this.favoriteSportsService.reloadFavorites();
+  }
 }
