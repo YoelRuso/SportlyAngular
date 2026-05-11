@@ -1,38 +1,39 @@
-import { Injectable, signal, effect, inject } from '@angular/core';
-import { Firestore, collection, query, where, getDocs, doc, setDoc, writeBatch } from '@angular/fire/firestore'
+import { Injectable, signal, effect } from '@angular/core';
 import { Authentication } from './authentication';
 import { FavoriteSport } from '../interfaces/favorite-sport';
 import { SportEvent } from '../interfaces/sportevent';
 import { SportsData } from './sports-data';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, Subscription, from, map, catchError, of } from 'rxjs';
+import { SqliteService } from './sqlite.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FavoriteSports {
-  firestore = inject(Firestore);
   private favoriteSportEventsSignal = signal<SportEvent[]>([]);
   private favoriteSportIdsSignal = signal<FavoriteSport[]>([]);
   private userSignal!: any;
 
-  constructor(private auth: Authentication, private sportsData: SportsData) {
+  constructor(
+    private auth: Authentication,
+    private sportsData: SportsData,
+    private sqliteService: SqliteService,
+  ) {
     this.userSignal = toSignal(this.auth.user$, { initialValue: null });
 
     effect((onCleanup) => {
       const user = this.userSignal();
-      let idsSubscription: Subscription | null = null;
+      let cancelled = false;
       if (user) {
-        idsSubscription = this.getFavoriteSportIds(user.uid).subscribe({
-          next: (ids) => this.favoriteSportIdsSignal.set(ids),
-          error: (err) => console.error('Error fetching favorite sport ids:', err),
-        });
+        void this.loadFavoriteSportIds(user.uid, () => cancelled);
       } else {
         this.favoriteSportEventsSignal.set([]);
         this.favoriteSportIdsSignal.set([]);
       }
 
-      onCleanup(() => idsSubscription?.unsubscribe());
+      onCleanup(() => {
+        cancelled = true;
+      });
     });
 
     effect(() => {
@@ -70,33 +71,17 @@ export class FavoriteSports {
     }
   }
 
-  // returns idEvents from partidas-favoritas endpoint
-  private getFavoriteSportIds(userId: string): Observable<FavoriteSport[]> {
-    const q = query(
-      collection(this.firestore, 'partidas-favoritas'),
-      where('userID', '==', userId)
-    );
+  async reloadFavorites(): Promise<void> {
+    const user = this.userSignal();
+    if (!user) {
+      this.favoriteSportEventsSignal.set([]);
+      this.favoriteSportIdsSignal.set([]);
+      return;
+    }
 
-    return from(getDocs(q)).pipe(
-      map((snapshot) => {
-        const favorites = snapshot.docs.map((doc) => doc.data() as FavoriteSport);
-        const uniqueByEvent = new Map<string, FavoriteSport>();
-        favorites.forEach((favorite) => {
-          const idEvent = favorite.idEvent;
-          if (idEvent && !uniqueByEvent.has(idEvent)) {
-            uniqueByEvent.set(idEvent, favorite);
-          }
-        });
-        return Array.from(uniqueByEvent.values());
-      }),
-      catchError((err) => {
-        console.error('Error fetching favorites:', err);
-        return of([]);
-      })
-    );
+    await this.loadFavoriteSportIds(user.uid);
   }
 
-  // add new FavoriteSport with just the idEvent
   private async _addFavoriteSport(idEvent: string, userId: string): Promise<void> {
     const favorite: FavoriteSport = { idEvent, userID: userId };
     try {
@@ -104,36 +89,37 @@ export class FavoriteSports {
         return;
       }
 
-      const favoriteDocId = this.favoriteDocId(userId, idEvent);
-      await setDoc(doc(this.firestore, 'partidas-favoritas', favoriteDocId), favorite, { merge: true });
+      await this.sqliteService.addFavoriteSport(userId, idEvent);
       this.favoriteSportIdsSignal.update((current) => [...current, favorite]);
     } catch (error) {
       console.error('Error adding favorite sport:', error);
     }
   }
 
-  // delete FavoriteSport by idEvent
   private async _deleteFavoriteSport(idEvent: string, userId: string): Promise<void> {
     try {
-      const favoriteQuery = query(
-        collection(this.firestore, 'partidas-favoritas'),
-        where('userID', '==', userId),
-        where('idEvent', '==', idEvent)
-      );
-      const snapshot = await getDocs(favoriteQuery);
-      const batch = writeBatch(this.firestore);
-      snapshot.docs.forEach((favoriteDoc) => batch.delete(favoriteDoc.ref));
-      batch.delete(doc(this.firestore, 'partidas-favoritas', this.favoriteDocId(userId, idEvent)));
-      await batch.commit();
+      await this.sqliteService.deleteFavoriteSport(userId, idEvent);
       this.favoriteSportIdsSignal.update((current) => current.filter((item) => item.idEvent !== idEvent));
     } catch (error) {
       console.error('Error deleting favorite sport:', error);
     }
   }
 
-
-  private favoriteDocId(userId: string, idEvent: string): string {
-    return `${userId}_${idEvent}`;
+  private async loadFavoriteSportIds(
+    userId: string,
+    isCancelled: () => boolean = () => false,
+  ): Promise<void> {
+    try {
+      const favorites = await this.sqliteService.getFavoriteSports(userId);
+      if (!isCancelled()) {
+        this.favoriteSportIdsSignal.set(favorites);
+      }
+    } catch (err) {
+      console.error('Error fetching favorite sport ids:', err);
+      if (!isCancelled()) {
+        this.favoriteSportIdsSignal.set([]);
+      }
+    }
   }
 
   private loadFavoriteEvents(idEvents: string[]): void {

@@ -152,6 +152,16 @@
   background: rgba(0, 255, 136, 0.12);
 }
 
+.fav-btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fav-btn--disabled:hover {
+  border-color: #555;
+  color: #555;
+}
+
 @media (max-width: 834px) {
   .card {
     max-width: 300px;

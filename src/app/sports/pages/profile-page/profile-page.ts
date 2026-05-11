@@ -67,4 +67,8 @@ export default class ProfilePage implements OnInit {
       this.loadingProfile.set(false);
     }
   }
+
+  ionViewWillEnter(): void {
+    void this.favoriteSportsService.reloadFavorites();
+  }
 }

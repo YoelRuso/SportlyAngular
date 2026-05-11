@@ -1,5 +1,34 @@
 # SPORTLY
 
+## Instalation
+```
+npm install @angular/fire --legacy-peer-deps
+npm install @ionic/angular ionicons --legacy-peer-deps
+npm install @ionic/angular-toolkit --save-dev --legacy-peer-deps
+npm install -g @ionic/cli
+npm install @capacitor/core --legacy-peer-deps
+npm install @capacitor-community/sqlite --legacy-peer-deps
+npm install jeep-sqlite sql.js --legacy-peer-deps
+```
+
+### Sqlite3 instalation
+Linux
+```
+sudo apt install sqlite3
+```
+
+## Quick start
+Para web-browser
+```
+ionic serve
+```
+Para movíl
+```
+ionic cap build android
+o
+ionic cap run android -l external
+```
+
 # 📁 Configuración de Firebase para el Equipo
 
 La base de datos de Firestore ya está configurada y con los datos cargados. Para poder trabajar localmente y que la aplicación se conecte correctamente, sigue estos pasos:
