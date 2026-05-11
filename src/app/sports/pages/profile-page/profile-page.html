@@ -1,32 +1,38 @@
-<div class="profile-wrapper">
+<ion-content [scrollY]="true">
+  <app-header />
+
   <div class="dashboard">
 
     <!-- PANEL IZQUIERDO -->
     <div class="profile-section">
       <div class="title-with-btn-back" id="perfil-title-with-btn-back">
         <h2>Ver Perfil</h2>
-        <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="perfil-btn-back">← Volver</a>
-        <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="mobile-btn-back">←</a>
+        <a routerLink="/home" class="btn-back-home" id="perfil-btn-back">← Volver</a>
+        <a routerLink="/home" class="btn-back-home" id="mobile-btn-back">←</a>
       </div>
 
       <!-- Foto de perfil -->
       @if (loadingProfile()) {
-        <div class="avatar-placeholder-skeleton"></div>
+        <div class="avatar-placeholder-skeleton">Cargando...</div>
       } @else if (profile()?.photoBase64) {
         <img [src]="profile()!.photoBase64" alt="Foto de perfil" class="profile-avatar" />
       } @else {
         <div class="avatar-fallback">
-          {{ profile()?.nombre?.charAt(0) ?? email?.charAt(0) ?? '?' }}
+          {{ profile()?.nombre?.charAt(0) ?? email()?.charAt(0) ?? '?' }}
         </div>
       }
 
       <!-- Info del usuario -->
       <div class="user-info">
-        @if (profile()) {
-          <p><strong>{{ profile()!.nombre }} {{ profile()!.apellidos }}</strong></p>
+        @if (loadingProfile()) {
+          <p>Cargando datos...</p>
+        } @else {
+          @if (profile()) {
+            <p><strong>{{ profile()?.nombre }} {{ profile()?.apellidos }}</strong></p>
+          }
+          <p><strong>Email: </strong>{{ email() }}</p>
+          <p><strong>ID: </strong>{{ userUUID() }}</p>
         }
-        <p><strong>Email: </strong>{{ email }}</p>
-        <p><strong>ID: </strong>{{ userUUID }}</p>
       </div>
     </div>
 
@@ -34,7 +40,7 @@
     <div class="favorites-section">
       <div class="title-with-btn-back">
         <h2>Partidos Favoritos</h2>
-        <a routerLink="/home" routerLinkActive="active" class="btn-back-home" id="partidos-btn-back">← Volver a Inicio</a>
+        <a routerLink="/home" class="btn-back-home" id="partidos-btn-back">← Volver a Inicio</a>
       </div>
 
       <div class="match-list">
@@ -71,4 +77,6 @@
     </div>
 
   </div>
-</div>
+
+  <app-footer />
+</ion-content>

@@ -4,11 +4,14 @@
   flex-direction: column;
   min-height: 100vh;
 }
+ion-content {
+  --background: #080e18;
+}
 
+/* ── Layout general ── */
 .dashboard {
   display: flex;
-  flex: 1;
-  min-height: calc(100vh - 76px);
+  min-height: 80vh;
 }
 
 /* ── Panel izquierdo ── */
