@@ -19,7 +19,7 @@
 
       <button class="avatar-btn" (click)="handleAvatarClick()" aria-label="Perfil de usuario">
         <img
-          src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+          [src]="userProfile()?.photoBase64 || 'https://cdn-icons-png.flaticon.com/512/847/847969.png'"
           alt="Avatar de usuario"
           class="avatar"
         />
