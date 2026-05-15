@@ -1,8 +1,12 @@
-/* ── Layout ── */
+ion-content {
+  --background: radial-gradient(circle at 12% 18%, rgba(49, 230, 164, 0.08) 0%, transparent 40%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+}
+
 .schedule-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 76px);
+  min-height: 100%;
 }
 
 .schedule-shell {
