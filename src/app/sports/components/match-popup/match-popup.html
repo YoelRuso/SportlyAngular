@@ -55,11 +55,24 @@
         </div>
       </div>
 
-      @if (event?.strVideo) {
-        <a [href]="event.strVideo" target="_blank" rel="noopener" class="popup-btn">
-          Ver mejores jugadas
-        </a>
-      }
+      <div class="popup-actions">
+        @if (event?.strVideo) {
+          <a [href]="event.strVideo" target="_blank" rel="noopener" class="popup-btn">
+            Ver mejores jugadas
+          </a>
+        }
+
+        <button
+          type="button"
+          class="popup-fav-btn"
+          [ngClass]="{ 'popup-fav-btn--active': isFavorite, 'popup-fav-btn--disabled': favoriteDisabled }"
+          [attr.aria-label]="favoriteDisabled ? 'Inicia sesion para guardar favoritos' : (isFavorite ? 'Quitar de favoritos' : 'Anadir a favoritos')"
+          [title]="favoriteDisabled ? 'Inicia sesion para guardar favoritos' : (isFavorite ? 'Quitar de favoritos' : 'Anadir a favoritos')"
+          (click)="onFavoriteClick($event)"
+        >
+          &hearts;
+        </button>
+      </div>
     </div>
 
   </div>

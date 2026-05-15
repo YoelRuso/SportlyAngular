@@ -169,6 +169,59 @@
   opacity: 0.85;
 }
 
+.popup-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 40px;
+}
+
+.popup-actions .popup-btn {
+  margin-right: auto;
+}
+
+.popup-fav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  margin-left: auto;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.62);
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.popup-fav-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.popup-fav-btn--active {
+  border-color: var(--accent);
+  background: rgba(60, 247, 177, 0.16);
+  color: var(--accent);
+}
+
+.popup-fav-btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.popup-fav-btn--disabled:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+  color: rgba(255, 255, 255, 0.62);
+  transform: none;
+}
+
 /* ── Scrollbar ── */
 .popup-container::-webkit-scrollbar { width: 6px; }
 .popup-container::-webkit-scrollbar-thumb {
