@@ -2,31 +2,25 @@
 
 ## Instalation
 ```
-npm install @angular/fire --legacy-peer-deps
-npm install @ionic/angular ionicons --legacy-peer-deps
-npm install @ionic/angular-toolkit --save-dev --legacy-peer-deps
-npm install -g @ionic/cli
-npm install @capacitor/core --legacy-peer-deps
-npm install @capacitor-community/sqlite --legacy-peer-deps
-npm install jeep-sqlite sql.js --legacy-peer-deps
-```
-
-### Sqlite3 instalation
-Linux
-```
-sudo apt install sqlite3
+npm install --legacy-peer-deps
 ```
 
 ## Quick start
-Para web-browser
+### Para web-browser
 ```
 ionic serve
 ```
-Para movíl
+
+### Para movíl
+
+1. Arranca
 ```
-ionic cap build android
-o
-ionic cap run android -l external
+ionic serve
+```
+2. en otro terminal arranca el movil
+```
+ionic capacitor sync android
+ionic cap run android
 ```
 
 # 📁 Configuración de Firebase para el Equipo
