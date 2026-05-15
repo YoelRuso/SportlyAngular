@@ -139,6 +139,11 @@ export default class HomePage implements OnInit {
     }
   }
 
+  isFavoriteEvent(event: SportEvent | null): boolean {
+    const id = event?.idEvent;
+    return Boolean(id && this.favoriteSportsService.favoriteSportIds().some((sport) => sport.idEvent === id));
+  }
+
   trackCompactPage(index: number, page: number | null): string {
     return page === null ? `ellipsis-${index}` : `page-${page}`;
   }

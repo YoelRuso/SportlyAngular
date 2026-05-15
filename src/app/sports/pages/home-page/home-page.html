@@ -68,6 +68,9 @@
     @if (selectedEvent) {
       <app-match-popup
         [event]="selectedEvent"
+        [isFavorite]="isFavoriteEvent(selectedEvent)"
+        [favoriteDisabled]="!auth.getCurrentUser()"
+        (favoriteClick)="toggleFavorite($event)"
         (close)="closePopup()"
       />
     }
