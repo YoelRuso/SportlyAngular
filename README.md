@@ -15,7 +15,7 @@ ionic serve
 
 1. Arranca
 ```
-ionic serve
+ionic serve --host=0.0.0.0 --port=8100
 ```
 2. en otro terminal arranca el movil
 ```
