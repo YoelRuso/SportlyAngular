@@ -8,10 +8,11 @@ import { CardSummary } from '../../components/card-summary/card-summary';
 import { ResumePagination } from '../../components/resume-pagination/resume-pagination';
 import { NewsArticle, NewsSportFilter } from '../../interfaces/news-article';
 import { NewsData } from '../../services/news-data';
+import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-resume-page',
-  imports: [Header, Footer, Navbar, HeroBanner, CardSummary, ResumePagination],
+  imports: [Header, Footer, Navbar, HeroBanner, CardSummary, ResumePagination, IonContent],
   templateUrl: './resume-page.html',
   styleUrl: './resume-page.css',
 })

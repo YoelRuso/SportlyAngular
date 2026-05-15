@@ -1,44 +1,46 @@
-<div class="resume-wrapper">
-  <app-header />
+<ion-content class="resume-content-wrapper" [fullscreen]="true" [scrollY]="true">
+  <div class="resume-wrapper">
+    <app-header />
 
-  <main class="resume-shell">
-    <section class="resume-grid" aria-label="Resumen deportivo">
-      <app-hero-banner />
-      <app-navbar (sportSelected)="onFilterChange($event)" />
+    <main class="resume-shell">
+      <section class="resume-grid" aria-label="Resumen deportivo">
+        <app-hero-banner />
+        <app-navbar (sportSelected)="onFilterChange($event)" />
 
-      <div class="resume-content">
-        <header class="resume-content-header">
-          <h2>Resumen de noticias</h2>
-          <p>Actualidad de futbol, baloncesto, tenis y F1.</p>
-        </header>
+        <div class="resume-content">
+          <header class="resume-content-header">
+            <h2>Resumen de noticias</h2>
+            <p>Actualidad de futbol, baloncesto, tenis y F1.</p>
+          </header>
 
-        @if (isLoading) {
-          <div class="resume-state">
-            <p>Cargando noticias...</p>
-          </div>
-        } @else if (errorMessage) {
-          <div class="resume-state resume-state-error">
-            <p>{{ errorMessage }}</p>
-          </div>
-        } @else if (isEmptyState) {
-          <div class="resume-state">
-            <p>No se encontraron noticias para este filtro.</p>
-          </div>
-        } @else {
-          <div class="resume-cards">
-            @for (article of paginatedNews; track article.id) {
-              <app-card-summary [article]="article" />
-            }
-          </div>
+          @if (isLoading) {
+            <div class="resume-state">
+              <p>Cargando noticias...</p>
+            </div>
+          } @else if (errorMessage) {
+            <div class="resume-state resume-state-error">
+              <p>{{ errorMessage }}</p>
+            </div>
+          } @else if (isEmptyState) {
+            <div class="resume-state">
+              <p>No se encontraron noticias para este filtro.</p>
+            </div>
+          } @else {
+            <div class="resume-cards">
+              @for (article of paginatedNews; track article.id) {
+                <app-card-summary [article]="article" />
+              }
+            </div>
 
-          <app-resume-pagination
-            [currentPage]="currentPage"
-            [totalPages]="totalPages"
-            (pageChange)="onPageChange($event)"
-          />
-        }
-      </div>
-    </section>
-  </main>
-  <app-footer />
-</div>
+            <app-resume-pagination
+              [currentPage]="currentPage"
+              [totalPages]="totalPages"
+              (pageChange)="onPageChange($event)"
+            />
+          }
+        </div>
+      </section>
+    </main>
+    <app-footer />
+  </div>
+</ion-content>
