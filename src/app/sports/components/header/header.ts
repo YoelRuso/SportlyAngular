@@ -1,7 +1,7 @@
 import { Component, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Authentication } from '../../services/authentication';
+import { Authentication, UserProfile } from '../../services/authentication';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -22,7 +22,10 @@ export class Header {
 
   constructor() {
     effect(() => {
-      console.log('Header: userProfile changed:', this.userProfile());
+      const profile = this.userProfile();
+      if (profile) {
+        console.log('Header: userProfile loaded', !!profile.photoBase64);
+      }
     });
   }
 
