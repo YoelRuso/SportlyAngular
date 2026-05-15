@@ -14,7 +14,7 @@
                 <app-card-init
                   [event]="event"
                   [isFavorite]="favoriteSportsService.favoriteSportIds().find(s => s.idEvent === event.idEvent) != null"
-                  [favoriteDisabled]="!auth.getCurrentUser()"
+                  [favoriteDisabled]="!auth.user()"
                   (cardClick)="openMatchPopup($event)"
                   (favoriteClick)="toggleFavorite($event)"
                 />
@@ -69,7 +69,7 @@
       <app-match-popup
         [event]="selectedEvent"
         [isFavorite]="isFavoriteEvent(selectedEvent)"
-        [favoriteDisabled]="!auth.getCurrentUser()"
+        [favoriteDisabled]="!auth.user()"
         (favoriteClick)="toggleFavorite($event)"
         (close)="closePopup()"
       />

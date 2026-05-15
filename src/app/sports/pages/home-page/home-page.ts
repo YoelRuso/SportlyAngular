@@ -123,7 +123,7 @@ export default class HomePage implements OnInit {
   }
 
   toggleFavorite(event: SportEvent): void {
-    if (!this.auth.getCurrentUser()) {
+    if (!this.auth.user()) {
       this.loginPromptOpen = true;
       this.cdr.markForCheck();
       return;
