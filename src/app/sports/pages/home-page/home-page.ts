@@ -5,6 +5,7 @@ import {
   OnInit,
   NgZone,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Header } from '../../components/header/header';
 import { HeroBanner } from '../../components/hero-banner/hero-banner';
 import { Navbar } from '../../components/navbar/navbar';
@@ -14,6 +15,8 @@ import { SportsData } from '../../services/sports-data';
 import { Footer } from '../../components/footer/footer';
 import { FavoriteSports } from '../../services/favorite-sports';
 import { MatchPopup } from '../../components/match-popup/match-popup';
+import { Authentication } from '../../services/authentication';
+import { IonContent, IonToast } from '@ionic/angular/standalone';
 
 type SportKey = 'all' | 'soccer' | 'basketball' | 'tennis' | 'f1';
 
@@ -21,7 +24,7 @@ const PAGE_SIZE = 9;
 
 @Component({
   selector: 'app-home-page',
-  imports: [Header, HeroBanner, Navbar, CardInit, Footer, MatchPopup],
+  imports: [IonContent, IonToast, Header, HeroBanner, Navbar, CardInit, Footer, MatchPopup],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +35,20 @@ export default class HomePage implements OnInit {
   events: SportEvent[] = [];
   hasLoadError = false;
   selectedEvent: SportEvent | null = null;
+  loginPromptOpen = false;
+  readonly loginToastButtons = [
+    {
+      text: 'Ir a login',
+      handler: () => {
+        void this.goToLogin();
+      },
+    },
+    {
+      text: 'Cerrar',
+      role: 'cancel' as const,
+      handler: () => this.closeLoginPrompt(),
+    },
+  ];
 
   currentPage = 1;
   pageSize = PAGE_SIZE;
@@ -67,10 +84,16 @@ export default class HomePage implements OnInit {
     private readonly sportsData: SportsData,
     private readonly cdr: ChangeDetectorRef,
     private readonly ngZone: NgZone,
+    public readonly auth: Authentication,
+    private readonly router: Router,
   ) {}
 
   ngOnInit(): void {
     this.loadAllEvents();
+  }
+
+  ionViewWillEnter(): void {
+    void this.favoriteSportsService.reloadFavorites();
   }
 
   goToPage(page: number): void {
@@ -100,14 +123,39 @@ export default class HomePage implements OnInit {
   }
 
   toggleFavorite(event: SportEvent): void {
+    if (!this.auth.user()) {
+      this.loginPromptOpen = true;
+      this.cdr.markForCheck();
+      return;
+    }
+
     const id = String(event.idEvent ?? '');
     if (!id) {
       // skip
     } else if (this.favoriteSportsService.favoriteSportIds().find(s => s.idEvent === id) != null) {
-      this.favoriteSportsService.deleteFavoriteSport(id);
+      void this.favoriteSportsService.deleteFavoriteSport(id);
     } else {
-      this.favoriteSportsService.addFavoriteSport(id);
+      void this.favoriteSportsService.addFavoriteSport(id);
     }
+  }
+
+  isFavoriteEvent(event: SportEvent | null): boolean {
+    const id = event?.idEvent;
+    return Boolean(id && this.favoriteSportsService.favoriteSportIds().some((sport) => sport.idEvent === id));
+  }
+
+  trackCompactPage(index: number, page: number | null): string {
+    return page === null ? `ellipsis-${index}` : `page-${page}`;
+  }
+
+  closeLoginPrompt(): void {
+    this.loginPromptOpen = false;
+    this.cdr.markForCheck();
+  }
+
+  async goToLogin(): Promise<void> {
+    this.closeLoginPrompt();
+    await this.router.navigate(['/login']);
   }
 
   private applyPage(): void {

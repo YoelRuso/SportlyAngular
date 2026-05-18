@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-// @ts-ignore
 export const routes: Routes = [
   {
     path: '',
@@ -30,7 +29,7 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./sports/pages/login-page/login-page'),
-  },,
+  },
   {
     path: 'registration',
     loadComponent: () => import('./sports/pages/registration-page/registration-page'),

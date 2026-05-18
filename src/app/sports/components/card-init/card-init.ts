@@ -11,6 +11,7 @@ import { CommonModule, NgClass } from '@angular/common';
 export class CardInit {
   @Input() event!: SportEvent;
   @Input() isFavorite = false;
+  @Input() favoriteDisabled = false;
 
   @Output() cardClick = new EventEmitter<SportEvent>();
   @Output() favoriteClick = new EventEmitter<SportEvent>();

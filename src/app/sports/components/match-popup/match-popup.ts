@@ -10,12 +10,20 @@ import { SportEvent } from '../../interfaces/sportevent';
 })
 export class MatchPopup {
   @Input() event!: SportEvent;
+  @Input() isFavorite = false;
+  @Input() favoriteDisabled = false;
   @Output() close = new EventEmitter<void>();
+  @Output() favoriteClick = new EventEmitter<SportEvent>();
 
   onOverlayClick(e: MouseEvent): void {
     if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
       this.close.emit();
     }
+  }
+
+  onFavoriteClick(e: MouseEvent): void {
+    e.stopPropagation();
+    this.favoriteClick.emit(this.event);
   }
 
   get title(): string {

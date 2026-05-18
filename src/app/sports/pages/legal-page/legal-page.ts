@@ -1,10 +1,17 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { collection, getDocs } from '@angular/fire/firestore'
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
-import { Firestore } from '@angular/fire/firestore';
+
+// Ionic imports
+import {
+  IonContent, IonList, IonItem, IonLabel,
+  IonMenu, IonMenuButton, IonMenuToggle,
+  IonSplitPane, IonButtons, IonHeader,
+  IonToolbar, IonTitle
+} from '@ionic/angular/standalone';
 
 interface LegalSection {
   id: string;
@@ -14,8 +21,16 @@ interface LegalSection {
 
 @Component({
   selector: 'app-legal-page',
-  imports: [CommonModule, Header, Footer, 
-           ],
+  standalone: true,
+  imports: [
+    CommonModule,
+    Header,
+    Footer,
+    IonContent, IonList, IonItem, IonLabel,
+    IonMenu, IonMenuButton, IonMenuToggle,
+    IonSplitPane, IonButtons, IonHeader,
+    IonToolbar, IonTitle
+  ],
   templateUrl: './legal-page.html',
   styleUrl: './legal-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,7 +76,6 @@ export default class LegalPage implements OnInit {
       const snapshot = await getDocs(collection(this.firestore, 'legal'));
       this.sections = snapshot.docs.map((doc) => doc.data() as LegalSection);
 
-      // Orden fijo del sidebar
       const ORDER = ['aviso-legal', 'privacidad', 'cookies', 'accesibilidad'];
       this.sections.sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
 

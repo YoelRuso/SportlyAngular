@@ -1,12 +1,45 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Authentication } from '../../services/authentication'
-import { FormsModule, NgForm } from '@angular/forms'
-import { Router, RouterLink, RouterLinkActive } from '@angular/router'
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCheckbox,
+  IonContent,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonNote,
+  IonText,
+} from '@ionic/angular/standalone';
+import { eyeOffOutline, eyeOutline, sparklesOutline } from 'ionicons/icons';
+
+import { Authentication } from '../../services/authentication';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    RouterLinkActive,
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+    IonItem,
+    IonInput,
+    IonLabel,
+    IonButton,
+    IonCheckbox,
+    IonNote,
+    IonText,
+    IonIcon,
+  ],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css',
 })
@@ -24,6 +57,9 @@ export default class LoginPage {
   showPassword = false;
 
   emailPattern = '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$';
+  readonly eyeOutline = eyeOutline;
+  readonly eyeOffOutline = eyeOffOutline;
+  readonly sparklesOutline = sparklesOutline;
 
   // User Pressed Login button
   async onLogin(form: NgForm) {

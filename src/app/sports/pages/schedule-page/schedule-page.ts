@@ -1,13 +1,31 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Header } from '../../components/header/header';
-import { Footer } from '../../components/footer/footer';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { SportEvent } from '../../interfaces/sportevent';
 import { SportsData } from '../../services/sports-data';
+import { IonContent } from '@ionic/angular/standalone';
+import { Header } from '../../components/header/header';
+import { Footer } from '../../components/footer/footer';
 
 const MESES_ES = [
-  'Enero','Febrero','Marzo','Abril','Mayo','Junio',
-  'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre',
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
 ];
 
 interface CalendarEvent {
@@ -19,7 +37,8 @@ interface CalendarEvent {
 
 @Component({
   selector: 'app-schedule-page',
-  imports: [Header, Footer],
+  standalone: true,
+  imports: [CommonModule, IonContent, Header, Footer],
   templateUrl: './schedule-page.html',
   styleUrl: './schedule-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,7 +54,7 @@ export default class SchedulePage implements OnInit, OnDestroy {
 
   weeks: (number | null)[][] = [];
 
-  readonly diasSemana = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+  readonly diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
   readonly meses = MESES_ES;
 
   private keyHandler = (e: KeyboardEvent) => {
@@ -49,59 +68,72 @@ export default class SchedulePage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     document.addEventListener('keydown', this.keyHandler);
-
-    // Construye el calendario inmediatamente, sin esperar eventos
     this.buildCalendar();
-
-    // Carga los eventos en segundo plano
-    this.loadEvents().then(() => {
-      this.cdr.markForCheck();
-    });
+    this.loadEvents().then(() => this.cdr.markForCheck());
   }
 
   ngOnDestroy(): void {
     document.removeEventListener('keydown', this.keyHandler);
   }
 
-  get mesDisplay(): string { return MESES_ES[this.mesActual]; }
+  get mesDisplay(): string {
+    return MESES_ES[this.mesActual];
+  }
 
   prevMonth(): void {
     this.mesActual--;
-    if (this.mesActual < 0) { this.mesActual = 11; this.anioActual--; }
+    if (this.mesActual < 0) {
+      this.mesActual = 11;
+      this.anioActual--;
+    }
     this.buildCalendar();
   }
 
   nextMonth(): void {
     this.mesActual++;
-    if (this.mesActual > 11) { this.mesActual = 0; this.anioActual++; }
+    if (this.mesActual > 11) {
+      this.mesActual = 0;
+      this.anioActual++;
+    }
     this.buildCalendar();
   }
 
-  prevYear(): void { this.anioActual--; this.buildCalendar(); }
-  nextYear(): void { this.anioActual++; this.buildCalendar(); }
+  prevYear(): void {
+    this.anioActual--;
+    this.buildCalendar();
+  }
+  nextYear(): void {
+    this.anioActual++;
+    this.buildCalendar();
+  }
 
   isToday(day: number | null): boolean {
     if (!day) return false;
     const hoy = new Date();
-    return day === hoy.getDate() && this.mesActual === hoy.getMonth() && this.anioActual === hoy.getFullYear();
+    return (
+      day === hoy.getDate() &&
+      this.mesActual === hoy.getMonth() &&
+      this.anioActual === hoy.getFullYear()
+    );
   }
 
   eventsForDay(day: number | null): CalendarEvent[] {
     if (!day) return [];
-    const key = this.dateKey(day);
-    return this.eventosPorFecha[key] ?? [];
+    return this.eventosPorFecha[this.dateKey(day)] ?? [];
   }
 
   openDay(day: number | null): void {
     if (!day) return;
     const key = this.dateKey(day);
-    const eventos = this.eventosPorFecha[key] ?? [];
     const fecha = new Date(`${key}T12:00:00`);
     const formato = new Intl.DateTimeFormat('es-ES', {
-      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
     }).format(fecha);
     this.selectedDayTitle = formato.charAt(0).toUpperCase() + formato.slice(1);
-    this.selectedDayEvents = eventos;
+    this.selectedDayEvents = this.eventosPorFecha[key] ?? [];
     this.modalOpen = true;
     this.cdr.markForCheck();
   }
@@ -118,7 +150,7 @@ export default class SchedulePage implements OnInit, OnDestroy {
   }
 
   private dateKey(day: number): string {
-    return `${this.anioActual}-${String(this.mesActual + 1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    return `${this.anioActual}-${String(this.mesActual + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   }
 
   private buildCalendar(): void {
@@ -130,7 +162,6 @@ export default class SchedulePage implements OnInit, OnDestroy {
       ...Array(offset).fill(null),
       ...Array.from({ length: diasEnMes }, (_, i) => i + 1),
     ];
-
     while (cells.length % 7 !== 0) cells.push(null);
 
     this.weeks = [];
@@ -143,19 +174,33 @@ export default class SchedulePage implements OnInit, OnDestroy {
   private async loadEvents(): Promise<void> {
     try {
       const events = await firstValueFrom(this.sportsData.getAllEvents());
-
       this.eventosPorFecha = {};
       events.forEach((event: SportEvent) => {
         const fecha = event.dateEvent;
         if (!fecha) return;
-
-        const label = event.strEvent ||
-          (event.strHomeTeam && event.strAwayTeam ? `${event.strHomeTeam} vs ${event.strAwayTeam}` : 'Evento deportivo');
+        const label =
+          event.strEvent ||
+          (event.strHomeTeam && event.strAwayTeam
+            ? `${event.strHomeTeam} vs ${event.strAwayTeam}`
+            : 'Evento deportivo');
         const sport = (event.strSport || '').toLowerCase();
-
-        const sportLabel = sport === 'soccer' ? '⚽' : sport === 'basketball' ? '🏀' : sport === 'tennis' ? '🎾' : sport === 'motorsport' ? '🏎️' : '🏅';
+        const sportLabel =
+          sport === 'soccer'
+            ? '⚽'
+            : sport === 'basketball'
+              ? '🏀'
+              : sport === 'tennis'
+                ? '🎾'
+                : sport === 'motorsport'
+                  ? '🏎️'
+                  : '🏅';
         if (!this.eventosPorFecha[fecha]) this.eventosPorFecha[fecha] = [];
-        this.eventosPorFecha[fecha].push({ label, sportLabel, time: event.strTime || '', venue: event.strVenue || '' });
+        this.eventosPorFecha[fecha].push({
+          label,
+          sportLabel,
+          time: event.strTime || '',
+          venue: event.strVenue || '',
+        });
       });
     } catch (e) {
       console.error('Error cargando eventos desde Firebase:', e);
