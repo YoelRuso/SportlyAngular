@@ -1,6 +1,15 @@
 # SPORTLY
 
-## Instalation
+# 🚀 Guía de Instalación y Configuración
+
+## 📥 Clonar el Repositorio
+
+```bash
+git clone <https://github.com/YoelRuso/SportlyAngular.git>
+cd SportlyAngular
+```
+
+## 📦 Instalar Dependencias
 ```
 npm install --legacy-peer-deps
 ```
